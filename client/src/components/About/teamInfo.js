@@ -16,7 +16,7 @@ export const teamData =
 export const memberData = [
     {
         name: "Brendan Scheidt",
-        bio: "Bio Here",
+        bio: "I am an undergrad at CSU majoring in computer science. I am also a UTA for CS165 data structures and algorithms. Throughout my career, I want to help shape the future of artificial intelligence by leading projects that push the boundaries of what's possible in fields such as education and environmental studies. To start accomplishing these goals, last year, I wrote a website that is an AI chatbot for helping tutor students in their classes and have it deployed on Heroku. Outside of school, I enjoy producing music and camping.",
         homeTown: "Fort Collins, CO",
         imagePath: bscheidtPic
     },
