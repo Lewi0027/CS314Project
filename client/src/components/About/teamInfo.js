@@ -3,6 +3,7 @@ import teamPic from "@static/images/PlaceholderTeam.jpg";
 
 import bscheidtPic from "@static/images/bscheidt_team_image.jpg"
 import hlewisPic from "@static/images/hlewis_team_image.png"
+import wattg5Pic from "@static/images/wyattg5_team_image.jpg"
 
 export const teamData =
     {
@@ -23,7 +24,7 @@ export const memberData = [
         name: "Wyatt Gensler",
         bio: "Bio Here",
         homeTown: "Castle Rock, CO",
-        imagePath: memberPic
+        imagePath: wattg5Pic
     },
     {
         name: "Team Member 3",
