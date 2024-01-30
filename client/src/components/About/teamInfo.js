@@ -23,13 +23,13 @@ export const memberData = [
         name: "Team Member 2 ",
         bio: "Bio Here",
         homeTown: "Hometown",
-        imagePath: hlewisPic
+        imagePath: memberPic
     },
     {
         name: "Team Member 3",
         bio: "Bio Here",
         homeTown: "Hometown",
-        imagePath: memberPic
+        imagePath: hlewisPic
     },
     {
         name: "Team Member 4",
