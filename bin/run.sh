@@ -2,6 +2,17 @@
 
 umask 077;
 
+# add preconfigured module on CS-dept systems if present
+source /etc/profile.d/modules.sh
+module purge
+module load courses/cs314
+if [[ $? != 0 ]]; then
+  echo "The '$0' script appears to have been invoked on a non-CS-dept machine."
+  echo "You may be using an unsupported configuration, which is OK, but you may"
+  echo "need to refer to the detail in LOCAL-SETUP.md and the guide wiki."
+  echo
+fi
+
 export SERVER_PORT=$((0+${CS314_SERVER_BASE:-41300}+${CS314_TEAM:-0}))
 export CLIENT_PORT=$((0+${CS314_CLIENT_BASE:-43100}+${CS314_TEAM:-0}))
 echo Using client/server ports: $CLIENT_PORT / $SERVER_PORT
