@@ -22,7 +22,7 @@ export const memberData = [
     },
     {
         name: "Wyatt Gensler",
-        bio: "Bio Here",
+        bio: "I am an undergrad student at CSU majoring in computer science and business finance. I am currently applying to internships in both of these industries. After graduation I hope to get a job with an aerospace company and after a few years in the industry I want to put my business and finance knowledge to work by moving up into a more managerial or corporate role. Outside of school I enjoy everything outdoors related, especially racing motocross.",
         homeTown: "Castle Rock, CO",
         imagePath: wattg5Pic
     },
