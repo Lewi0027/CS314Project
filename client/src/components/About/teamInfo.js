@@ -1,6 +1,8 @@
 import memberPic from "@static/images/Placeholder.jpg";
 import teamPic from "@static/images/PlaceholderTeam.jpg";
 
+import bscheidtPic from "@static/images/bscheidt_team_image.jpg"
+
 export const teamData =
     {
         teamName: "Team Name",
@@ -14,7 +16,7 @@ export const memberData = [
         name: "Team Member 1",
         bio: "Bio Here",
         homeTown: "Hometown",
-        imagePath: memberPic
+        imagePath: bscheidtPic
     },
     {
         name: "Team Member 2 ",
