@@ -1,6 +1,4 @@
-import memberPic from "@static/images/Placeholder.jpg";
-import teamPic from "@static/images/PlaceholderTeam.jpg";
-
+import barleyBytesPic from "@static/images/BarleyBytes_team.png";
 import bscheidtPic from "@static/images/bscheidt_team_image.jpg"
 import hlewisPic from "@static/images/hlewis_team_image.png"
 import wattg5Pic from "@static/images/wyattg5_team_image.jpg"
@@ -11,7 +9,7 @@ export const teamData =
     {
         teamName: "t28 BarleyBytes",
         missionStatement: "Our mission at BarleyBytes is to develop well-designed features tailored to the needs of our users. We achieve this through a collaborative team effort, leveraging Scrum methodologies and clean code practices for efficient and goal-oriented task management.",
-        imagePath: teamPic,
+        imagePath: barleyBytesPic,
     };
 
 
