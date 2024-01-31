@@ -9,8 +9,8 @@ import ajleiPic from "@static/images/ajlei_team_image.jpg"
 
 export const teamData =
     {
-        teamName: "Team Name",
-        missionStatement: "Mission Statement",
+        teamName: "t28 BarleyBytes",
+        missionStatement: "Our mission at BarleyBytes is to develop well-designed features tailored to the needs of our users. We achieve this through a collaborative team effort, leveraging Scrum methodologies and clean code practices for efficient and goal-oriented task management.",
         imagePath: teamPic,
     };
 
