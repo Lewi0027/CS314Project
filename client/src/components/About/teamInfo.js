@@ -40,7 +40,7 @@ export const memberData = [
     },
     {
         name: "AJ Leichner",
-        bio: "Bio Here",
+        bio: "I am an undergrad at CSU and candidate for a bachelor's of Science: Computer Science. I find computers and programming interesting, yet I hope to one day be on the business side of consulting with a computer background for that job. I'm looking at ways to improve my resume for internships this upcoming summer, and I am also interested in getting involved with more projects in the Computer Science industry. I love to pick up hobbies as I go, with trouble committing to just one. Hanging out with friends, working out, and going outside are all great releases for me.",
         homeTown: "Highlands Ranch, CO",
         imagePath: memberPic
     },
