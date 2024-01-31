@@ -28,7 +28,7 @@ export const memberData = [
     },
     {
         name: "Henry Lewis",
-        bio: "Bio Here",
+        bio: "I am a second bachelors student at CSU majoring in computer science. I currently work as a cartographer and use some low-level Python in my daily work. I would love to expand my knowledge to include front-end, software engineering, more back-end languages/knowledge and other practical knowledge. I hope to work as a developer one day. Outside of school I have a variety of hobbies including skiing, camping, working out and spending time with my family and friends.",
         homeTown: "Fort Collins, CO",
         imagePath: hlewisPic
     },
