@@ -33,9 +33,9 @@ export const memberData = [
         imagePath: hlewisPic
     },
     {
-        name: "Team Member 4",
+        name: "Diego Celorio",
         bio: "Bio Here",
-        homeTown: "Hometown",
+        homeTown: "Boca Raton, FL",
         imagePath: memberPic
     },
     {
