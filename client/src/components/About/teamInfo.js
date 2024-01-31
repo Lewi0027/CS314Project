@@ -27,9 +27,9 @@ export const memberData = [
         imagePath: wattg5Pic
     },
     {
-        name: "Team Member 3",
+        name: "Henry Lewis",
         bio: "Bio Here",
-        homeTown: "Hometown",
+        homeTown: "Fort Collins, CO",
         imagePath: hlewisPic
     },
     {
