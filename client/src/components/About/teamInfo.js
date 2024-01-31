@@ -34,7 +34,7 @@ export const memberData = [
     },
     {
         name: "Diego Celorio",
-        bio: "Bio Here",
+        bio: "I am an undergrad student at CSU pursuing a bachelor's in Computer Science. I want to learn more about computers broadly as I improve my coding skills and I would like to someday make my own game as a side project. I hope to become a software developer when I graduate and keep making code. I also enjoy having a good time with my buds and playing soccer.",
         homeTown: "Boca Raton, FL",
         imagePath: memberPic
     },
