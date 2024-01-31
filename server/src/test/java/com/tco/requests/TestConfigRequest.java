@@ -34,6 +34,6 @@ public class TestConfigRequest {
     @DisplayName("base: Team name is correct")
     public void testServerName() {
         String name = conf.getServerName();
-        assertEquals("t28 team name", name);
+        assertEquals("t28 BarleyBytes", name);
     }
 }

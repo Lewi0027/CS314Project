@@ -20,7 +20,7 @@
 							"",
 							"pm.test(\"Server-side team name is correct\", () => {",
 							"    const response = pm.response.json();",
-							"pm.collectionVariables.set(\"TEAM_NAME\", \"t28 team name\");",
+							"pm.collectionVariables.set(\"TEAM_NAME\", \"t28 BarleyBytes\");",
 							"    const expectedTeamName = pm.collectionVariables.get(\"TEAM_NAME\");",
 							"    pm.expect(response.serverName).to.eql(expectedTeamName);",
 							"});"
