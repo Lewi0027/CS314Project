@@ -1,3 +1,5 @@
+# This file should NOT be changed.
+# The application will not deploy correctly if this file is changed.
 name: build-and-test
 
 on:
@@ -5,7 +7,6 @@ on:
     branches: [main]
   release:
     types: [published]
- 
 
 jobs:
   build-and-test:
@@ -17,8 +18,19 @@ jobs:
         node-version: [18.x]
 
     steps:
+    - name: Fail on release if outside sprint dates
+      run: |
+        now="$(date +'%Y.%m.%d.%H.%M')"
+        if [[ $now < "${{ vars.SPRINT_BEGIN }}" || "${{ vars.SPRINT_END }}" < $now ]]; then
+          echo "Releases can not be deployed outside of the sprint dates"
+          echo "Sprint begin date:      ${{ vars.SPRINT_BEGIN }}"
+          echo "Sprint end date:        ${{ vars.SPRINT_END }}"
+          echo "Attempted release date: $now"
+          exit 1
+        fi
+      if: github.event_name == 'release'
+
     - uses: actions/checkout@v2
-    - run: verify_workflows
 
     - name: Set up node.js (${{ matrix.node-version }})
       uses: actions/setup-node@v1
@@ -30,17 +42,6 @@ jobs:
       with:
         java-version: 11
 
-    - name: Log originating commit ID
-      run: echo "full_sha1=$(git cat-file -p HEAD | grep parent | tail -1 | cut -d' ' -f2)" >> $GITHUB_ENV 
- 
-    - name: Tag revision for DEV
-      if: github.event_name == 'pull_request'
-      run: echo "REVISION=#${{ github.event.number }}.$(git rev-parse --short ${{ env.full_sha1 }})" >> $GITHUB_ENV
-
-    - name: Tag revision for SPRINT
-      if: github.event_name == 'release'
-      run: echo "REVISION=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
-
     - name: Install client dependencies
       run: cache_dependencies client
 
@@ -49,7 +50,6 @@ jobs:
 
     - name: Prepare Codeclimate reporting tools
       env:
-        GIT_COMMIT_SHA: ${{ env.full_sha1 }} 
         GIT_BRANCH: ${{ github.head_ref }}
       run: |
         curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
@@ -63,35 +63,23 @@ jobs:
       run: npm run prodClient --prefix client
       
     - name: Build & test server with maven
-      run: mvn -f server --global-settings server/.m2/settings.xml -Drevision=${{ env.REVISION }} verify
+      run: mvn -f server --global-settings server/.m2/settings.xml verify
 
-    - name: Postman Tests for DEV
+    - name: Postman tests
       env:
-        REVISION: ${{ env.REVISION }}
-      run: postman DEV
-      if: github.event_name == 'pull_request'
-
-    - name: Postman Tests for SPRINT
-      env:
-        REVISION: ${{ env.REVISION }}
-      run: postman SPRINT
-      if: github.event_name == 'release'
+        DEV_PORT_BASE: ${{ vars.DEV_PORT_BASE }}
+        DEV_PORT_BLOCK_SIZE: ${{ vars.DEV_PORT_BLOCK_SIZE }}
+      run: postman
  
-    - name: Deploy server for DEV
+    - name: Deploy server
       env:
-        REVISION: ${{ env.REVISION }}
-      run: build-test-deploy DEV
-      if: github.event_name == 'pull_request'
-
-    - name: Deploy server for SPRINT
-      env:
-        REVISION: ${{ env.REVISION }}
-      run: build-test-deploy SPRINT
-      if: github.event_name == 'release'
+        GITHUB_USER: ${{ github.actor }}
+        DEV_PORT_BASE: ${{ vars.DEV_PORT_BASE }}
+        DEV_PORT_BLOCK_SIZE: ${{ vars.DEV_PORT_BLOCK_SIZE }}
+      run: build-test-deploy
 
     - name: Finish and report Codeclimate statistics
       env:
-        GIT_COMMIT_SHA: ${{ env.full_sha1 }} 
         GIT_BRANCH: ${{ github.head_ref }}
         JACOCO_SOURCE_PATH: server/src/main/java
       run: |
