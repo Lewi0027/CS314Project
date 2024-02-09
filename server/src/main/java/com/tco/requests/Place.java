@@ -10,4 +10,13 @@ public class Place implements GeographicCoordinate{
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
+    @Override
+    public double latRadians() {
+        return 0;
+    }
+    @Override
+    public double lonRadians() {
+        return 0;
+    }
 }
