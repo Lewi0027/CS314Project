@@ -51,19 +51,19 @@ function DistanceHeader(props){
 	return(
 		<thead>
 		<tr>
-			<th>
+			<th data-testid='total-distance'>
 				{props.total}
 				{" miles"}
 			</th>
-		  <td className="text-end">{"leg"}</td>
-		  <td className="text-end">{"Σ"}</td>
+		  <td data-testid='leg-header' className="text-end">{"leg"}</td>
+		  <td data-testid='cumulative-header' className="text-end">{"Σ"}</td>
 			<td></td>
 		</tr>
 	  </thead>
 	);
 }
 
-function OptimizeButtons(props){
+export function OptimizeButtons(props){
 	const optimizeImplemented = isFeatureImplemented(props.serverSettings, "tour");
 	if(!optimizeImplemented){
 		return(<td colspan={3}></td>);
@@ -72,6 +72,7 @@ function OptimizeButtons(props){
 			<td colspan={3}>
 			<Button
 				color='primary'
+				data-testid='optimize-button'
 				onClick={() => {
 					optimizeTrip(props)
 				}}
@@ -83,7 +84,7 @@ function OptimizeButtons(props){
 	);
 }
 
-async function optimizeTrip(props){
+export async function optimizeTrip(props){
 	const request = {
 		"requestType": "tour",
 		"earthRadius": 3960,
@@ -97,7 +98,7 @@ async function optimizeTrip(props){
 	}
 }
 
-function convertObjectToPlace(obj) {
+export function convertObjectToPlace(obj) {
 	const newPlace = new Place({name: obj.name,
 		latitude: obj.latitude,
 		longitude: obj.longitude,

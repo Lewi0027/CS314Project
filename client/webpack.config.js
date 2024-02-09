@@ -3,6 +3,23 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
+const getAliasResolves = {
+    "@components": path.resolve(__dirname, 'src/components/'),
+	"@hooks": path.resolve(__dirname, 'src/hooks/'),
+	"@models": path.resolve(__dirname, 'src/models/'),
+	"@static": path.resolve(__dirname, 'src/static/'),
+	"@utils": path.resolve(__dirname, 'src/utils/')
+};
+
+const getPlugins = (SERVER_PORT, CLIENT_LOG_LEVEL) =>
+	[
+		new CleanWebpackPlugin(),
+		new webpack.DefinePlugin({'process.env.SERVER_PORT': SERVER_PORT}),
+		new webpack.DefinePlugin({'process.env.CLIENT_LOG_LEVEL': CLIENT_LOG_LEVEL}),
+		new HtmlWebpackPlugin({ template: 'templates/index.html', favicon: "templates/favicon.ico" }),
+		new webpack.HotModuleReplacementPlugin()
+	];
+
 const MODULE_RULES = {
 	rules:
 		[
@@ -49,21 +66,9 @@ module.exports = env => {
 		module: MODULE_RULES,
 		output: { filename: "bundle.js", path: path.resolve(BUILD_DIRECTORY_PREFIX, './client/dist/public/') },
 		performance: { hints: false },
-		plugins: [
-			new CleanWebpackPlugin(),
-			new webpack.DefinePlugin({'process.env.SERVER_PORT': SERVER_PORT}),
-			new webpack.DefinePlugin({'process.env.CLIENT_LOG_LEVEL': CLIENT_LOG_LEVEL}),
-			new HtmlWebpackPlugin({ template: 'templates/index.html', favicon: "templates/favicon.ico" }),
-			new webpack.HotModuleReplacementPlugin()
-		],
+		plugins: getPlugins(SERVER_PORT, CLIENT_LOG_LEVEL),
 		resolve: {
-		  	alias: {
-				"@components": path.resolve(__dirname, 'src/components/'),
-				"@hooks": path.resolve(__dirname, 'src/hooks/'),
-				"@models": path.resolve(__dirname, 'src/models/'),
-				"@static": path.resolve(__dirname, 'src/static/'),
-				"@utils": path.resolve(__dirname, 'src/utils/')
-		  },
+		  	alias: getAliasResolves,
 		},
 	};
 };

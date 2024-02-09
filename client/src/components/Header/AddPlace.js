@@ -15,9 +15,10 @@ import { FaHome } from 'react-icons/fa';
 import Coordinates from 'coordinate-parser';
 import { DEFAULT_STARTING_POSITION } from '@utils/constants';
 import { reverseGeocode } from '@utils/reverseGeocode';
-import { getOriginalServerUrl, sendAPIRequest } from '@utils/restfulAPI';
+import { sendAPIRequest } from '@utils/restfulAPI';
 import { isFeatureImplemented } from '@utils/restfulAPI';
 import { LOG } from '@utils/constants';
+import { verifySearch } from './VerifySearch';
 
 export default function AddPlace(props) {
 	const [foundPlace, setFoundPlace] = useState();
@@ -26,18 +27,12 @@ export default function AddPlace(props) {
 	const [coordString, setCoordString] = useState('');
 	const [selectedType, setSelectedType] = useState('All Types');
 	const [selectedCountry, setSelectedCountry] = useState('All Countries');
-	const serverSettings = props.serverSettings;
 	const [countries, setCountries] = useState([]);
-	
 	const addPlaceProps = {
-		buttonClicked,
-		setButtonClicked,
-		foundPlace,
-		setFoundPlace,
-		coordString,
-		setCoordString,
-		append: props.placeActions.append,
-		serverSettings,
+		buttonClicked, setButtonClicked,
+		foundPlace, setFoundPlace,
+		coordString, setCoordString,
+		append: props.placeActions.append, serverSettings: props.serverSettings,
 		foundPlaces, setFoundPlaces,
 		selectedType, setSelectedType,
 		selectedCountry, setSelectedCountry,
@@ -47,11 +42,8 @@ export default function AddPlace(props) {
 		<Modal isOpen={props.showAddPlace} toggle={props.toggleAddPlace}>
 			<AddPlaceHeader toggleAddPlace={props.toggleAddPlace} />
 			<PlaceSearch {...addPlaceProps}/>
-			<AddPlaceFooter
-				{...addPlaceProps}
-			/>
+			<AddPlaceFooter {...addPlaceProps}/>
 			<DisplayMap {...addPlaceProps} />
-			<ButtonFooter {...addPlaceProps}/>
 		</Modal>
 	);
 }
@@ -129,26 +121,25 @@ function ButtonFooter(props){
 }
 
 async function verifyCoordinates(props) {
-	if(isCoordinateText(props.coordString)){
-		try {
-			const latLngPlace = new Coordinates(props.coordString);
-			const lat = latLngPlace.getLatitude();
-			const lng = latLngPlace.getLongitude();
-			if (isLatLngValid(lat,lng)) {
-				const fullPlace = await reverseGeocode({ lat, lng });
-				props.setFoundPlace(fullPlace);
-				props.setFoundPlaces([]);
-			}
-		} catch (error) {
-			props.setFoundPlace(undefined);
+    if (!isCoordinateText(props.coordString)) {
+        await verifySearch(props);
+        props.setButtonClicked(Array(props.foundPlaces.length).fill(false));
+        return;
+    }
+    try {
+        const latLngPlace = new Coordinates(props.coordString);
+		const lat = latLngPlace.getLatitude();
+		const lng = latLngPlace.getLongitude();
+        if (isLatLngValid(lat, lng)){
+			const fullPlace = await reverseGeocode({ lat, lng });
+        	props.setFoundPlace(fullPlace);
+        	props.setFoundPlaces([]);
 		}
-		// do near here: await verifyNear(lat, long, props.setFoundPlaces, props.serverSettings);
-	}
-	else{
-		await verifySearch(props);
-		props.setButtonClicked(Array(props.foundPlaces.length).fill(false));
-	}
+    } catch (error) {
+        props.setFoundPlace(undefined);
+    }
 }
+
 
 function DisplayMap(props){
 	return(
@@ -166,10 +157,12 @@ function DisplayMap(props){
 						{props.buttonClicked[index] ? "Added" : "Add place"}
 					</Button></td></div>
 			))}
-			</Col></ModalBody>
+			</Col>
+			<ButtonFooter {...props}/>
+			</ModalBody>
 	);
 }
-function TypeMenu(props) {
+export function TypeMenu(props) {
 	const [dropdownOpen, setDropdownOpen] = useState(false);
 	const toggleDropdown = () => {
 		setDropdownOpen(!dropdownOpen);
@@ -184,16 +177,16 @@ function TypeMenu(props) {
 			{props.selectedType.charAt(0).toUpperCase() + props.selectedType.slice(1)}
 			</DropdownToggle>
 			<DropdownMenu>
-				<DropdownItem onClick={() => {props.setSelectedType('All Types')}}>All Types</DropdownItem>
-				<DropdownItem onClick={() => {props.setSelectedType('airport')}}>Airport</DropdownItem>
-				<DropdownItem onClick={() => {props.setSelectedType('heliport')}}>Heliport</DropdownItem>
-				<DropdownItem onClick={() => {props.setSelectedType('balloonport')}}>Balloonport</DropdownItem>
-				<DropdownItem onClick={() => {props.setSelectedType('other')}}>Other</DropdownItem>
+				<DropdownItem data-testid='all-type-click' onClick={() => {props.setSelectedType('All Types')}}>All Types</DropdownItem>
+				<DropdownItem data-testid='airport-click' onClick={() => {props.setSelectedType('airport')}}>Airport</DropdownItem>
+				<DropdownItem data-testid='heliport-click' onClick={() => {props.setSelectedType('heliport')}}>Heliport</DropdownItem>
+				<DropdownItem data-testid='balloon-click' onClick={() => {props.setSelectedType('balloonport')}}>Balloonport</DropdownItem>
+				<DropdownItem data-testid='other-click' onClick={() => {props.setSelectedType('other')}}>Other</DropdownItem>
 			</DropdownMenu>
 		</Dropdown>
 		);
 }
-function WhereMenu(props){
+export function WhereMenu(props){
 	const [dropdownOpen, setDropdownOpen] = useState(false);
 	const toggleDropdown = () => {
 		setDropdownOpen(!dropdownOpen);
@@ -204,14 +197,14 @@ function WhereMenu(props){
 	}
 	useEffect(() => {getWhereOptions(props)}, [props.serverSettings]);
 	return(
-		<Dropdown isOpen={dropdownOpen} toggle={toggleDropdown} align="left" direction="down"  data-testid='type-dropdown'>
+		<Dropdown isOpen={dropdownOpen} toggle={toggleDropdown} align="left" direction="down"  data-testid='where-dropdown'>
 			<DropdownToggle caret color="primary">{props.selectedCountry}</DropdownToggle>
 			<DropdownMenu>
 			<DropdownItem onClick={() => props.setSelectedCountry("All Countries")}>
 				{"All Countries"}
 			</DropdownItem>
 			{Object.entries(props.countries).map(([index]) => (
-				<DropdownItem key={index} onClick={() => props.setSelectedCountry(index)}>
+				<DropdownItem key={index} onClick={() => props.setSelectedCountry(props.countries[index])}>
 				{props.countries[index]}
             </DropdownItem>
 			))}
@@ -220,35 +213,7 @@ function WhereMenu(props){
 	);
 }
 
-async function verifySearch(props) {
-	if(isFeatureImplemented(props.serverSettings, "find")){ //change call based on if type and where defined
-		let requestBody = {};
-		if(props.selectedCountry != 'All Countries' && props.selectedType != 'All Types'){
-			requestBody = { requestType: "find", where: [props.selectedCountry], type: [props.selectedType], match: props.coordString, limit: 5 };
-		}
-		else if(props.selectedType != 'All Types'){
-			requestBody = { requestType: "find", type: [props.selectedType], match: props.coordString, limit: 5 };
-		}
-		else if(props.selectedCountry != 'All Countries'){
-			requestBody = { requestType: "find", where: [props.selectedCountry], match: props.coordString, limit: 5 };
-		}
-		else{
-			requestBody = { requestType: "find", match: props.coordString, limit: 5 };
-		}
-		const findResponse = await sendAPIRequest(requestBody, props.serverSettings.serverUrl);
-		if (findResponse) {
-			props.setFoundPlaces(findResponse.places);
-		}
-		else {
-			LOG.error(`Find request to ${props.serverSettings.serverUrl} failed. Check the log for more details.`, "error");
-		}
-	}
-	else{
-		props.setFoundPlaces([]);
-	}
-}
-
-async function getWhereOptions(props){
+export async function getWhereOptions(props){
 		const request = {
 			"requestType": "config"
 		}
@@ -260,8 +225,6 @@ async function getWhereOptions(props){
 			props.setCountries([]);
 		}
 }
-
-//async function verifyNear
 
 function isLatLngValid(lat,lng) {
 	return (lat !== undefined && lng !== undefined);
