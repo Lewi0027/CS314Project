@@ -1,15 +1,16 @@
 package com.tco.requests;
 
 import com.tco.misc.GeographicCoordinate;
+import java.util.LinkedHashMap;
 
-public class Place implements GeographicCoordinate{
-    private double latitude;
-    private double longitude;
+public class Place extends LinkedHashMap<String, String> implements GeographicCoordinate{
 
-    public Place(double latitude, double longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
+    public Place(String latitude, String longitude) {
+        this.put("latitude", latitude);
+        this.put("longitude", longitude);
     }
+
+    public Place() {}
 
     @Override
     public double latRadians() {
