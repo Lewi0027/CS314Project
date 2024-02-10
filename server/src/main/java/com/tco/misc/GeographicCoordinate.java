@@ -1,6 +1,6 @@
 package com.tco.misc;
 
 public interface GeographicCoordinate {
-    public double latRadians();
-    public double lonRadians();
+    public Double latRadians();
+    public Double lonRadians();
 }
