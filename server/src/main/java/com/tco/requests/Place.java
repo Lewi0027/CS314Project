@@ -15,7 +15,7 @@ public class Place extends LinkedHashMap<String, String> implements GeographicCo
     @Override
     public Double latRadians() {
         String latitude = this.get("latitude");
-        Double latitudeDecimal = Double.parseDouble(this.get("latitude"));
+        Double latitudeDecimal = Double.parseDouble(latitude);
         return Math.toRadians(latitudeDecimal);
     }
     @Override
