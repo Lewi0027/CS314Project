@@ -1,7 +1,7 @@
 package com.tco.requests;
 
-import java.util.List;
+import java.util.ArrayList;
 
-public class Places {
-    private List<Place> places;
+public class Places extends ArrayList<Place> {
+    
 }
