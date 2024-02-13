@@ -131,7 +131,7 @@ public class TestHaversine {
     // test real distances
 
     @Test
-    @DisplayName("lewi0027: ")
+    @DisplayName("lewi0027: distance from Fargo to Christchurch in all three units")
     public void testRealDistances() {
         Geo fargo = new Geo(46.8772, -96.7898);
         Geo christchurch = new Geo(-43.5257, 172.6398);
