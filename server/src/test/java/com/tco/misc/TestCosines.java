@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestCosines {
 
@@ -96,6 +95,69 @@ public class TestCosines {
         assertEquals(north, east);
         assertEquals(east, south);
         assertEquals(south, west);
+    }
+   
+    // Test different regions 
+    
+    @Test
+    @DisplayName("Wyattg5: Distance from origin to w180")
+    public void testDistanceOriginW180() {
+        assertEquals( piBig, testCosinesClass.between(origin, w180, big) );
+        assertEquals( piSmall, testCosinesClass.between(origin, w180, small) );
+    }
+    
+    @Test
+    @DisplayName("Wyattg5: Distance from origin to n180")
+    public void testDistanceOriginN180() {
+        assertEquals(piSmall, testCosinesClass.between(origin, n180, small) );
+        assertEquals(piBig, testCosinesClass.between(origin, n180, big) );
+    }
+
+    @Test
+    @DisplayName("Wyattg5: Distance from origin to e180")
+    public void testDistanceOriginE180() {
+        assertEquals( piBig, testCosinesClass.between(origin, e180, big) );
+        assertEquals( piSmall, testCosinesClass.between(origin, e180, small) );
+    }
+
+    @Test
+    @DisplayName("Wyattg5: Distance from origin to e90")
+    public void testDistanceOriginE90() {
+        assertEquals(piSmallHalf, testCosinesClass.between(origin, e90, small) );
+        assertEquals(piBigHalf, testCosinesClass.between(origin, e90, big) );
+    }
+
+    @Test
+    @DisplayName("Wyattg5: Distance from w45 to e45")
+    public void testDistanceW45E45(){
+        assertEquals( piBigHalf, testCosinesClass.between(w45, e45, big) );
+        assertEquals( piSmallHalf, testCosinesClass.between(w45, e45, small) );
+    }
+    
+    // Test real locations
+
+    @Test
+    @DisplayName("Wyattg5: Distance from Denver to Beijing")
+    public void testDistanceDenvertoBeijing() {
+        Geo beijing = new Geo(39.5423, 116.2439);
+        Geo denver = new Geo(39.4551, -104.5118);
+
+        assertEquals( 10304, testCosinesClass.between(beijing, denver, earthRadiusKM) );
+        assertEquals( 6402, testCosinesClass.between(beijing, denver, earthRadiusMi) );
+        assertEquals( 5570, testCosinesClass.between(beijing, denver, earthRadiusNM) );
+    }
+
+    //Lewi0027 real distance test
+
+    @Test
+    @DisplayName("Wyattg5: Using lewi0027 distance from Fargo to Christchurch")
+    public void testRealDistances() {
+        Geo fargo = new Geo(46.8772, -96.7898);
+        Geo christchurch = new Geo(-43.5257, 172.6398);
+
+        assertEquals(13399, testCosinesClass.between(fargo, christchurch, earthRadiusKM));
+        assertEquals(8326, testCosinesClass.between(fargo, christchurch, earthRadiusMi));
+        assertEquals(7243, testCosinesClass.between(fargo, christchurch, earthRadiusNM));
     }
 
 }
