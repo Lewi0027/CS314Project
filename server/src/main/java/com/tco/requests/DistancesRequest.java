@@ -60,7 +60,16 @@ public class DistancesRequest extends Request {
         Distances distances = new Distances();
         
         // Add ability to calculate new distances
+        GreatCircleDistance distanceCalculator = FormulaFactory.createFormula(formula);
 
+        for(int i = 0; i < places.size(); i++){
+            GeographicCoordinate from = places.get(i);
+            GeographicCoordinate to = places.get((i + 1) % places.size());
+
+            long distance = distanceCalculator.between(from, to, earthRadius);
+            distances.add(distance);
+        }
+        
         return distances;
     }
 
