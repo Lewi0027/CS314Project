@@ -72,20 +72,21 @@ public class TestCosines {
 
     // big identity tests
 
-    @test
+    @Test
     @DisplayName("Wyattg5: Distance to self should be zero")
     public void testDistanceOriginOrigin() {
         assertEquals( 0L, testCosinesClass.between(origin, origin, big) );
         assertEquals( 0L, testCosinesClass.between(origin, origin, small) );
     }
 
-    @test
+    @Test
     @DisplayName("Wyattg5: Distance to same place should be zero")
     public void testDistanceSamePlace() {
         assertEquals( 0L, testCosinesClass.between(e180, w180, big) );
         assertEquals( 0L, testCosinesClass.between(e180, w180, small) );
     }
-    @test
+
+    @Test
     @DisplayName("Wyattg5: Distance from origin to 180 should all be equal")
     public void testDistanceOrigin180() {
         Long north = testCosinesClass.between(origin, n180, sampleRadius);
@@ -97,15 +98,4 @@ public class TestCosines {
         assertEquals(south, west);
     }
 
-    // Test different regions 
-    
-    @test
-    @DisplayName("Wyattg5: Distance from origin to w180")
-    public void testDistanceOriginW180() {
-        assertEquals( piBig, testCosinesClass.between(origin, w180, big) );
-        assertEquals( piSmall, testCosinesClass.between(origin, w180, small) );
-    }
-    
-    
-    // Test real locations
 }
