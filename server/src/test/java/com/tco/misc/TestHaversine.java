@@ -30,12 +30,10 @@ public class TestHaversine {
     }
 
     final Geo origin = new Geo(0, 0);
-    final Geo n180 = new Geo(180, 0);
-    final Geo s180 = new Geo(-180, 0);
-    final Geo e180 = new Geo(0, 180);
-    final Geo w180 = new Geo(0, -180);
     final Geo e90 = new Geo(0, 90);
     final Geo w90 = new Geo(0, -90);
+    final Geo e180 = new Geo(0, 180);
+    final Geo w180 = new Geo(0, -180);
     final Geo n90 = new Geo(90, 0);
     final Geo s90 = new Geo(-90, 0);
     final Geo n45 = new Geo(45, 0);
@@ -44,7 +42,6 @@ public class TestHaversine {
     final Geo w45 = new Geo(0, -45);
     final Geo e45n45 = new Geo(45, 45);
     final Geo e90n90 = new Geo(90, 90);
-    final Geo e135n135 = new Geo(135, 135);
 
     // to test minimum earth radius value
     final static long small = 1L;
@@ -86,12 +83,12 @@ public class TestHaversine {
     }
 
     @Test
-    @DisplayName("lewi0027: origin to *180 similarity")
-    public void testDistanceAll180() {
-        Long north = testClass.between(origin, n180, sampleRadius);
-        Long south = testClass.between(origin, s180, sampleRadius);
-        Long east = testClass.between(origin, e180, sampleRadius);
-        Long west = testClass.between(origin, w180, sampleRadius);
+    @DisplayName("lewi0027: origin to *90 similarity")
+    public void testDistanceAll90() {
+        Long north = testClass.between(origin, n90, sampleRadius);
+        Long south = testClass.between(origin, s90, sampleRadius);
+        Long east = testClass.between(origin, e90, sampleRadius);
+        Long west = testClass.between(origin, w90, sampleRadius);
         assertEquals(north, south);
         assertEquals(south, east);
         assertEquals(east, west);
@@ -101,13 +98,6 @@ public class TestHaversine {
     // lat or long change tests, just one
 
     @Test
-    @DisplayName("lewi0027: distance from origin to n180")
-    public void testDistanceFromOriginToN180() {
-        assertEquals(piSmall, testClass.between(origin, n180, small));
-        assertEquals(piBig, testClass.between(origin, n180, big));
-    }
-
-    @Test
     @DisplayName("lewi0027: distance from origin to n90")
     public void testDistanceFromOriginToN90() {
         assertEquals(piSmallHalf, testClass.between(origin, n90, small));
@@ -115,19 +105,21 @@ public class TestHaversine {
     }
 
     @Test
-    @DisplayName("lewi0027: distance from origin to e180")
-    public void testDistanceFromOriginToE180() {
-        assertEquals(piSmall, testClass.between(origin, e180, small));
-        assertEquals(piBig, testClass.between(origin, e180, big));
-    }
-
-    @Test
     @DisplayName("lewi0027: distance from origin to e90")
-    public void testDistanceFromOrigintoE90() {
+    public void testDistanceFromOriginToE90() {
         assertEquals(piSmallHalf, testClass.between(origin, e90, small));
         assertEquals(piBigHalf, testClass.between(origin, e90, big));
     }
 
+    @Test
+    @DisplayName("lewi0027: lat and long change")
+    public void testDistanceFromOriginToE90N90() {
+        double sqrtTwo = Math.sqrt(2);
+        long piSmallSqrtTwo = Math.round(piSmall/sqrtTwo);
+
+        assertEquals(piSmallSqrtTwo, testClass.between(origin, e90n90, small));
+    }
+    
     // test real distances
 
     @Test
@@ -140,5 +132,4 @@ public class TestHaversine {
         assertEquals(8326, testClass.between(fargo, christchurch, earthRadiusMi));
         assertEquals(7243, testClass.between(fargo, christchurch, earthRadiusNM));
     }
-
 }

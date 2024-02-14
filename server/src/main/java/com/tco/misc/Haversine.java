@@ -14,7 +14,7 @@ public class Haversine implements GreatCircleDistance{
         Double latitudeDifference = latitudeTo - latitudeFrom;
         Double longitudeDifference = longitudeTo - longitudeFrom;
 
-        Double firstEquation = haversineMethod(latitudeDifference) + haversineMethod(longitudeDifference) * cosineLatitudes(latitudeFrom, latitudeTo);
+        Double firstEquation = haversineMethod(latitudeDifference) + haversineMethod(longitudeDifference) * (cosineLatitudes(latitudeFrom, latitudeTo) - haversineMethod(latitudeDifference));
         Double finalEquation = 2 * Math.asin(Math.sqrt(firstEquation));
 
         double distance = finalEquation * earthRadius;
@@ -22,12 +22,11 @@ public class Haversine implements GreatCircleDistance{
         return Math.round(distance);
     }
 
-    protected Double haversineMethod (Double differenceInDistance) {
-        return (Math.pow(Math.sin(differenceInDistance/2), 2));
+    protected Double haversineMethod (Double haversineDistance) {
+        return (Math.pow(Math.sin(haversineDistance/2), 2));
     }
 
     protected Double cosineLatitudes(Double latitudeOne, Double latitudeTwo) {
-        return (Math.cos(latitudeOne) * Math.cos(latitudeTwo));
+        return Math.pow(Math.cos((latitudeOne + latitudeTwo)/2), 2);
     }
-
 }
