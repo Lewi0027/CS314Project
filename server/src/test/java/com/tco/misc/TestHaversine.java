@@ -128,6 +128,15 @@ public class TestHaversine {
         assertEquals(piBigHalf, testClass.between(origin, e90, big));
     }
 
+    @Test
+    @DisplayName("lewi0027: lat and long change")
+    public void testDistanceFromOriginToE90N90() {
+        double sqrtTwo = Math.sqrt(2);
+        long piSmallSqrtTwo = Math.round(piSmall/sqrtTwo);
+
+        assertEquals(piSmallSqrtTwo, testClass.between(origin, e90n90, small));
+    }
+    
     // test real distances
 
     @Test
