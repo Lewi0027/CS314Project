@@ -7,6 +7,345 @@
 	},
 	"item": [
 		{
+			"name": "bscheidt-distances-1-point",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f64dc93c-2c40-42a5-8e78-00b317779260",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Distances returns correct response\", () => {",
+							"    var responseBody = pm.response.json();",
+							"    ",
+							"    pm.expect(responseBody.distances).to.be.an('array').that.is.not.empty;",
+							"    pm.expect(responseBody.distances.length).to.eql(1); ",
+							"",
+							"    pm.expect(responseBody.distances[0]).to.eql(0);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "1bae048b-1cdf-4d3e-a268-5629f4c969ef",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"distances\",\n    \"places\": [{\"name\": \"place1\", \"latitude\": \"0\", \"longitude\": \"0\"}],\n    \"formula\": \"vincenty\",\n    \"earthRadius\": 1000000000000000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/distances",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"distances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bscheidt-distances-2-points",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f64dc93c-2c40-42a5-8e78-00b317779260",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Distances returns correct response\", () => {",
+							"    var responseBody = pm.response.json();",
+							"    ",
+							"    pm.expect(responseBody.distances).to.be.an('array').that.is.not.empty;",
+							"    pm.expect(responseBody.distances.length).to.eql(2); ",
+							"",
+							"    pm.expect(responseBody.distances[0]).to.eql(3141592653589793);",
+							"    pm.expect(responseBody.distances[1]).to.eql(3141592653589793);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "c1751c7d-8adc-441e-b34d-a93f6e8fe419",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"distances\",\n    \"places\": [{\"name\": \"place1\", \"latitude\": \"0\", \"longitude\": \"0\"},\n               {\"name\": \"place2\", \"latitude\": \"0\", \"longitude\": \"180\"}],\n    \"formula\": \"vincenty\",\n    \"earthRadius\": 1000000000000000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/distances",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"distances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bscheidt-distances-null-places",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f64dc93c-2c40-42a5-8e78-00b317779260",
+						"exec": [
+							"pm.test(\"Response is HTTP400 status\", () => {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "7bc17e90-10c9-4dd8-9e8f-9237a4ee4bec",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"distances\",\n    \"places\": null,\n    \"formula\": \"vincenty\",\n    \"earthRadius\": 1000000000000000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/distances",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"distances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bscheidt-distances-null-earth-radius",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f64dc93c-2c40-42a5-8e78-00b317779260",
+						"exec": [
+							"pm.test(\"Response is HTTP400 status\", () => {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "cb132c4c-75d1-436d-b8b2-3d16631e5a5f",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"distances\",\n    \"places\": [],\n    \"formula\": \"vincenty\",\n    \"earthRadius\": null\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/distances",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"distances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bscheidt-distances-0-earth-radius",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f64dc93c-2c40-42a5-8e78-00b317779260",
+						"exec": [
+							"pm.test(\"Response is HTTP400 status\", () => {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "5b11ed7a-c672-4546-a797-fee8d38136ca",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"distances\",\n    \"places\": [],\n    \"formula\": \"vincenty\",\n    \"earthRadius\": 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/distances",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"distances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bscheidt-distances-OOB-latitude",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f64dc93c-2c40-42a5-8e78-00b317779260",
+						"exec": [
+							"pm.test(\"Response is HTTP400 status\", () => {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "c55d594e-d673-4d49-874f-ce24f346553b",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"distances\",\n    \"places\": [{\"name\": \"place1\", \"latitude\": \"-91\", \"longitude\": \"0\"}],\n    \"formula\": \"vincenty\",\n    \"earthRadius\": 10000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/distances",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"distances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bscheidt-distances-OOB-longitude",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f64dc93c-2c40-42a5-8e78-00b317779260",
+						"exec": [
+							"pm.test(\"Response is HTTP400 status\", () => {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "218234c1-ed58-4eb1-a93a-90adab5143f0",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"distances\",\n    \"places\": [{\"name\": \"place1\", \"latitude\": \"0\", \"longitude\": \"181\"}],\n    \"formula\": \"vincenty\",\n    \"earthRadius\": 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/distances",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"distances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "base",
 			"event": [
 				{
@@ -23,7 +362,7 @@
 					}
 				}
 			],
-			"id": "c1751c7d-8adc-441e-b34d-a93f6e8fe419",
+			"id": "61dc6997-3c4f-438e-91ec-6a47dd48edeb",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
