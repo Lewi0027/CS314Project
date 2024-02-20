@@ -8,7 +8,7 @@ export function SaveTrip(tripName, tripData, format= 'json'){
         fileType = "application/vnd.google-earth.kml+xml";
         fileExtension = ".kml";
     }
-    else { //Defaults to KML
+    else { //Defaults to JSON
         fileContent = JSON.stringify(tripData);
         fileType = "application/json";
         fileExtension = ".json";
