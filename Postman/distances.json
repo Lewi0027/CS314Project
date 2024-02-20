@@ -390,6 +390,116 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "wyattg5-distances-cosines-formula",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9ad5d921-0951-4f62-a3d4-8cb65c4edf2a",
+						"exec": [
+							"pm.test(\"Response is HTTP400 status\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Cosines returns correct response\", () => {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseBody.distances).to.be.an('array').that.is.not.empty;\r",
+							"    pm.expect(responseBody.distances.length).to.eql(2); \r",
+							"\r",
+							"    pm.expect(responseBody.distances[0]).to.eql(785);\r",
+							"    pm.expect(responseBody.distances[1]).to.eql(785);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "f4ea2925-f013-48e9-8a14-400e52bce705",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"requestType\": \"distances\",\r\n    \"places\": [{\"name\": \"place1\", \"latitude\": \"45\", \"longitude\": \"90\"},\r\n               {\"name\": \"place2\", \"latitude\": \"90\", \"longitude\": \"45\"}],\r\n    \"formula\": \"cosines\",\r\n    \"earthRadius\": 1000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/distances",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"distances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "wyattg5-distances-haversine-formula",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "82cad498-3b8c-4433-b61b-a1ae90991a9a",
+						"exec": [
+							"pm.test(\"Response is HTTP400 status\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Cosines returns correct response\", () => {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseBody.distances).to.be.an('array').that.is.not.empty;\r",
+							"    pm.expect(responseBody.distances.length).to.eql(2); \r",
+							"\r",
+							"    pm.expect(responseBody.distances[0]).to.eql(785);\r",
+							"    pm.expect(responseBody.distances[1]).to.eql(785);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "7d925a27-7c99-4238-a79e-091227fa8699",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"requestType\": \"distances\",\r\n    \"places\": [{\"name\": \"place1\", \"latitude\": \"45\", \"longitude\": \"90\"},\r\n               {\"name\": \"place2\", \"latitude\": \"90\", \"longitude\": \"45\"}],\r\n    \"formula\": \"cosines\",\r\n    \"earthRadius\": 1000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/distances",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"distances"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
