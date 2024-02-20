@@ -447,6 +447,51 @@
 			"response": []
 		},
 		{
+			"name": "lewi0027-distances-negative-earth-radius",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b116389b-9fe7-47da-8f05-6b2704c517aa",
+						"exec": [
+							"pm.test(\"Response is HTTP400 status\", () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "81e409bb-9887-4331-baa3-7d3454f68b20",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"requestType\": \"distances\",\r\n    \"places\": [{\"name\": \"location1\", \"latitude\": \"0\", \"longitude\": \"0\"}],\r\n    \"formula\": \"vincenty\",\r\n    \"earthRadius\":-6371\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/distances",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"distances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "wyattg5-distances-haversine-formula",
 			"event": [
 				{
@@ -482,6 +527,63 @@
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n    \"requestType\": \"distances\",\r\n    \"places\": [{\"name\": \"place1\", \"latitude\": \"45\", \"longitude\": \"90\"},\r\n               {\"name\": \"place2\", \"latitude\": \"90\", \"longitude\": \"45\"}],\r\n    \"formula\": \"cosines\",\r\n    \"earthRadius\": 1000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/distances",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"distances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lewi0027-distances-data-types",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b116389b-9fe7-47da-8f05-6b2704c517aa",
+						"exec": [
+							"pm.test(\"Check json file data types\", () => {\r",
+							"    var responseData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(typeof responseData.requestType).to.equal('string');\r",
+							"    pm.expect(typeof responseData.formula).to.equal('string');\r",
+							"    pm.expect(typeof responseData.earthRadius).to.equal('number');\r",
+							"\r",
+							"    for (i = 0; i < responseData.places.length; i++) {\r",
+							"        pm.expect(typeof responseData.places[i].name).to.equal('string');\r",
+							"        pm.expect(typeof responseData.places[i].latitude).to.equal('string');\r",
+							"        pm.expect(typeof responseData.places[i].longitude).to.equal('string');\r",
+							"    }\r",
+							"    \r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "00f372c9-6396-4897-8cce-17a68abe9816",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"requestType\": \"distances\",\r\n    \"places\": [{\"name\": \"location1\", \"latitude\": \"0\", \"longitude\": \"0\"},\r\n                {\"name\": \"location2\", \"latitude\": \"30\", \"longitude\": \"30\"},\r\n                {\"name\": \"location1\", \"latitude\": \"60\", \"longitude\": \"60\"},\r\n                {\"name\": \"location1\", \"latitude\": \"75\", \"longitude\": \"75\"}],\r\n    \"formula\": \"vincenty\",\r\n    \"earthRadius\":6371\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
