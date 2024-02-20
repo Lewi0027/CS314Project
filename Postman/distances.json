@@ -458,7 +458,7 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"Cosines returns correct response\", () => {\r",
+							"pm.test(\"Haversine returns correct response\", () => {\r",
 							"    var responseBody = pm.response.json();\r",
 							"    \r",
 							"    pm.expect(responseBody.distances).to.be.an('array').that.is.not.empty;\r",
