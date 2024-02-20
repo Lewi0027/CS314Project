@@ -3,7 +3,6 @@ import {generateKML} from "./kmlOperations.js";
 export function SaveTrip(tripName, tripData, format= 'json'){
     let fileContent, fileType, fileExtension;
     
-    console.log(tripData);
     if (format === 'kml') {
         fileContent = generateKML(tripName, tripData);
         fileType = "application/vnd.google-earth.kml+xml";
@@ -14,7 +13,7 @@ export function SaveTrip(tripName, tripData, format= 'json'){
         fileType = "application/json";
         fileExtension = ".json";
     }
-    
+
     const file = new Blob([fileContent], { type: fileType });
     const link = document.createElement("a");
     const url = URL.createObjectURL(file);
