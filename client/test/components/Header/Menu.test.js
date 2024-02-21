@@ -53,7 +53,7 @@ describe('Menu', () => {
 
 		
 	// Need to add Save Trip test
-	test('base: Toggles Save Trip', async () => {
+	test('diegocel: Toggles Save Trip', async () => {
 		const menuToggle = screen.getByTestId('menu-toggle');
 		await waitFor(() => user.click(menuToggle));
 		const saveTripButton = screen.getByTestId("save-trip-button");
