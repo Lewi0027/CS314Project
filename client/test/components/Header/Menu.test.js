@@ -14,6 +14,7 @@ describe('Menu', () => {
 		toggleAddPlace: jest.fn(),
 		disableRemoveAll: false,
 		toggleSettings: jest.fn(),
+		toggleSaveFile: jest.fn(),
 	};
 
 	beforeEach(() => {
@@ -52,17 +53,11 @@ describe('Menu', () => {
 
 		
 	// Need to add Save Trip test
-
-	/* Commented out tests for save trip because it expects instant json save not a modal
-
-	test('base: Saves Trip', async () => {
-		global.URL.createObjectURL = jest.fn();
-
+	test('diegocel: Toggles Save Trip', async () => {
 		const menuToggle = screen.getByTestId('menu-toggle');
 		await waitFor(() => user.click(menuToggle));
-		const saveTripButton = screen.getByTestId('save-trip-button');
+		const saveTripButton = screen.getByTestId("save-trip-button");
 		user.click(saveTripButton);
-		expect(global.URL.createObjectURL).toBeCalledTimes(1);
+		expect(menuProps.toggleSaveFile).toHaveBeenCalled();
 	});
-	*/
 });
