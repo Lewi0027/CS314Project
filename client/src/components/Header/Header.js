@@ -5,6 +5,7 @@ import Menu from './Menu';
 import { useToggle } from '@hooks/useToggle';
 import AddPlace from './AddPlace';
 import LoadFile from './LoadFile'
+import SaveFile from './SaveFile'
 import Settings from './Settings';
 import { IoMdClose } from 'react-icons/io';
 
@@ -12,13 +13,14 @@ export default function Header(props) {
 	const [showAddPlace, toggleAddPlace] = useToggle(false);
 	const [showSettings, toggleSettings] = useToggle(false);
 	const [showLoadFile, toggleLoadFile] = useToggle(false);
+	const [showSaveFile, toggleSaveFile] = useToggle(false);
 
 	const toggles = {
-		toggleAddPlace, toggleSettings, toggleLoadFile, toggleAbout: props.toggleAbout,
+		toggleAddPlace, toggleSettings, toggleLoadFile, toggleSaveFile, toggleAbout: props.toggleAbout,
 	}
 
 	const shows = {
-		showAddPlace, showSettings, showLoadFile, showAbout: props.showAbout
+		showAddPlace, showSettings, showLoadFile, showSaveFile, showAbout: props.showAbout
 	}
 	
 	return (
@@ -78,6 +80,9 @@ function AppModals(props) {
 				{...props}
 			/>
 			<LoadFile
+				{...props}
+			/>
+			<SaveFile
 				{...props}
 			/>
 		</>
