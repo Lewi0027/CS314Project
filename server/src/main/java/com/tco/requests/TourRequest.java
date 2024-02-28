@@ -10,11 +10,11 @@ public class TourRequest extends Request{
     private Places places;
     private final Double earthRadius;
     private final String formula;
-    private final Integer response;
+    private final Double response;
 
     private final static transient Logger log = LoggerFactory.getLogger(DistancesRequest.class);
 
-    public TourRequest(Places places, Double earthRadius, String formula, Integer response) {
+    public TourRequest(Places places, Double earthRadius, String formula, Double response) {
         this.places = places;
         this.earthRadius = earthRadius;
         this.formula = formula;
