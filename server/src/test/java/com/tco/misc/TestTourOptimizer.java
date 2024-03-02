@@ -25,6 +25,11 @@ public class TestTourOptimizer {
     final Place w45 = new Place("0", "-45");
     final Place e45n45 = new Place("45", "45");
     final Place e90n90 = new Place("90", "90");
+    final Place penta1 = new Place("-14.25", "-49.5");
+    final Place penta2 = new Place("49.5", "31.25");
+    final Place penta3 = new Place("-9", "15");
+    final Place penta4 = new Place("32", "-67.75");
+    final Place penta5 = new Place("35", "21.5");
 
     // to test minimum earth radius value
     final static Double small = 1.0;
@@ -158,5 +163,40 @@ public class TestTourOptimizer {
         int[] expectedArray = {3, 2, 1, 0}; // Expected nearest neighbors from starting point 0
 
         assertArrayEquals(expectedArray, optimizer.nearestNeighbor(3));
+    }
+
+    @Test
+    @DisplayName("lewi0027: testing nearestNeighbor using places.add()")
+    public void testNearestNeighborUsingPlaces() {
+        optimizer = new OneOpt();
+        places.add(penta1);
+        places.add(penta2);
+        places.add(penta3);
+        places.add(penta4);
+        places.add(penta5);
+
+        optimizer.fillDistanceMatrix(10.0, "vincenty", places);
+
+        int[] expectedArray = {0, 3, 1, 4, 2};
+        int[] testArray = {0, 0, 0, 0, 0};
+
+        optimizer.setTour(testArray);
+
+        assertArrayEquals(expectedArray, optimizer.nearestNeighbor(0));
+    }
+
+    @Test
+    @DisplayName("lewi0027: testing nearestNeighbor with only one location")
+    public void testNearestNeighborOneLocation() {
+        optimizer = new OneOpt();
+        places.add(origin);
+
+        optimizer.fillDistanceMatrix(10.0, "vincenty", places);
+
+        int[] expectedArray = {0};
+
+        optimizer.setTour(expectedArray);
+
+        assertArrayEquals(expectedArray, optimizer.nearestNeighbor(0));
     }
 }
