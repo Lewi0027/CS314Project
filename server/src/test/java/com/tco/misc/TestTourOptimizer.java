@@ -159,4 +159,39 @@ public class TestTourOptimizer {
 
         assertArrayEquals(expectedArray, optimizer.nearestNeighbor(3));
     }
+
+    @Test
+    @DisplayName("lewi0027: testing nearestNeighbor using places.add()")
+    public void testNearestNeighborUsingPlaces() {
+        optimizer = new OneOpt();
+        places.add(penta1);
+        places.add(penta2);
+        places.add(penta3);
+        places.add(penta4);
+        places.add(penta5);
+
+        optimizer.fillDistanceMatrix(10.0, "vincenty", places);
+
+        int[] expectedArray = {0, 3, 1, 4, 2};
+        int[] testArray = {0, 0, 0, 0, 0};
+
+        optimizer.setTour(testArray);
+
+        assertArrayEquals(expectedArray, optimizer.nearestNeighbor(0));
+    }
+
+    @Test
+    @DisplayName("lewi0027: testing nearestNeighbor with only one location")
+    public void testNearestNeighborOneLocation() {
+        optimizer = new OneOpt();
+        places.add(origin);
+
+        optimizer.fillDistanceMatrix(10.0, "vincenty", places);
+
+        int[] expectedArray = {0};
+
+        optimizer.setTour(expectedArray);
+
+        assertArrayEquals(expectedArray, optimizer.nearestNeighbor(0));
+    }
 }
