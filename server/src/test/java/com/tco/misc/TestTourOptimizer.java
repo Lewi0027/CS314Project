@@ -199,4 +199,57 @@ public class TestTourOptimizer {
 
         assertArrayEquals(expectedArray, optimizer.nearestNeighbor(0));
     }
+
+    @Test
+    @DisplayName("bscheidt: test 0 length tour total distance")
+    public void testTotalDistanceZeroLength() {
+        optimizer = new OneOpt();
+        int[] tour = new int[0];
+        optimizer.fillDistanceMatrix(10.0, "vincenty", places);
+        optimizer.setTour(tour);
+
+        assertEquals(0l, optimizer.totalDistanceOfTour());
+    }
+
+    @Test
+    @DisplayName("bscheidt: test 1 length tour total distance")
+    public void testTotalDistanceOneLength() {
+        optimizer = new OneOpt();
+        int[] tour = new int[]{0};
+        places.add(e180);
+        optimizer.fillDistanceMatrix(1000.0, "vincenty", places);
+        optimizer.setTour(tour);
+
+        assertEquals(0l, optimizer.totalDistanceOfTour());
+    }
+
+    @Test
+    @DisplayName("bscheidt: test 2 length tour total distance")
+    public void testTotalDistanceTwoLength() {
+        optimizer = new OneOpt();
+        int[] tour = new int[]{0, 1};
+        places.add(e180);
+        places.add(origin);
+        optimizer.fillDistanceMatrix(big, "vincenty", places);
+        optimizer.setTour(tour);
+
+        assertEquals(piBig * 2, optimizer.totalDistanceOfTour());
+    }
+
+    @Test
+    @DisplayName("bscheidt: test 5 length tour total distance")
+    public void testTotalDistanceFiveLength() {
+        optimizer = new OneOpt();
+        int[] tour = new int[]{0, 1, 2, 3, 4};
+        places.add(origin);
+        places.add(e180);
+        places.add(n90);
+        places.add(s90);
+        places.add(w180);
+        optimizer.fillDistanceMatrix(big, "vincenty", places);
+        optimizer.setTour(tour);
+        long totalDistance = piBig + piBigHalf + piBig + piBigHalf + piBig;
+
+        assertEquals(totalDistance, optimizer.totalDistanceOfTour());
+    }
 }
