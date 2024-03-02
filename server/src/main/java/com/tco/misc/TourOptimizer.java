@@ -10,7 +10,28 @@ public abstract class TourOptimizer {
 
     public Places construct(Places places, Double earthRadius, String formula, Double response){
         fillDistanceMatrix(earthRadius, formula, places);
+        fillTour(places.size());
+        calculateShortestTour();
         return places;
+    }
+    
+    protected void calculateShortestTour() {
+        long shortestTourDistance = Long.MAX_VALUE;
+        long tourDistance = 0l;
+        int[] bestTourSoFar = this.tour.clone();
+        int tourLength = this.tour.length;
+
+        for(int i = 0; i < tourLength; i++) {
+            this.tour = nearestNeighbor(i);
+            improve();
+            tourDistance = totalDistanceOfTour();
+            if(tourDistance < shortestTourDistance) {
+                shortestTourDistance = tourDistance;
+                bestTourSoFar = this.tour.clone();
+            }
+        }
+
+        this.tour = bestTourSoFar;
     }
 
     protected long totalDistanceOfTour() {
@@ -26,6 +47,10 @@ public abstract class TourOptimizer {
         }
 
         return tourDistances.total();
+    }
+
+    protected void fillTour(int tourSize) {
+        this.tour = new int[tourSize];
     }
 
     protected void fillDistanceMatrix(Double earthRadius, String formula, Places places) {
@@ -83,5 +108,9 @@ public abstract class TourOptimizer {
     }
     protected void setTour(int[] array) {
         this.tour = array;
+    }
+
+    protected int[] getTour() {
+        return this.tour;
     }
 }

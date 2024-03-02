@@ -204,7 +204,7 @@ public class TestTourOptimizer {
     @DisplayName("bscheidt: test 0 length tour total distance")
     public void testTotalDistanceZeroLength() {
         optimizer = new OneOpt();
-        int[] tour = new int[0];
+        int[] tour = {};
         optimizer.fillDistanceMatrix(10.0, "vincenty", places);
         optimizer.setTour(tour);
 
@@ -251,5 +251,116 @@ public class TestTourOptimizer {
         long totalDistance = piBig + piBigHalf + piBig + piBigHalf + piBig;
 
         assertEquals(totalDistance, optimizer.totalDistanceOfTour());
+    }
+
+    @Test
+    @DisplayName("bscheidt: find shortest tour for 0 locations")
+    public void testShortestTourZeroPlaces() {
+        optimizer = new OneOpt();
+        long[][] distanceMatrix = {{}};
+        optimizer.setDistanceMatrix(distanceMatrix);
+        optimizer.fillTour(places.size());
+
+        optimizer.calculateShortestTour();
+
+        int[] expectedTour = {};
+        long expectedDistance = 0l;
+
+        assertArrayEquals(expectedTour, optimizer.getTour());
+        assertEquals(expectedDistance, optimizer.totalDistanceOfTour());
+
+    }
+
+    @Test
+    @DisplayName("bscheidt: find shortest tour for 1 location")
+    public void testShortestTourOnePlace() {
+        optimizer = new OneOpt();
+        places.add(origin);
+        long[][] distanceMatrix = {{0}};
+        optimizer.setDistanceMatrix(distanceMatrix);
+        optimizer.fillTour(places.size());
+
+        optimizer.calculateShortestTour();
+
+        int[] expectedTour = {0};
+        long expectedDistance = 0l;
+
+        assertArrayEquals(expectedTour, optimizer.getTour());
+        assertEquals(expectedDistance, optimizer.totalDistanceOfTour());
+
+    }
+
+    @Test
+    @DisplayName("bscheidt: find shortest tour for 2 locations")
+    public void testShortestTourTwoPlaces() {
+        optimizer = new OneOpt();
+        places.add(origin);
+        places.add(e180);
+        long[][] distanceMatrix = {
+            {0, piBig},
+            {piBig, 0}
+        };
+        optimizer.setDistanceMatrix(distanceMatrix);
+        optimizer.fillTour(places.size());
+
+        optimizer.calculateShortestTour();
+
+        int[] expectedTour = {0, 1};
+        long expectedDistance = piBig * 2;
+
+        assertArrayEquals(expectedTour, optimizer.getTour());
+        assertEquals(expectedDistance, optimizer.totalDistanceOfTour());
+
+    }
+
+    @Test
+    @DisplayName("bscheidt: find shortest tour for 3 locations")
+    public void testShortestTourThreePlaces() {
+        optimizer = new OneOpt();
+        places.add(origin);
+        places.add(e180);
+        places.add(n90);
+        long[][] distanceMatrix = {
+            {0, piBig, piBigHalf},
+            {piBig, 0, piBigHalf},
+            {piBigHalf, piBigHalf, 0}
+        };
+        optimizer.setDistanceMatrix(distanceMatrix);
+        optimizer.fillTour(places.size());
+
+        optimizer.calculateShortestTour();
+
+        int[] expectedTour = {0, 2, 1};
+        long expectedDistance = piBig + piBigHalf + piBigHalf;
+
+        assertArrayEquals(expectedTour, optimizer.getTour());
+        assertEquals(expectedDistance, optimizer.totalDistanceOfTour());
+
+    }
+
+    @Test
+    @DisplayName("bscheidt: shortest tour starts at different location")
+    public void testShortestTourDifferentStartPoint() {
+        optimizer = new OneOpt();
+        // E <--------50--------> C <-1-> B <--2--> A <----10----> D
+        
+        long[][] distanceMatrix = {
+            {0, 2, 3, 10, 53},
+            {2, 0, 1, 12, 51},
+            {3, 1, 0, 13, 50},
+            {10, 12, 13, 0, 63},
+            {53, 51, 50, 63, 0}
+        };
+        optimizer.setDistanceMatrix(distanceMatrix);
+        optimizer.fillTour(5);
+
+        optimizer.calculateShortestTour();
+
+        int[] expectedTour = {2, 1, 0, 3, 4};
+        long expectedDistance = 126L;
+
+        assertArrayEquals(expectedTour, optimizer.getTour());
+        assertEquals(expectedDistance, optimizer.totalDistanceOfTour());
+
     }
 }
