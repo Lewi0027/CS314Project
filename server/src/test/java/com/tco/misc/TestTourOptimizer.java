@@ -119,4 +119,44 @@ public class TestTourOptimizer {
 
         assertArrayEquals(testMatrix, optimizer.getDistanceMatrix());
     }
+
+    @Test
+    @DisplayName("lewi0027: testing default returns for nearestNeighbor")
+    public void testNearestNeighborWithSimpleArray() {
+        long[][] testMatrix = {
+            {0, 10, 20, 30},
+            {10, 0, 15, 25},
+            {20, 15, 0, 10},
+            {30, 25, 10, 0}
+        };
+        int[] testArray = {0, 0, 0, 0};
+
+        optimizer = new OneOpt();
+        optimizer.setDistanceMatrix(testMatrix);
+        optimizer.setTour(testArray);
+
+        int[] expectedArray = {0, 1, 2, 3}; // Expected nearest neighbors from starting point 0
+
+        assertArrayEquals(expectedArray, optimizer.nearestNeighbor(0));
+    }
+
+    @Test
+    @DisplayName("lewi0027: testing default returns for nearestNeighbor")
+    public void testNearestNeighborWithSimpleArrayReverse() {
+        long[][] testMatrix = {
+            {0, 10, 20, 30},
+            {10, 0, 15, 25},
+            {20, 15, 0, 10},
+            {30, 25, 10, 0}
+        };
+        int[] testArray = {0, 0, 0, 0};
+
+        optimizer = new OneOpt();
+        optimizer.setDistanceMatrix(testMatrix);
+        optimizer.setTour(testArray);
+
+        int[] expectedArray = {3, 2, 1, 0}; // Expected nearest neighbors from starting point 0
+
+        assertArrayEquals(expectedArray, optimizer.nearestNeighbor(3));
+    }
 }
