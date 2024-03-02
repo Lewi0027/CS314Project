@@ -25,6 +25,11 @@ public class TestTourOptimizer {
     final Place w45 = new Place("0", "-45");
     final Place e45n45 = new Place("45", "45");
     final Place e90n90 = new Place("90", "90");
+    final Place penta1 = new Place("-14.25", "-49.5");
+    final Place penta2 = new Place("49.5", "31.25");
+    final Place penta3 = new Place("-9", "15");
+    final Place penta4 = new Place("32", "-67.75");
+    final Place penta5 = new Place("35", "21.5");
 
     // to test minimum earth radius value
     final static Double small = 1.0;
