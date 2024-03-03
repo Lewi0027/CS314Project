@@ -363,4 +363,98 @@ public class TestTourOptimizer {
         assertEquals(expectedDistance, optimizer.totalDistanceOfTour());
 
     }
+
+    @Test
+    @DisplayName("lewi0027: rearrangePlaces 3 item test")
+    public void testRearrangePlacesWithThreeItems() {
+        optimizer = new OneOpt();
+        optimizer.setTour(new int[]{2,1,0});
+        places.add(origin);
+        places.add(e90);
+        places.add(n90);
+
+        Places rearrangedPlaces = optimizer.rearrangePlaces(places);
+
+        Places expectedPlaces = new Places();
+        expectedPlaces.add(n90);
+        expectedPlaces.add(e90);
+        expectedPlaces.add(origin);
+
+        assertEquals(expectedPlaces, rearrangedPlaces);
+    }
+
+    @Test
+    @DisplayName("lewi0027: rearrangePlaces 3 item; no change")
+    public void testRearrangePlacesWithThreeItemsNoChange() {
+        optimizer = new OneOpt();
+        optimizer.setTour(new int[]{0,1,2});
+        places.add(origin);
+        places.add(e90);
+        places.add(n90);
+
+        Places rearrangedPlaces = optimizer.rearrangePlaces(places);
+
+        Places expectedPlaces = new Places();
+        expectedPlaces.add(origin);
+        expectedPlaces.add(e90);
+        expectedPlaces.add(n90);
+
+        assertEquals(expectedPlaces, rearrangedPlaces);
+    }
+
+    @Test
+    @DisplayName("lewi0027: rearrangePlaces with one item; no change")
+    public void testRearrangePlacesWithOneItemNoChange() {
+        optimizer = new OneOpt();
+        optimizer.setTour(new int[]{0});
+        places.add(origin);
+
+        Places rearrangedPlaces = optimizer.rearrangePlaces(places);
+
+        Places expectedPlaces = new Places();
+        expectedPlaces.add(origin);
+
+        assertEquals(expectedPlaces, rearrangedPlaces);
+    }
+
+    @Test
+    @DisplayName("lewi0027: findNearestPlace four item test")
+    public void testFindNearestPlaceFourItems() {
+        optimizer = new OneOpt();
+        optimizer.setTour(new int []{0,1,2,3});
+
+        long[][] distanceMatrix = {
+            {0, 10, 20, 30},
+            {10, 0, 15, 25},
+            {20, 15, 0, 10},
+            {30, 25, 10, 0}
+        };
+        
+        optimizer.setDistanceMatrix(distanceMatrix);
+        boolean[] visited = {true, false, false, false};
+        int currentPlace = 0;
+
+        int nearestPlace = optimizer.findNearestPlace(visited, currentPlace);
+
+        assertEquals(1, nearestPlace);
+    }
+
+    @Test
+    @DisplayName("lewi0027: findNearestPlace one item test; return -1")
+    public void testFindNearestPlaceOneItem() {
+        optimizer = new OneOpt();
+        optimizer.setTour(new int []{0});
+
+        long[][] distanceMatrix = {
+            {0}
+        };
+        
+        optimizer.setDistanceMatrix(distanceMatrix);
+        boolean[] visited = {true};
+        int currentPlace = 0;
+
+        int nearestPlace = optimizer.findNearestPlace(visited, currentPlace);
+
+        assertEquals(-1, nearestPlace);
+    }
 }
