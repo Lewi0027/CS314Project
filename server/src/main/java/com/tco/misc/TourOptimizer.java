@@ -1,6 +1,7 @@
 package com.tco.misc;
 
 import com.tco.requests.Places;
+import com.tco.requests.Place;
 import com.tco.requests.Distances;
 
 public abstract class TourOptimizer {
@@ -12,9 +13,23 @@ public abstract class TourOptimizer {
         fillDistanceMatrix(earthRadius, formula, places);
         fillTour(places.size());
         calculateShortestTour();
+        places = rearrangePlaces(places);
+
         return places;
     }
     
+    protected Places rearrangePlaces(Places places) {
+        int tourLength = this.tour.length;
+        Places modifiedPlaces = new Places();
+        
+        for (int i = 0; i < tourLength; i++) {
+            Place placeToAdd = places.get(tour[i]);
+            modifiedPlaces.add(placeToAdd);
+        }
+
+        return modifiedPlaces;
+    }
+
     protected void calculateShortestTour() {
         long shortestTourDistance = Long.MAX_VALUE;
         long tourDistance = 0l;
@@ -103,9 +118,11 @@ public abstract class TourOptimizer {
     protected long[][] getDistanceMatrix() {
         return this.distanceMatrix;
     }
+    
     protected void setDistanceMatrix(long[][] matrix) {
         this.distanceMatrix = matrix;
     }
+
     protected void setTour(int[] array) {
         this.tour = array;
     }
