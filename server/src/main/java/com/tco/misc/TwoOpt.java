@@ -18,10 +18,17 @@ public class TwoOpt extends TourOptimizer{
             }
         }
     }
+    
     private boolean isImproved(int[] tour, int i, int k){
-        //calculate if new leg distance swapping is shorter than current leg distance
-        //return (newLeg < oldLeg);
-        return true;
+        long newLegStart = distanceMatrix[i][k];
+        long newLegEnd = distanceMatrix[i+1][k+1];
+        long oldLegStart = distanceMatrix[i][i+1];
+        long oldLegEnd = distanceMatrix[k][k+1];
+
+        long newDistance = newLegStart + newLegEnd;
+        long oldDistance = oldLegStart + oldLegEnd;
+        
+        return newDistance < oldDistance;
     }
 
     private void swapIndex(int[] tour, int i1, int k){
