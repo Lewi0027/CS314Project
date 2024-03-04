@@ -7,7 +7,7 @@ import com.tco.requests.Distances;
 public abstract class TourOptimizer {
 
     private long[][] distanceMatrix;
-    private int[] tour;
+    protected int[] tour;
 
     public Places construct(Places places, Double earthRadius, String formula, Double response){
         fillDistanceMatrix(earthRadius, formula, places);
