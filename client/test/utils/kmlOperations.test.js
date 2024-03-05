@@ -82,6 +82,24 @@ describe('generateKML', () => {
         expect(result).toContain('A sample tour that includes 0 places.');
     });
 
+    test('bscheidt: handles null tripData', () => {
+        const tripName = 'Invalid Trip';
+        const tripData = null; // No trip data
+
+        const result = generateKML(tripName, tripData);
+        expect(result).not.toContain(tripName);
+        expect(result).not.toContain('A sample tour that includes 0 places.');
+    });
+
+    test('bscheidt: handles null tripName', () => {
+        const tripName = null; // null trip name
+        const tripData = { places: [] };
+
+        const result = generateKML(tripName, tripData);
+        expect(result).not.toContain(tripName);
+        expect(result).not.toContain('A sample tour that includes 0 places.');
+    });
+
     test('bscheidt: handles places with missing properties gracefully', () => {
         const tripName = 'Incomplete Places Trip';
         const tripData = {

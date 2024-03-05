@@ -46,6 +46,26 @@ describe('SaveTrip', () =>{
         expect(global.window.URL.revokeObjectURL).toHaveBeenCalledWith(downloadURL);
     });
 
+    test('bscheidt: invalid format', () => {
+        const tripName = 'default test trip';
+        const fileText = '{"destination": ""}';
+        const downloadURL = 'mocked-URL';
+        const format = "test"
+
+        global.URL.createObjectURL.mockReturnValue(downloadURL);
+
+        SaveTrip(tripName, fileText, format);
+
+        expect(global.document.createElement).not.toHaveBeenCalledWith('a');
+        expect(global.URL.createObjectURL).not.toHaveBeenCalledWith(expect.any(Blob));
+        expect(global.document.body.appendChild).not.toHaveBeenCalledWith(expect.objectContaining({
+            href: expect.any(String),
+            download: expect.any(String),
+        }));
+        expect(global.window.URL.revokeObjectURL).not.toHaveBeenCalledWith(downloadURL);
+
+    });
+
     test('ajlei: default file with one place', ()=>{
         const tripName = 'default test trip';
         const fileText = '{"places":[{"name":"Colorado State University","streetAddress":"South College Avenue","latitude":"40.57474577527911","longitude":"-105.08438232095821","municipality":"Fort Collins","region":"Colorado","country":"United States","postcode":"80524","defaultDisplayName":"Colorado State University"}]}';
