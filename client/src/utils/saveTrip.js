@@ -2,6 +2,8 @@ import {generateKML} from "./kmlOperations.js";
 
 export function SaveTrip(tripName, tripData, format= 'json'){
     let fileContent, fileType, fileExtension;
+
+    if(format !== "json" && format !== "kml") return;
     
     if (format === 'kml') {
         fileContent = generateKML(tripName, tripData);

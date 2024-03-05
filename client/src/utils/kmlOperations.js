@@ -1,4 +1,8 @@
 export function generateKML(tripName, tripData) {
+  if (!tripData || !tripName) return `<?xml version="1.0" encoding="UTF - 8"?>
+    < kml xmlns = "http://www.opengis.net/kml/2.2" >
+      <Document></Document>
+    </kml>`
   let description = `A sample tour that includes ${tripData.places?.length || 0} places.`
   let kml = `<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
