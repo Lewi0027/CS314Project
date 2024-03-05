@@ -13,8 +13,8 @@ public class TwoOpt extends TourOptimizer{
         while (improvement) {
             improvement = false;
             for(int i = 0; i <= route.length - 3; i++){
-                for(int k = 2; k <= route.length - 1; k++){
-                    if(isImproved(tour, i, k)){
+                for(int k = i + 2; k <= route.length - 1; k++){
+                    if(isImproved(route, i, k)){
                         swapIndex(route, i, k);
                         improvement = true;
                     }
@@ -25,11 +25,11 @@ public class TwoOpt extends TourOptimizer{
     }
 
 
-    private boolean isImproved(int[] tour, int i, int k){
-        long newLegStart = distanceMatrix[tour[i]][tour[k]];
-        long newLegEnd = distanceMatrix[tour[i+1]][tour[k+1]];
-        long oldLegStart = distanceMatrix[tour[i]][tour[i+1]];
-        long oldLegEnd = distanceMatrix[tour[k]][tour[k+1]];
+    private boolean isImproved(int[] route, int i, int k){
+        long newLegStart = distanceMatrix[route[i]][route[k]];
+        long newLegEnd = distanceMatrix[route[i+1]][route[k+1]];
+        long oldLegStart = distanceMatrix[route[i]][route[i+1]];
+        long oldLegEnd = distanceMatrix[route[k]][route[k+1]];
 
         long newDistance = newLegStart + newLegEnd;
         long oldDistance = oldLegStart + oldLegEnd;
