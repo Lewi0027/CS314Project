@@ -14,9 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 public class TestTwoOpt {
     private TwoOpt optimizer2;
     TourOptimizer optimizer;
+    TourOptimizer optimizerCity;
     Places places;
     Places cities;
     long[][] distanceMatrix;
+    long[][] distanceMatrixCity;
     Place one = new Place("35.26804693351555", "-106.78710937500001");
     Place two = new Place("35.37561413174875", "-99.71191406250001");
     Place three = new Place("40.36747374615593", "-94.13085937500001");
@@ -36,13 +38,17 @@ public class TestTwoOpt {
     Place ottowa = new Place("45.39328618414052", "-75.71777343750001");
     Place jerseyCity = new Place("40.7200087521193", "-74.04785156250001");
     Place memphis = new Place("35.108505710716386", "-90.02197265625");
-    
+    int FC = 0;
+    int SLC = 1;
+    int LA = 2;
+    int Ottowa = 3;
+    int JC = 4;
+    int Memphis = 5;
 
     @BeforeEach
     public void setupTestTwoOptClass() {
         optimizer2 = new TwoOpt();
         optimizer = new TwoOpt();
-        optimizerCity = new TwoOpt();
         places = new Places();
         places.add(one);
         places.add(two);
@@ -53,15 +59,16 @@ public class TestTwoOpt {
         optimizer.fillDistanceMatrix(3959.0, "vincenty", places);
         distanceMatrix = optimizer.getDistanceMatrix();
 
+        optimizerCity = new TwoOpt();
         cities = new Places();
-        places.add(fortCollins);
-        places.add(saltLakeCity);
-        places.add(ottowa);
-        places.add(losAngeles);
-        places.add(jerseyCity);
-        places.add(memphis);
-        optimizer.fillDistanceMatrix(3959.0, "vincenty", places);
-        DistanceMatrixCity = optimizer.getDistanceMatrix();
+        cities.add(fortCollins);
+        cities.add(saltLakeCity);
+        cities.add(losAngeles);
+        cities.add(ottowa);
+        cities.add(jerseyCity);
+        cities.add(memphis);
+        optimizerCity.fillDistanceMatrix(3959.0, "vincenty", cities);
+        distanceMatrixCity = optimizerCity.getDistanceMatrix();
     }
 
     // 5 places test
@@ -121,12 +128,12 @@ public class TestTwoOpt {
     }
 
     //testing cities
-    
+
     @Test
     @DisplayName("diegocel: test 6 cities")
     public void testRealLocations(){
-        optimizerCity.setTour(new int[]{fortCollins, saltLakeCity, losAngeles, ottowa, jerseyCity, memphis});
-        int testTour = {fortCollins, saltLakeCity, losAngeles, ottowa, jerseyCity, memphis};
+        optimizerCity.setTour(new int[]{FC, SLC, LA, Ottowa, JC, Memphis});
+        int[] testTour = {FC, LA, SLC, Ottowa, JC, Memphis};
 
         optimizerCity.improve();
         
@@ -136,8 +143,8 @@ public class TestTwoOpt {
     @Test
     @DisplayName("diegocel: swapping cities to compare")
     public void testRealLocations(){
-        optimizerCity.setTour(new int[]{fortCollins, ottowa, losAngeles, jerseyCity, saltLakeCity, memphis});
-        int testTour = {fortCollins, saltLakeCity, losAngeles, ottowa, jerseyCity, memphis};
+        optimizerCity.setTour(new int[]{FC, Ottowa, LA, JC, SLC, Memphis});
+        int[] testTour = {FC, SLC, LA, Memphis, JC, Ottowa};
 
         optimizerCity.improve();
         
