@@ -15,6 +15,7 @@ public class TestTwoOpt {
     private TwoOpt optimizer2;
     TourOptimizer optimizer;
     Places places;
+    Places cities;
     long[][] distanceMatrix;
     Place one = new Place("35.26804693351555", "-106.78710937500001");
     Place two = new Place("35.37561413174875", "-99.71191406250001");
@@ -28,12 +29,20 @@ public class TestTwoOpt {
     int D = 3;
     int E = 4;
     int F = 5;
+
+    Place fortCollins = new Place("40.5734", "-105.0865");
+    Place saltLakeCity = new Place("40.749971500860234", "-111.86279296875001");
+    Place losAngeles = new Place("34.018348048208104", "-118.25683593750001");
+    Place ottowa = new Place("45.39328618414052", "-75.71777343750001");
+    Place jerseyCity = new Place("40.7200087521193", "-74.04785156250001");
+    Place memphis = new Place("35.108505710716386", "-90.02197265625");
     
 
     @BeforeEach
     public void setupTestTwoOptClass() {
         optimizer2 = new TwoOpt();
         optimizer = new TwoOpt();
+        optimizerCity = new TwoOpt();
         places = new Places();
         places.add(one);
         places.add(two);
@@ -43,7 +52,16 @@ public class TestTwoOpt {
         places.add(six);
         optimizer.fillDistanceMatrix(3959.0, "vincenty", places);
         distanceMatrix = optimizer.getDistanceMatrix();
-        
+
+        cities = new Places();
+        places.add(fortCollins);
+        places.add(saltLakeCity);
+        places.add(ottowa);
+        places.add(losAngeles);
+        places.add(jerseyCity);
+        places.add(memphis);
+        optimizer.fillDistanceMatrix(3959.0, "vincenty", places);
+        DistanceMatrixCity = optimizer.getDistanceMatrix();
     }
 
     // 5 places test
@@ -100,5 +118,29 @@ public class TestTwoOpt {
         optimizer.improve();
 
         assertArrayEquals(testTour, optimizer.getTour());
+    }
+
+    //testing cities
+    
+    @Test
+    @DisplayName("diegocel: test 6 cities")
+    public void testRealLocations(){
+        optimizerCity.setTour(new int[]{fortCollins, saltLakeCity, losAngeles, ottowa, jerseyCity, memphis});
+        int testTour = {fortCollins, saltLakeCity, losAngeles, ottowa, jerseyCity, memphis};
+
+        optimizerCity.improve();
+        
+        assertArrayEquals(testTour, optimizerCity.getTour());
+    }
+
+    @Test
+    @DisplayName("diegocel: swapping cities to compare")
+    public void testRealLocations(){
+        optimizerCity.setTour(new int[]{fortCollins, ottowa, losAngeles, jerseyCity, saltLakeCity, memphis});
+        int testTour = {fortCollins, saltLakeCity, losAngeles, ottowa, jerseyCity, memphis};
+
+        optimizerCity.improve();
+        
+        assertArrayEquals(testTour, optimizerCity.getTour());
     }
 }
