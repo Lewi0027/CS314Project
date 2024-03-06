@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class TwoOpt extends TourOptimizer{
 
-    private int[] route;
+    protected int[] route;
     
     @Override
     public void improve() {
@@ -17,7 +17,7 @@ public class TwoOpt extends TourOptimizer{
             improvement = false;
             for(int i = 0; i <= route.length - 4; i++){
                 for(int k = i + 2; k <= route.length - 2; k++){
-                    if(isImproved(route, i, k)){
+                    if(isImproved(i, k)){
                         swapIndex(i + 1, k);
                         improvement = true;
                     }
@@ -27,7 +27,7 @@ public class TwoOpt extends TourOptimizer{
         this.tour = Arrays.copyOf(route, route.length - 1);
     }
 
-    private boolean isImproved(int[] route, int i, int k){
+    protected boolean isImproved(int i, int k){
         long newLegStart = distanceMatrix[route[i]][route[k]];
         long newLegEnd = distanceMatrix[route[i+1]][route[k+1]];
         long oldLegStart = distanceMatrix[route[i]][route[i+1]];
@@ -38,7 +38,7 @@ public class TwoOpt extends TourOptimizer{
         return newDistance < oldDistance;
     }
 
-    private void swapIndex(int i1, int k){
+    protected void swapIndex(int i1, int k){
         //Reverse the places in the tour without making new data structure
         while(i1 < k) {
             int temp = route[i1];
