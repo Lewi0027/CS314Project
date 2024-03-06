@@ -142,7 +142,7 @@ public class TestTwoOpt {
 
     @Test
     @DisplayName("diegocel: swapping cities to compare")
-    public void testRealLocations(){
+    public void testSwapRealLocations(){
         optimizerCity.setTour(new int[]{FC, Ottowa, LA, JC, SLC, Memphis});
         int[] testTour = {FC, SLC, LA, Memphis, JC, Ottowa};
 
