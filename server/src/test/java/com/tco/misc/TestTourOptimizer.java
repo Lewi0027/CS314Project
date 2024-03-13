@@ -330,7 +330,7 @@ public class TestTourOptimizer {
 
         optimizer.calculateShortestTour();
 
-        int[] expectedTour = {0, 2, 1};
+        int[] expectedTour = {0, 1, 2};
         long expectedDistance = piBig + piBigHalf + piBigHalf;
 
         assertArrayEquals(expectedTour, optimizer.getTour());

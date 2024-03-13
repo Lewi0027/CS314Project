@@ -13,9 +13,36 @@ public abstract class TourOptimizer {
         fillDistanceMatrix(earthRadius, formula, places);
         fillTour(places.size());
         calculateShortestTour();
+        rotateTour();
         places = rearrangePlaces(places);
 
         return places;
+    }
+
+    protected void rotateTour() {
+        int startIndex = findStartIndex();
+        if (startIndex == 0) return;
+
+        int[] rotatedTour = new int[tour.length];
+
+        // Copy the part from startIndex to the end of tour to the beginning of rotatedTour
+        System.arraycopy(tour, startIndex, rotatedTour, 0, tour.length - startIndex);
+
+        // Copy the part from 0 to startIndex of tour to the end of rotatedTour
+        System.arraycopy(tour, 0, rotatedTour, tour.length - startIndex, startIndex);
+
+        this.tour = rotatedTour;
+    }
+
+    protected int findStartIndex() {
+        int start = 0;
+        for(int i = 0; i < tour.length; i++) {
+            if(tour[i] == 0) {
+                start = i;
+                break;
+            }
+        }
+        return start;
     }
     
     protected Places rearrangePlaces(Places places) {
@@ -31,10 +58,11 @@ public abstract class TourOptimizer {
     }
 
     protected void calculateShortestTour() {
-        long shortestTourDistance = Long.MAX_VALUE;
+        long shortestTourDistance = totalDistanceOfTour();
         long tourDistance = 0l;
         int[] bestTourSoFar = this.tour.clone();
         int tourLength = this.tour.length;
+        if(tourLength == 0) return;
 
         for(int i = 0; i < tourLength; i++) {
             this.tour = nearestNeighbor(i);
@@ -66,6 +94,9 @@ public abstract class TourOptimizer {
 
     protected void fillTour(int tourSize) {
         this.tour = new int[tourSize];
+        for(int i = 0; i < tourSize; i++) {
+            this.tour[i] = i;
+        }
     }
 
     protected void fillDistanceMatrix(Double earthRadius, String formula, Places places) {
