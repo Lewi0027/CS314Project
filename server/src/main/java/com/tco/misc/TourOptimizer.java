@@ -106,10 +106,11 @@ public abstract class TourOptimizer {
 
         for(int from = 0; from < tourLength; from++) {
             GeographicCoordinate fromPlace = places.get(from);
-            for(int to = 0; to < tourLength; to++) {
+            for(int to = from + 1; to < tourLength; to++) {
                 GeographicCoordinate toPlace = places.get(to);
                 long distance = calculator.between(fromPlace, toPlace, earthRadius);
                 this.distanceMatrix[from][to] = distance;
+                this.distanceMatrix[to][from] = distance;
             }
         }
     }
