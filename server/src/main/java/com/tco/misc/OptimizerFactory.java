@@ -30,4 +30,11 @@ public class OptimizerFactory {
         return quarticTerm + cubicTerm + quadraticTerm + linearTerm + constantTerm;
     }
 
+    public static double calculateNoOpt(int placesSize) {
+        double quadraticTerm = -0.0000976612 * (Math.pow(placesSize, 2));
+        double linearTerm = 0.30235 * placesSize;
+        double constantTerm = 17.05127;
+        return quadraticTerm + linearTerm + constantTerm;
+    }
+
 }
