@@ -27,6 +27,7 @@ public class TourRequest extends Request{
 
     @Override
     public void buildResponse() {
+        if(this.response == 0.0) return;
         constructPlacesWithOptimizer();
         log.trace("buildResponse -> {}", this);
     }
