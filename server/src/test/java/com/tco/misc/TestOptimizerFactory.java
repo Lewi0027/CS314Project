@@ -106,7 +106,7 @@ public class TestOptimizerFactory {
     // Tests calculateOneOpt()
 
     @Test
-    @DisplayName("wgens: should return 17.05127 for placesSize = 0")
+    @DisplayName("wgens: should return 7.05127 for placesSize = 0")
     void testOneOptZeroInput() {
         int placesSize = 0;
         double expectedTime = 7.85096; // Assuming constant term for zero input
@@ -143,6 +143,48 @@ public class TestOptimizerFactory {
         int placesSize = largePlaceSize;
         double expectedTime = 64.011365;
         assertEquals(expectedTime, testClass.calculateOneOpt(placesSize), 0.00001);
+    }
+
+    // Tests calculateTwoOpt()
+
+    @Test
+    @DisplayName("wgens: should return 8.38256 for placesSize = 0")
+    void testTwoOptZeroInput() {
+        int placesSize = 0;
+        double expectedTime = 8.38256; // Assuming constant term for zero input
+        assertEquals(expectedTime, testClass.calculateTwoOpt(placesSize), 0.00001);
+    }
+
+    @Test
+    @DisplayName("wgens: should return 10289ish for placesSize = 1000")
+    void testTwoOptVeryLargeInput() {
+        int placesSize = veryLargePlaceSize;
+        double expectedTime = 10289.68556;
+        assertEquals(expectedTime, testClass.calculateTwoOpt(placesSize), 0.00001);
+    }
+
+    @Test
+    @DisplayName("wgens: should return 12ish for placesSize = 10")
+    void testTwoOptSmallInput() {
+        int placesSize = smallPlaceSize;
+        double expectedTime = 12.894638;
+        assertEquals(expectedTime, testClass.calculateTwoOpt(placesSize), 0.00001);
+    }
+
+    @Test
+    @DisplayName("wgens: should return 29.2ish for placesSize = 50")
+    void testTwoOptMediumInput() {
+        int placesSize = mediumPlaceSize;
+        double expectedTime = 29.246879;
+        assertEquals(expectedTime, testClass.calculateTwoOpt(placesSize), 0.00001);
+    }
+
+    @Test
+    @DisplayName("wgens: should return 50ish for placesSize = 100")
+    void testTwoOptLargeInput() {
+        int placesSize = largePlaceSize;
+        double expectedTime = 50.678375;
+        assertEquals(expectedTime, testClass.calculateTwoOpt(placesSize), 0.00001);
     }
 
 
