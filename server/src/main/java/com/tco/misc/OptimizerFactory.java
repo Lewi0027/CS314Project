@@ -20,4 +20,14 @@ public class OptimizerFactory {
     private static Double calculateTime(int timeForOneSecond, int placesSize) {
         return Math.log(placesSize) / Math.log(timeForOneSecond);
     }
+
+    public static double calculateMatrixTime(int placesSize) {
+        double quarticTerm = 1.69777e-11 * (Math.pow(placesSize, 4));
+        double cubicTerm = -3.28461e-8 * (Math.pow(placesSize, 3));
+        double quadraticTerm = 1.26646e-4 * (Math.pow(placesSize, 2));
+        double linearTerm = 1.94351e-3 * placesSize;
+        double constantTerm = 1.2237e-1;
+        return quarticTerm + cubicTerm + quadraticTerm + linearTerm + constantTerm;
+    }
+
 }
