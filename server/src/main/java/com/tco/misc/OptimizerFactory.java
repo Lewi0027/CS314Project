@@ -37,4 +37,14 @@ public class OptimizerFactory {
         return quadraticTerm + linearTerm + constantTerm;
     }
 
+    protected static double calculateOneOpt(int placesSize){
+        double quarticTerm = -5.85444e-10 * (Math.pow(placesSize, 4));
+        double cubicTerm = 1.97076e-6* (Math.pow(placesSize, 3));
+        double quadraticTerm = -9.79171e-4 * (Math.pow(placesSize, 2));
+        double linearTerm = 6.40399e-1 * placesSize;
+        double constantTerm = 7.85096;
+        return quarticTerm + cubicTerm + quadraticTerm + linearTerm + constantTerm;
+    }
+
+
 }

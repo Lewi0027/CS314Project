@@ -103,4 +103,47 @@ public class TestOptimizerFactory {
         assertEquals(expectedTime, testClass.calculateNoOpt(placesSize), 0.00001);
     }
 
+    // Tests calculateOneOpt()
+
+    @Test
+    @DisplayName("wgens: should return 17.05127 for placesSize = 0")
+    void testOneOptZeroInput() {
+        int placesSize = 0;
+        double expectedTime = 7.85096; // Assuming constant term for zero input
+        assertEquals(expectedTime, testClass.calculateOneOpt(placesSize), 0.00001);
+    }
+
+    @Test
+    @DisplayName("wgens: should return 1054.4ish for placesSize = 1000")
+    void testOneOptVeryLargeInput() {
+        int placesSize = veryLargePlaceSize;
+        double expectedTime = 1054.39496;
+        assertEquals(expectedTime, testClass.calculateOneOpt(placesSize), 0.00001);
+    }
+
+    @Test
+    @DisplayName("wgens: should return 14.16ish for placesSize = 10")
+    void testOneOptSmallInput() {
+        int placesSize = smallPlaceSize;
+        double expectedTime = 14.158997;
+        assertEquals(expectedTime, testClass.calculateOneOpt(placesSize), 0.00001);
+    }
+
+    @Test
+    @DisplayName("wgens: should return 31.9ish for placesSize = 50")
+    void testOneOptMediumInput() {
+        int placesSize = mediumPlaceSize;
+        double expectedTime = 37.665668;
+        assertEquals(expectedTime, testClass.calculateOneOpt(placesSize), 0.00001);
+    }
+
+    @Test
+    @DisplayName("wgens: should return 64ish for placesSize = 100")
+    void testOneOptLargeInput() {
+        int placesSize = largePlaceSize;
+        double expectedTime = 64.011365;
+        assertEquals(expectedTime, testClass.calculateOneOpt(placesSize), 0.00001);
+    }
+
+
 }
