@@ -8,8 +8,12 @@ public abstract class TourOptimizer {
 
     protected long[][] distanceMatrix;
     protected int[] tour;
+    protected double response;
+    protected long startTime;
 
     public Places construct(Places places, Double earthRadius, String formula, Double response){
+        startTime = System.nanoTime();
+        this.response = response;
         fillDistanceMatrix(earthRadius, formula, places);
         fillTour(places.size());
         calculateShortestTour();
