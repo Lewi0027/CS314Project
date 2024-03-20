@@ -3,9 +3,21 @@ package com.tco.misc;
 public class OptimizerFactory {
 
     public static TourOptimizer createOptimizer(int placesSize, Double response) {
-        if(response <= 0) // If it is a negative value, should it throw an exception?
+        if(response <= 0) { // If it is a negative value, should it throw an exception?
             return new NoOpt();
+        }
+        if(placesSize < 4){
+            return new NoOpt();
+        }
 
+        double responseThresholdMatrix = calculateMatrixTime(placesSize);
+        double responseThresholdNoOpt = calculateNoOpt(placesSize);
+        double responseThresholdOneOpt = calculateOneOpt(placesSize);
+        double responseThresholdTwoOpt = calculateTwoOpt(placesSize);
+        double responseThresholdThreeOpt = calculateThreeOpt(placesSize);
+
+        double responseMillis = response * 1000; // converts response to milliseconds for threshold comparibility
+        
         if (response >= calculateTime(120, placesSize)) {
             return new ThreeOpt();
         } else if (response >= calculateTime(450, placesSize)) {
