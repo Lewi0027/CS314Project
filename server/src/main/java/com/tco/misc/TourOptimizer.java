@@ -178,7 +178,7 @@ public abstract class TourOptimizer {
         this.response = response;
     }
 
-    protected voit setStartTime(long startTime){
+    protected void setStartTime(long startTime){
         this.startTime = startTime;
     }
 }
