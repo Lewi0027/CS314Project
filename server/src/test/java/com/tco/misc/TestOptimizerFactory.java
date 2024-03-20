@@ -187,5 +187,47 @@ public class TestOptimizerFactory {
         assertEquals(expectedTime, testClass.calculateTwoOpt(placesSize), 0.00001);
     }
 
+    // Tests calculateThreeOpt()
+
+    @Test
+    @DisplayName("bscheidt: should return 19.3161 for placesSize = 0")
+    void testThreeOptZeroInput() {
+        int placesSize = 0;
+        double expectedTime = 19.3161; // Assuming constant term for zero input
+        assertEquals(expectedTime, testClass.calculateThreeOpt(placesSize), 0.00001);
+    }
+
+    @Test
+    @DisplayName("bscheidt: should return 2988902.2860999997 for placesSize = 1000")
+    void testThreeOptVeryLargeInput() {
+        int placesSize = veryLargePlaceSize;
+        double expectedTime = 2988902.2860999997;
+        assertEquals(expectedTime, testClass.calculateThreeOpt(placesSize), 0.00001);
+    }
+
+    @Test
+    @DisplayName("bscheidt: should return 7.819438599999998 for placesSize = 10")
+    void testThreeOptSmallInput() {
+        int placesSize = smallPlaceSize;
+        double expectedTime = 7.819438599999998;
+        assertEquals(expectedTime, testClass.calculateThreeOpt(placesSize), 0.00001);
+    }
+
+    @Test
+    @DisplayName("bscheidt: should return 28.148724999999992 for placesSize = 50")
+    void testThreeOptMediumInput() {
+        int placesSize = mediumPlaceSize;
+        double expectedTime = 28.148724999999992;
+        assertEquals(expectedTime, testClass.calculateThreeOpt(placesSize), 0.00001);
+    }
+
+    @Test
+    @DisplayName("bscheidt: should return 334.4761 for placesSize = 100")
+    void testThreeOptLargeInput() {
+        int placesSize = largePlaceSize;
+        double expectedTime = 334.4761;
+        assertEquals(expectedTime, testClass.calculateThreeOpt(placesSize), 0.00001);
+    }
+
 
 }
