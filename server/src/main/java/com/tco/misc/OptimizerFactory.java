@@ -18,19 +18,19 @@ public class OptimizerFactory {
 
         double responseMillis = response * 1000; // converts response to milliseconds for threshold comparibility
         
-        if (response >= calculateTime(120, placesSize)) {
-            return new ThreeOpt();
-        } else if (response >= calculateTime(450, placesSize)) {
-            return new TwoOpt();
-        } else if(response > ( (0.0000005 * Math.pow(placesSize, 2)) - (0.0002 * placesSize) + 0.08956)) {
-            return new OneOpt();
-        } else {
+        if(responseMillis - 50 < responseThresholdMatrix)
             return new NoOpt();
-        } 
-    }
 
-    private static Double calculateTime(int timeForOneSecond, int placesSize) {
-        return Math.log(placesSize) / Math.log(timeForOneSecond);
+        if(responseMillis > responseThresholdThreeOpt / 10)
+            return new ThreeOpt();
+
+        if(responseMillis > responseThresholdTwoOpt / 10)
+            return new TwoOpt();
+
+        if(responseMillis > responseThresholdOneOpt / 10)
+            return new OneOpt();
+
+        return new NoOpt();
     }
 
     public static double calculateMatrixTime(int placesSize) {
@@ -50,11 +50,11 @@ public class OptimizerFactory {
     }
 
     protected static double calculateOneOpt(int placesSize){
-        double quarticTerm = -5.85444e-10 * (Math.pow(placesSize, 4));
-        double cubicTerm = 1.97076e-6 * (Math.pow(placesSize, 3));
-        double quadraticTerm = -9.79171e-4 * (Math.pow(placesSize, 2));
-        double linearTerm = 6.40399e-1 * placesSize;
-        double constantTerm = 7.85096;
+        double quarticTerm = 1e-10 * (Math.pow(placesSize, 4));
+        double cubicTerm = 5.999e-7 * (Math.pow(placesSize, 3));
+        double quadraticTerm = -0.000111 * (Math.pow(placesSize, 2));
+        double linearTerm = 0.4580 * placesSize;
+        double constantTerm = 14.9673;
         return quarticTerm + cubicTerm + quadraticTerm + linearTerm + constantTerm;
     }
 

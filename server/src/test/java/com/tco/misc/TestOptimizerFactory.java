@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestOptimizerFactory {
 
@@ -18,6 +19,143 @@ public class TestOptimizerFactory {
     @BeforeEach
     public void setupTestClass() {
         testClass = new OptimizerFactory();
+    }
+
+    // Tests for createOptimizer(int placesSize, Double response)
+
+    private TourOptimizer result;
+
+    @Test
+    @DisplayName("ajlei: should return NoOpt object for response = 0.0 ")
+    void testZeroResponse() {
+        result = testClass.createOptimizer(10, 0.0);
+        assertTrue(result instanceof NoOpt);
+    }
+
+    @Test
+    @DisplayName("ajlei: should return NoOpt object for response = -1.0 ")
+    void testNegativeResponse() {
+        result = testClass.createOptimizer(10, -1.0);
+        assertTrue(result instanceof NoOpt);
+    }
+
+    @Test
+    @DisplayName("ajlei: should return NoOpt object for placesSize < 4 ")
+    void testLessThanFourResponse() {
+        result = testClass.createOptimizer(3, 1.0);
+        assertTrue(result instanceof NoOpt);
+    }
+
+    @Test
+    @DisplayName("ajlei: should return NoOpt object for placesSize = 2600 and response = 1.0")
+    void testNormalTooLargeResponseThresholdMatrix() {
+        result = testClass.createOptimizer(2600, 1.0);
+        assertTrue(result instanceof NoOpt);
+    }
+
+    @Test
+    @DisplayName("ajlei: should return NoOpt object for response = 0.000001")
+    void testTinyTooLargeResponseThresholdMatrix() {
+        result = testClass.createOptimizer(1, 0.000001);
+        assertTrue(result instanceof NoOpt);
+    }
+
+    @Test
+    @DisplayName("ajlei: should return NoOpt object for placesSize = 1900 and response = 0.5")
+    void testSmallTooLargeResponseThresholdMatrix() {
+        result = testClass.createOptimizer(1900, 0.5);
+        assertTrue(result instanceof NoOpt);
+    }
+
+    @Test
+    @DisplayName("ajlei: should return NoOpt object for placesSize = 5100 and response = 10.0")
+    void testTooLargeResponseThresholdMatrix() {
+        result = testClass.createOptimizer(5100, 10.0);
+        assertTrue(result instanceof NoOpt);
+    }
+
+    @Test
+    @DisplayName("ajlei: should return ThreeOpt object for placesSize = 244 and response = 1.0")
+    void testNormalTooLargeResponseThresholdThreeOpt() {
+        result = testClass.createOptimizer(244, 1.0);
+        assertTrue(result instanceof ThreeOpt);
+    }
+
+    @Test
+    @DisplayName("ajlei: should return ThreeOpt object for placesSize = 205 and response = 0.5")
+    void testSmallTooLargeResponseThresholdThreeOpt() {
+        result = testClass.createOptimizer(205, 0.5);
+        assertTrue(result instanceof ThreeOpt);
+    }
+
+    @Test
+    @DisplayName("ajlei: should return ThreeOpt object for placesSize = 432 and response = 10.0")
+    void testTooLargeResponseThresholdThreeOpt() {
+        result = testClass.createOptimizer(432, 10.0);
+        assertTrue(result instanceof ThreeOpt);
+    }
+
+    @Test
+    @DisplayName("ajlei: should return TwoOpt object for placesSize = 990 and response = 1.0")
+    void testNormalTooLargeResponseThresholdTwoOpt() {
+        result = testClass.createOptimizer(990, 1.0);
+        assertTrue(result instanceof TwoOpt);
+    }
+
+    @Test
+    @DisplayName("ajlei: should return TwoOpt object for placesSize = 792 and response = 0.5")
+    void testSmallTooLargeResponseThresholdTwoOpt() {
+        result = testClass.createOptimizer(792, 0.5);
+        assertTrue(result instanceof TwoOpt);
+    }
+
+    @Test
+    @DisplayName("ajlei: should return TwoOpt object for placesSize = 2058 and response = 10.0")
+    void testTooLargeResponseThresholdTwoOpt() {
+        result = testClass.createOptimizer(2058, 10.0);
+        assertTrue(result instanceof TwoOpt);
+    }
+
+    @Test
+    @DisplayName("ajlei: should return OneOpt object for placesSize = 2258 and response = 1.0")
+    void testNormalTooLargeResponseThresholdOneOpt() {
+        result = testClass.createOptimizer(2258, 1.0);
+        assertTrue(result instanceof OneOpt);
+    }
+
+    @Test
+    @DisplayName("ajlei: should return OneOpt object for placesSize = 1796 and response = 0.5")
+    void testSmallTooLargeResponseThresholdOneOpt() {
+        result = testClass.createOptimizer(1796, 0.5);
+        assertTrue(result instanceof OneOpt);
+    }
+
+    @Test
+    @DisplayName("ajlei: should return OneOpt object for placesSize = 4561 and response = 10.0")
+    void testTooLargeResponseThresholdOneOpt() {
+        result = testClass.createOptimizer(4561, 10.0);
+        assertTrue(result instanceof OneOpt);
+    }
+
+    @Test
+    @DisplayName("ajlei: should return NoOpt object for placesSize = 2259 and response = 1.0")
+    void testNormalTooLargeResponseThresholdNoOpt() {
+        result = testClass.createOptimizer(2259, 1.0);
+        assertTrue(result instanceof NoOpt);
+    }
+
+    @Test
+    @DisplayName("ajlei: should return NoOpt object for placesSize = 1797 and response = 0.5")
+    void testSmallTooLargeResponseThresholdNoOpt() {
+        result = testClass.createOptimizer(1797, 0.5);
+        assertTrue(result instanceof NoOpt);
+    }
+
+    @Test
+    @DisplayName("ajlei: should return NoOpt object for placesSize = 4562 and response = 10.0")
+    void testTooLargeResponseThresholdNoOpt() {
+        result = testClass.createOptimizer(4562, 10.0);
+        assertTrue(result instanceof NoOpt);
     }
 
     // Tests for calculateMatrixTime(int placesSize)
@@ -106,42 +244,42 @@ public class TestOptimizerFactory {
     // Tests calculateOneOpt()
 
     @Test
-    @DisplayName("wgens: should return 7.05127 for placesSize = 0")
+    @DisplayName("wgens: should return 14.9673 for placesSize = 0")
     void testOneOptZeroInput() {
         int placesSize = 0;
-        double expectedTime = 7.85096; // Assuming constant term for zero input
+        double expectedTime = 14.9673; // Assuming constant term for zero input
         assertEquals(expectedTime, testClass.calculateOneOpt(placesSize), 0.00001);
     }
 
     @Test
-    @DisplayName("wgens: should return 1054.4ish for placesSize = 1000")
+    @DisplayName("wgens: should return 1061.86730ish for placesSize = 1000")
     void testOneOptVeryLargeInput() {
         int placesSize = veryLargePlaceSize;
-        double expectedTime = 1054.39496;
+        double expectedTime = 1061.86730;
         assertEquals(expectedTime, testClass.calculateOneOpt(placesSize), 0.00001);
     }
 
     @Test
-    @DisplayName("wgens: should return 14.16ish for placesSize = 10")
+    @DisplayName("wgens: should return 19.5368009ish for placesSize = 10")
     void testOneOptSmallInput() {
         int placesSize = smallPlaceSize;
-        double expectedTime = 14.158997;
+        double expectedTime = 19.5368009;
         assertEquals(expectedTime, testClass.calculateOneOpt(placesSize), 0.00001);
     }
 
     @Test
-    @DisplayName("wgens: should return 31.9ish for placesSize = 50")
+    @DisplayName("wgens: should return 37.6654125ish for placesSize = 50")
     void testOneOptMediumInput() {
         int placesSize = mediumPlaceSize;
-        double expectedTime = 37.665668;
+        double expectedTime = 37.6654125;
         assertEquals(expectedTime, testClass.calculateOneOpt(placesSize), 0.00001);
     }
 
     @Test
-    @DisplayName("wgens: should return 64ish for placesSize = 100")
+    @DisplayName("wgens: should return 60.2672ish for placesSize = 100")
     void testOneOptLargeInput() {
         int placesSize = largePlaceSize;
-        double expectedTime = 64.011365;
+        double expectedTime = 60.2672;
         assertEquals(expectedTime, testClass.calculateOneOpt(placesSize), 0.00001);
     }
 
