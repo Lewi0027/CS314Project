@@ -53,5 +53,14 @@ public class OptimizerFactory {
         double linearTerm = 4.64993e-1 * placesSize;
         double constantTerm = 8.38256;
         return quarticTerm + cubicTerm + quadraticTerm + linearTerm + constantTerm;
-    }    
+    }
+
+    protected static double calculateThreeOpt(int placesSize) {
+        double quarticTerm = 3.16846e-6 * (Math.pow(placesSize, 4));
+        double cubicTerm = -2.14276e-4 * (Math.pow(placesSize, 3));
+        double quadraticTerm = 3.61923e-2 * (Math.pow(placesSize, 2));
+        double linearTerm = -1.49333 * placesSize;
+        double constantTerm = 1.93161e1;
+        return quarticTerm + cubicTerm + quadraticTerm + linearTerm + constantTerm;
+    } 
 }
