@@ -173,4 +173,12 @@ public abstract class TourOptimizer {
     protected int[] getTour() {
         return this.tour;
     }
+    
+    protected void setResponse(double response){
+        this.response = response;
+    }
+
+    protected voit setStartTime(long startTime){
+        this.startTime = startTime;
+    }
 }
