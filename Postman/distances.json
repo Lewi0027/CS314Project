@@ -392,6 +392,62 @@
 			"response": []
 		},
 		{
+			"name": "wyattg5-distances-cosines-formula",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f64dc93c-2c40-42a5-8e78-00b317779260",
+						"exec": [
+							"pm.test(\"Response is HTTP400 status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Cosines returns correct response\", () => {",
+							"    var responseBody = pm.response.json();",
+							"    ",
+							"    pm.expect(responseBody.distances).to.be.an('array').that.is.not.empty;",
+							"    pm.expect(responseBody.distances.length).to.eql(2); ",
+							"",
+							"    pm.expect(responseBody.distances[0]).to.eql(785);",
+							"    pm.expect(responseBody.distances[1]).to.eql(785);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "fc36b1d2-5534-4b68-981a-ccd39179fbd6",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"distances\",\n    \"places\": [{\"name\": \"place1\", \"latitude\": \"45\", \"longitude\": \"90\"},\n               {\"name\": \"place2\", \"latitude\": \"90\", \"longitude\": \"45\"}],\n    \"formula\": \"cosines\",\n    \"earthRadius\": 1000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/distances",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"distances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "lewi0027-distances-negative-earth-radius",
 			"event": [
 				{
@@ -437,22 +493,33 @@
 			"response": []
 		},
 		{
-			"name": "lewi0027-distances-incorrect-input",
+			"name": "wyattg5-distances-haversine-formula",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "b116389b-9fe7-47da-8f05-6b2704c517aa",
+						"id": "f64dc93c-2c40-42a5-8e78-00b317779260",
 						"exec": [
-							"pm.test(\"Response is HTTP400 status\", () => {\r",
-							"    pm.response.to.have.status(400);\r",
+							"pm.test(\"Response is HTTP400 status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Haversine returns correct response\", () => {",
+							"    var responseBody = pm.response.json();",
+							"    ",
+							"    pm.expect(responseBody.distances).to.be.an('array').that.is.not.empty;",
+							"    pm.expect(responseBody.distances.length).to.eql(2); ",
+							"",
+							"    pm.expect(responseBody.distances[0]).to.eql(785);",
+							"    pm.expect(responseBody.distances[1]).to.eql(785);",
 							"});"
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
-			"id": "3e090b28-d71b-4f96-9e70-8c79eaffe185",
+			"id": "e41704b0-c1f5-4874-9841-65e4fb02fc92",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -461,7 +528,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"requestType\": \"distances\",\r\n    \"places\": [{\"name\": \"location1\", \"latitude\": \"0\", \"longitude\": \"0\"},\r\n                {\"name\": \"location2\", \"latitude\": \"60\", \"longitude\": \"60\"},\r\n                {\"name\": \"location3\", \"latitude\": \"30\", \"longitude\": \"30\"}],\r\n    \"formula\": \"wrongformula\",\r\n    \"earthRadius\":6371\r\n}",
+					"raw": "{\n    \"requestType\": \"distances\",\n    \"places\": [{\"name\": \"place1\", \"latitude\": \"45\", \"longitude\": \"90\"},\n               {\"name\": \"place2\", \"latitude\": \"90\", \"longitude\": \"45\"}],\n    \"formula\": \"haversine\",\n    \"earthRadius\": 1000\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -519,6 +586,51 @@
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n    \"requestType\": \"distances\",\r\n    \"places\": [{\"name\": \"location1\", \"latitude\": \"0\", \"longitude\": \"0\"},\r\n                {\"name\": \"location2\", \"latitude\": \"30\", \"longitude\": \"30\"},\r\n                {\"name\": \"location1\", \"latitude\": \"60\", \"longitude\": \"60\"},\r\n                {\"name\": \"location1\", \"latitude\": \"75\", \"longitude\": \"75\"}],\r\n    \"formula\": \"vincenty\",\r\n    \"earthRadius\":6371\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/distances",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"distances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lewi0027-distances-invalid-formula-input",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b116389b-9fe7-47da-8f05-6b2704c517aa",
+						"exec": [
+							"pm.test(\"Response is HTTP400 status\", () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "3e090b28-d71b-4f96-9e70-8c79eaffe185",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"requestType\": \"distances\",\r\n    \"places\": [{\"name\": \"location1\", \"latitude\": \"0\", \"longitude\": \"0\"},\r\n                {\"name\": \"location2\", \"latitude\": \"60\", \"longitude\": \"60\"},\r\n                {\"name\": \"location3\", \"latitude\": \"30\", \"longitude\": \"30\"}],\r\n    \"formula\": \"wrongformula\",\r\n    \"earthRadius\":6371\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
