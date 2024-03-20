@@ -57,7 +57,7 @@ public class DistancesRequest extends Request {
         if ( formula != null && !formula.equalsIgnoreCase("Vincenty") && !formula.equalsIgnoreCase("Haversine") && !formula.equalsIgnoreCase("Cosines")) throw new BadRequestException();
     }
 
-    private Distances buildDistanceList() throws BadRequestException {
+    private Distances buildDistanceList(){
         Distances distances = new Distances();
         
         // Add ability to calculate new distances
