@@ -23,6 +23,13 @@ public abstract class TourOptimizer {
         return places;
     }
 
+    protected boolean tooMuchTimeElapsed(){
+        Double responseThreshold = (this.response * 1000) - 150;
+        long currTime = System.nanoTime();
+        double totalDuration = (currTime - this.startTime) / 1e6;
+        return (totalDuration >= responseThreshold);
+    }
+
     protected void rotateTour() {
         int startIndex = findStartIndex();
         if (startIndex == 0) return;
