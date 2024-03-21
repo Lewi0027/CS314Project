@@ -14,9 +14,11 @@ public class TwoOpt extends TourOptimizer{
         boolean improvement = true;
         
         while (improvement) {
+            if(tooMuchTimeElapsed()) break;
             improvement = false;
             for(int i = 0; i <= route.length - 4; i++){
                 for(int k = i + 2; k <= route.length - 2; k++){
+                    if(tooMuchTimeElapsed()) break;
                     if(isImproved(i, k)){
                         swapIndex(i + 1, k);
                         improvement = true;
