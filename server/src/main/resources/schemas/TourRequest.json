@@ -1,14 +1,29 @@
 {
   "$id": "https://example.com/address.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "distances",
-  "description": "distance request/response",
+  "title": "tour",
+  "description": "tour request/response",
   "type": "object",
   "properties": {
     "requestType": {
-      "description":"the TIP object type should be distance",
+      "description":"the TIP object type should be tour",
       "type":"string",
-      "pattern":"^distances$"
+      "pattern":"^tour$"
+    },
+    "earthRadius": {
+      "description":"the radius of the earth in some unit of measure",
+      "type":"number",
+      "minimum":1
+    },
+    "response": {
+      "description": "the maximum response time",
+      "type": "number",
+      "minimum": 0
+    },
+    "formula":{
+      "description":"a formula included in the formulae property of the config response.",
+      "type":"string",
+      "minimum":1
     },
     "places": {
       "description": "a list of places",
@@ -29,26 +44,8 @@
         "additionalProperties": { "type": "string" }
       },
       "minitems": 0
-    },
-    "earthRadius":{
-      "description":"the radius of the earth in some unit of measure",
-      "type":"number",
-      "minimum":1
-    },
-    "formula":{
-      "description":"the formula specified in the request, if provided",
-      "type":"string"
-    },
-    "distances":{
-      "description":"the great circle distance between each place with the last element being the distance between the first and last element in places",
-      "type":"array",
-      "items": {
-        "type":"integer",
-        "minimum": 0
-      },
-      "minItems": 0
     }
   },
-  "required":["requestType","places","earthRadius","distances"],
+  "required":["requestType", "earthRadius", "response", "places"],
   "additionalProperties": false
 }

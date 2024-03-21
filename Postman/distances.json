@@ -397,28 +397,27 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "f64dc93c-2c40-42a5-8e78-00b317779260",
+						"id": "9ad5d921-0951-4f62-a3d4-8cb65c4edf2a",
 						"exec": [
-							"pm.test(\"Response is HTTP400 status\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"pm.test(\"Cosines returns correct response\", () => {",
-							"    var responseBody = pm.response.json();",
-							"    ",
-							"    pm.expect(responseBody.distances).to.be.an('array').that.is.not.empty;",
-							"    pm.expect(responseBody.distances.length).to.eql(2); ",
-							"",
-							"    pm.expect(responseBody.distances[0]).to.eql(785);",
-							"    pm.expect(responseBody.distances[1]).to.eql(785);",
-							"});",
+							"pm.test(\"Response is HTTP400 status\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Cosines returns correct response\", () => {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseBody.distances).to.be.an('array').that.is.not.empty;\r",
+							"    pm.expect(responseBody.distances.length).to.eql(2); \r",
+							"\r",
+							"    pm.expect(responseBody.distances[0]).to.eql(785);\r",
+							"    pm.expect(responseBody.distances[1]).to.eql(785);\r",
+							"});\r",
 							""
 						],
-						"type": "text/javascript",
-						"packages": {}
+						"type": "text/javascript"
 					}
 				}
 			],
-			"id": "fc36b1d2-5534-4b68-981a-ccd39179fbd6",
+			"id": "f4ea2925-f013-48e9-8a14-400e52bce705",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -427,7 +426,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"requestType\": \"distances\",\n    \"places\": [{\"name\": \"place1\", \"latitude\": \"45\", \"longitude\": \"90\"},\n               {\"name\": \"place2\", \"latitude\": \"90\", \"longitude\": \"45\"}],\n    \"formula\": \"cosines\",\n    \"earthRadius\": 1000\n}",
+					"raw": "{\r\n    \"requestType\": \"distances\",\r\n    \"places\": [{\"name\": \"place1\", \"latitude\": \"45\", \"longitude\": \"90\"},\r\n               {\"name\": \"place2\", \"latitude\": \"90\", \"longitude\": \"45\"}],\r\n    \"formula\": \"cosines\",\r\n    \"earthRadius\": 1000\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -498,28 +497,27 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "f64dc93c-2c40-42a5-8e78-00b317779260",
+						"id": "82cad498-3b8c-4433-b61b-a1ae90991a9a",
 						"exec": [
-							"pm.test(\"Response is HTTP400 status\", () => {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"Haversine returns correct response\", () => {",
-							"    var responseBody = pm.response.json();",
-							"    ",
-							"    pm.expect(responseBody.distances).to.be.an('array').that.is.not.empty;",
-							"    pm.expect(responseBody.distances.length).to.eql(2); ",
-							"",
-							"    pm.expect(responseBody.distances[0]).to.eql(785);",
-							"    pm.expect(responseBody.distances[1]).to.eql(785);",
+							"pm.test(\"Response is HTTP400 status\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Haversine returns correct response\", () => {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseBody.distances).to.be.an('array').that.is.not.empty;\r",
+							"    pm.expect(responseBody.distances.length).to.eql(2); \r",
+							"\r",
+							"    pm.expect(responseBody.distances[0]).to.eql(785);\r",
+							"    pm.expect(responseBody.distances[1]).to.eql(785);\r",
 							"});"
 						],
-						"type": "text/javascript",
-						"packages": {}
+						"type": "text/javascript"
 					}
 				}
 			],
-			"id": "e41704b0-c1f5-4874-9841-65e4fb02fc92",
+			"id": "7d925a27-7c99-4238-a79e-091227fa8699",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -528,7 +526,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"requestType\": \"distances\",\n    \"places\": [{\"name\": \"place1\", \"latitude\": \"45\", \"longitude\": \"90\"},\n               {\"name\": \"place2\", \"latitude\": \"90\", \"longitude\": \"45\"}],\n    \"formula\": \"haversine\",\n    \"earthRadius\": 1000\n}",
+					"raw": "{\r\n    \"requestType\": \"distances\",\r\n    \"places\": [{\"name\": \"place1\", \"latitude\": \"45\", \"longitude\": \"90\"},\r\n               {\"name\": \"place2\", \"latitude\": \"90\", \"longitude\": \"45\"}],\r\n    \"formula\": \"haversine\",\r\n    \"earthRadius\": 1000\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

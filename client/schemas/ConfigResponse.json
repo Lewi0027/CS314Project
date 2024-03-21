@@ -20,7 +20,15 @@
       "type": "array",
       "items": {
         "type": "string",
-        "enum": ["config", "find", "distances", "tour", "type", "where"]
+        "enum": ["config", "find", "near", "distances", "tour", "type", "where"]
+      }
+    },
+    "formulae" : {
+      "description": "the Great Circle Distance computation methods supported by this server.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["vincenty", "haversine", "cosines"]
       }
     },
     "type": {

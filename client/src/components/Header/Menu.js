@@ -59,7 +59,7 @@ function buildMenuButtons(props) {
 		new MenuButtonProps('about-button', props.toggleAbout, <BsFillPeopleFill />, 'About'),
 		new MenuButtonProps('add-place-button', props.toggleAddPlace, <FaPlus />, 'Add Place'),
 		new MenuButtonProps('load-trip-button', props.toggleLoadFile, <FaFolderOpen />, 'Load Trip'),
-		new MenuButtonProps('save-trip-button', () => {SaveTrip(props.tripName, JSON.stringify({"places": props.places}))}, <FaSave />, 'Save Trip'),
+		new MenuButtonProps('save-trip-button', props.toggleSaveFile, <FaSave />, 'Save Trip'),
 		new MenuButtonProps('remove-all-button', props.placeActions.removeAll, <FaTrashAlt />, 'Remove All', props.disableRemoveAll),
 		new MenuButtonProps('settings-button', props.toggleSettings, <AiFillSetting />, 'Settings'),
 	];

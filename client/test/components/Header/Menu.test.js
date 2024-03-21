@@ -14,6 +14,7 @@ describe('Menu', () => {
 		toggleAddPlace: jest.fn(),
 		disableRemoveAll: false,
 		toggleSettings: jest.fn(),
+		toggleSaveFile: jest.fn(),
 	};
 
 	beforeEach(() => {
@@ -50,13 +51,13 @@ describe('Menu', () => {
 		expect(menuProps.toggleSettings).toHaveBeenCalled();
 	});
 
-	test('base: Saves Trip', async () => {
-		global.URL.createObjectURL = jest.fn();
-
+		
+	// Need to add Save Trip test
+	test('diegocel: Toggles Save Trip', async () => {
 		const menuToggle = screen.getByTestId('menu-toggle');
 		await waitFor(() => user.click(menuToggle));
-		const saveTripButton = screen.getByTestId('save-trip-button');
+		const saveTripButton = screen.getByTestId("save-trip-button");
 		user.click(saveTripButton);
-		expect(global.URL.createObjectURL).toBeCalledTimes(1);
+		expect(menuProps.toggleSaveFile).toHaveBeenCalled();
 	});
 });
