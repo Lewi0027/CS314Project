@@ -47,6 +47,8 @@ public class TestThreeOpt {
     public void testOneSegSwap() {
         optimizer.setTour(new int[]{A, C, B, D, E, F});
         int[] testTour = {A, B, C, D, E, F};
+        optimizer.setResponse(1.0);
+        optimizer.setStartTime(System.nanoTime());
 
         optimizer.improve();
 
@@ -58,6 +60,8 @@ public class TestThreeOpt {
     public void testTwoSegSwap() {
         optimizer.setTour(new int[]{A, D, C, B, E, F});
         int[] testTour = {A, B, C, D, E, F};
+        optimizer.setResponse(1.0);
+        optimizer.setStartTime(System.nanoTime());
 
         optimizer.improve();
 
@@ -69,6 +73,8 @@ public class TestThreeOpt {
     public void testOneSegSwapTwo() {
         optimizer.setTour(new int[]{A, E, D, B, C, F});
         int[] testTour = {A, B, C, D, E, F};
+        optimizer.setResponse(1.0);
+        optimizer.setStartTime(System.nanoTime());
 
         optimizer.improve();
 
@@ -80,6 +86,8 @@ public class TestThreeOpt {
     public void testThreeSegSwap() {
         optimizer.setTour(new int[]{A, D, E, B, C, F});
         int[] testTour = {A, B, C, D, E, F};
+        optimizer.setResponse(1.0);
+        optimizer.setStartTime(System.nanoTime());
 
         optimizer.improve();
 
@@ -91,6 +99,8 @@ public class TestThreeOpt {
     public void testOneAndTwoSegSwap() {
         optimizer.setTour(new int[]{A, E, B, C, D, F});
         int[] testTour = {A, B, C, D, E, F};
+        optimizer.setResponse(1.0);
+        optimizer.setStartTime(System.nanoTime());
 
         optimizer.improve();
 
