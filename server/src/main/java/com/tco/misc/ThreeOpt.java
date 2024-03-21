@@ -12,10 +12,12 @@ public class ThreeOpt extends TwoOpt{
 
         boolean improvement = true;
         while (improvement) {
+            if (tooMuchTimeElapsed()) break;
             improvement = false;
             for (int i = 0; i <= n - 3; i++) {
                 for (int j = i + 1; j <= n - 2; j++) {
                     for (int k = j + 1; k <= n - 1; k++) {
+                        if (tooMuchTimeElapsed()) break;
                         int reversals = threeOptReversals(i, j, k);
                         if (threeOptReverseI1J(reversals)) swapIndex(i + 1, j);
                         if (threeOptReverseJ1K(reversals)) swapIndex(j + 1, k);
