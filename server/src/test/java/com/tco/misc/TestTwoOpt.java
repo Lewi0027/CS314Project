@@ -86,6 +86,8 @@ public class TestTwoOpt {
         int [] tour = {0, 4, 1, 3, 2};
         optimizer2.setDistanceMatrix(distanceMatrix);
         optimizer2.setTour(tour);
+        optimizer2.setResponse(1.0);
+        optimizer2.setStartTime(System.nanoTime());
 
         optimizer2.improve();
 
@@ -99,7 +101,9 @@ public class TestTwoOpt {
     public void testOneSegSwap() {
         optimizer.setTour(new int[]{A, C, B, D, E, F});
         int[] testTour = {A, B, C, D, E, F};
-
+        optimizer.setResponse(1.0);
+        optimizer.setStartTime(System.nanoTime());   
+        
         optimizer.improve();
 
         assertArrayEquals(testTour, optimizer.getTour());
@@ -110,6 +114,8 @@ public class TestTwoOpt {
     public void testTwoSegSwap() {
         optimizer.setTour(new int[]{A, D, C, B, E, F});
         int[] testTour = {A, B, C, D, E, F};
+        optimizer.setResponse(1.0);
+        optimizer.setStartTime(System.nanoTime());   
 
         optimizer.improve();
 
@@ -121,6 +127,8 @@ public class TestTwoOpt {
     public void testOneSegSwapTwo() {
         optimizer.setTour(new int[]{A, E, D, B, C, F});
         int[] testTour = {A, B, C, D, E, F};
+        optimizer.setResponse(1.0);
+        optimizer.setStartTime(System.nanoTime()); 
 
         optimizer.improve();
 
@@ -134,6 +142,8 @@ public class TestTwoOpt {
     public void testRealLocations(){
         optimizerCity.setTour(new int[]{FC, SLC, LA, Ottowa, JC, Memphis});
         int[] testTour = {FC, LA, SLC, Ottowa, JC, Memphis};
+        optimizerCity.setResponse(1.0);
+        optimizerCity.setStartTime(System.nanoTime()); 
 
         optimizerCity.improve();
         
@@ -145,6 +155,8 @@ public class TestTwoOpt {
     public void testSwapRealLocations(){
         optimizerCity.setTour(new int[]{FC, Ottowa, LA, JC, SLC, Memphis});
         int[] testTour = {FC, SLC, LA, Memphis, JC, Ottowa};
+        optimizerCity.setResponse(1.0);
+        optimizerCity.setStartTime(System.nanoTime()); 
 
         optimizerCity.improve();
         
