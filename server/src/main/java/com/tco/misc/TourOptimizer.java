@@ -75,10 +75,15 @@ public abstract class TourOptimizer {
         int tourLength = this.tour.length;
         if(tourLength == 0) return;
 
+        if(tooMuchTimeElapsed()) return;
+
         for(int i = 0; i < tourLength; i++) {
             this.tour = nearestNeighbor(i);
+            if(tooMuchTimeElapsed()) break;
             improve();
+            if(tooMuchTimeElapsed()) break;
             tourDistance = totalDistanceOfTour();
+            if(tooMuchTimeElapsed()) break; 
             if(tourDistance < shortestTourDistance) {
                 shortestTourDistance = tourDistance;
                 bestTourSoFar = this.tour.clone();
