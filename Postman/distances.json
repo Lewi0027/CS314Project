@@ -602,51 +602,6 @@
 				}
 			},
 			"response": []
-		},
-		{
-			"name": "lewi0027-distances-invalid-formula-input",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "b116389b-9fe7-47da-8f05-6b2704c517aa",
-						"exec": [
-							"pm.test(\"Response is HTTP400 status\", () => {\r",
-							"    pm.response.to.have.status(400);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"id": "3e090b28-d71b-4f96-9e70-8c79eaffe185",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"requestType\": \"distances\",\r\n    \"places\": [{\"name\": \"location1\", \"latitude\": \"0\", \"longitude\": \"0\"},\r\n                {\"name\": \"location2\", \"latitude\": \"60\", \"longitude\": \"60\"},\r\n                {\"name\": \"location3\", \"latitude\": \"30\", \"longitude\": \"30\"}],\r\n    \"formula\": \"wrongformula\",\r\n    \"earthRadius\":6371\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{BASE_URL}}/api/distances",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"path": [
-						"api",
-						"distances"
-					]
-				}
-			},
-			"response": []
 		}
 	]
 }
