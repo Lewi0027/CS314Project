@@ -24,7 +24,11 @@ public class Select {
     }
 
     static String statementFind(String where, String data, String limit) {
-        return "";
+        return "SELECT "
+            + data
+            + " FROM " + TABLE
+            + " " + where + " "
+            + limit + " ;";
     }
 
     static String statementNear(String where, String data, String limit, Place place) {
