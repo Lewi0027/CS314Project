@@ -16,7 +16,8 @@ public class Select {
     }
 
     static String found(String match) {
-        return "";
+        String where = "WHERE " + COLUMN + " LIKE \"%" + match + "%\"";
+        return statementFind(where, "COUNT(*) AS count", "");
     }
 
     static String match(String match, int limit) {
