@@ -8,7 +8,7 @@ public class Select {
     private final static String COLUMN = "name";
     private final static String COLUMNS = "id,name,municipality,iso_region,iso_country,latitude,longitude,altitude,type";
 
-    static String near(Boundary boundary, Place place) {
+    static String near(Place place) {
         return "";
     }
 
