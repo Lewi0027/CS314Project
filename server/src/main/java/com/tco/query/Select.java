@@ -25,6 +25,12 @@ public class Select {
     }
 
     static String statementNear(String where, String data, String limit, Place place) {
-        return "";
+        return "SELECT "
+            + data
+            + " FROM " + TABLE + " "
+            + where
+            + " ORDER BY ABS(latitude - " + place.get("latitude") + ") + ABS(longitude - " + place.get("longitude") + ") "
+            + limit
+            + ";";
     }
 }
