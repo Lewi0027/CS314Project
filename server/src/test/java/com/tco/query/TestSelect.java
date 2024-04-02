@@ -35,4 +35,23 @@ public class TestSelect {
         "WHERE latitude BETWEEN 5.0 AND 25.0 AND longitude BETWEEN 30.0 AND 40.0 ORDER BY ABS(latitude - 15) + ABS(longitude - 35) " + 
         "LIMIT 200;", Select.near(boundOne, place) );
     }
+
+    //Tests for found
+    @Test
+    @DisplayName("Diegocel: Tests found for correct output")
+    public void testFoundCorrect(){
+        String match = "Barcelona";
+        String expectedQuery = "SELECT COUNT(*) AS count FROM world WHERE name LIKE \"%Barcelona%\";";
+        String actualQuery = Select.found(match);
+        assertEquals(expectedQuery, actualQuery, "Query should match");
+    }
+
+    @Test
+    @DisplayName("Diegocel: Test for found with no match")
+    public void testFoundNoMatch(){
+        String match = "";
+        String expectedQuery = "SELECT COUNT(*) AS count FROM world WHERE name LIKE \"%%\";";
+        String actualQuery = Select.found(match);
+        assertEquals(expectedQuery, actualQuery, "Query should match");
+    }
 }
