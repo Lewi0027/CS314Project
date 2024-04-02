@@ -41,7 +41,7 @@ public class TestSelect {
     @DisplayName("Diegocel: Tests found for correct output")
     public void testFoundCorrect(){
         String match = "Barcelona";
-        String expectedQuery = "SELECT COUNT(*) AS count FROM world WHERE name LIKE \"%Barcelona%\";";
+        String expectedQuery = "SELECT COUNT(*) AS count FROM world WHERE name LIKE \"%Barcelona%\"  ;";
         String actualQuery = Select.found(match);
         assertEquals(expectedQuery, actualQuery, "Query should match");
     }
@@ -50,7 +50,7 @@ public class TestSelect {
     @DisplayName("Diegocel: Test for found with no match")
     public void testFoundNoMatch(){
         String match = "";
-        String expectedQuery = "SELECT COUNT(*) AS count FROM world WHERE name LIKE \"%%\";";
+        String expectedQuery = "SELECT COUNT(*) AS count FROM world WHERE name LIKE \"%%\"  ;";
         String actualQuery = Select.found(match);
         assertEquals(expectedQuery, actualQuery, "Query should match");
     }
