@@ -29,7 +29,7 @@ public class TestSelect {
     }
 
     @Test
-    @DisplayName("wyattg5: Test near for correct output")
+    @DisplayName("Wyattg5: Test near for correct output")
     public void testNear() {
         assertEquals( "SELECT id,name,municipality,iso_region,iso_country,latitude,longitude,altitude,type FROM world " +
         "WHERE latitude BETWEEN 5.0 AND 25.0 AND longitude BETWEEN 30.0 AND 40.0 ORDER BY ABS(latitude - 15) + ABS(longitude - 35) " + 
@@ -41,7 +41,7 @@ public class TestSelect {
     @DisplayName("Diegocel: Tests found for correct output")
     public void testFoundCorrect(){
         String match = "Barcelona";
-        String expectedQuery = "SELECT COUNT(*) AS count FROM world WHERE name LIKE \"%Barcelona%\"  ;";
+        String expectedQuery = "SELECT COUNT(*) AS count FROM world WHERE name LIKE \"%Barcelona%\" ;";
         String actualQuery = Select.found(match);
         assertEquals(expectedQuery, actualQuery, "Query should match");
     }
@@ -50,8 +50,14 @@ public class TestSelect {
     @DisplayName("Diegocel: Test for found with no match")
     public void testFoundNoMatch(){
         String match = "";
-        String expectedQuery = "SELECT COUNT(*) AS count FROM world WHERE name LIKE \"%%\"  ;";
+        String expectedQuery = "SELECT COUNT(*) AS count FROM world WHERE name LIKE \"%%\" ;";
         String actualQuery = Select.found(match);
         assertEquals(expectedQuery, actualQuery, "Query should match");
+    }
+
+    @Test
+    @DisplayName("Wyattg5: Test statementFind for correct output")
+    public void testStatementFind() {
+        assertEquals( "SELECT data FROM world where LIMIT 5;", Select.statementFind(where, data, limit) );
     }
 }

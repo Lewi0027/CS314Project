@@ -29,7 +29,7 @@ public class Select {
             + data
             + " FROM " + TABLE
             + " " + where + " "
-            + limit + " ;";
+            + limit + ";";
     }
 
     static String statementNear(String where, String data, String limit, Place place) {
