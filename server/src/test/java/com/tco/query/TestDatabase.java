@@ -105,5 +105,34 @@ public class TestDatabase {
         }
         
     }
+
+    @Test
+    @DisplayName("bscheidt: test valid found query")
+    public void testValidFound() {
+        try {
+            String sql = "select COUNT(*) AS count from continent;";
+
+            int expected = 7;
+            
+            int actual = Database.found(sql);
+
+            assertEquals(expected, actual);
+        }
+        catch(Exception e) {
+            fail("Shouldnt have thrown an exception when querying the DB.");
+        }
+        
+    }
+
+    @Test
+    @DisplayName("bscheidt: test invalid found query")
+    public void testInalidFound() {
+        String sql = "invalid query";
+
+        assertThrows(Exception.class, () -> {
+            Database.found(sql);
+        });
+        
+    }
     
 }
