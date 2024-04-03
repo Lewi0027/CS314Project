@@ -8,8 +8,14 @@ public class BoundaryFinder {
     Boundary boundary;
     boolean boundaryCrossesPole;
 
-    public BoundaryFinder() {
-        //Constructor
+    public BoundaryFinder(double lat, double lon, double earthRadius, int distance) {
+        this.lat = lat;
+        this.lon = lon;
+        this.earthRadius = earthRadius;
+        this.distance = distance + 1; // +1 helps with rounding errors and edge cases
+        this.boundaryCrossesPole = false;
+        this.boundary = new Boundary();
+        calculateBoundary();
     }
 
     private void calculateBoundary() {
