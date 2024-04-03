@@ -21,7 +21,8 @@ public class Select {
     }
 
     static String match(String match, int limit) {
-        return "";
+        String where = "WHERE " + COLUMN + " LIKE \"%" + match + "%\""; 
+        return statementFind(where, COLUMNS + " ", "LIMIT " + limit);
     }
 
     static String statementFind(String where, String data, String limit) {
