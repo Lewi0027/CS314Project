@@ -14,6 +14,7 @@ public class TestSelect {
     final String where = "where";
     final String data = "data"; 
     final String limit = "LIMIT 5";
+    final String keyword = "keyword";
     Place place;    
     Boundary boundOne;
 
@@ -59,5 +60,11 @@ public class TestSelect {
     @DisplayName("Wyattg5: Test statementFind for correct output")
     public void testStatementFind() {
         assertEquals( "SELECT data FROM world where LIMIT 5;", Select.statementFind(where, data, limit) );
+    }
+
+    @Test
+    @DisplayName("Lewi0027: Test match() method for return value")
+    public void testMatchMethod() {
+        assertEquals( "SELECT id,name,municipality,iso_region,iso_country,latitude,longitude,altitude,type  FROM world WHERE name LIKE \"%keyword%\" LIMIT 5;", Select.match(keyword, 5) );
     }
 }
