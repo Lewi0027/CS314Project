@@ -34,12 +34,30 @@ public class BoundaryFinder {
     }
 
     private double getLatMin(double ratio) {
-        return -1;
+        double latMin = this.lat - (this.distance / ratio);
+        if(latMin < -90){
+            this.boundaryCrossesPole = true;
+            latMin = -90;
+        }
+        else if(latMin > 90){
+            this.boundaryCrossesPole = true;
+            latMin = 90;
+        }
+        return latMin;
     }
 
     private double getLatMax(double ratio) {
-        return -1;
-    }
+        double latMax = this.lat + (this.distance / ratio);
+        if(latMax < -90){
+            this.boundaryCrossesPole = true;
+            latMax = -90;
+        }
+        else if(latMax > 90){
+            this.boundaryCrossesPole = true;
+            latMax = 90;
+        }
+        return latMax;
+    }       
 
     private double getLonMin(double latByEquator) {
         return -1;
