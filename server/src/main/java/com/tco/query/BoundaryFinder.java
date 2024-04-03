@@ -33,7 +33,7 @@ public class BoundaryFinder {
         return -1;
     }
 
-    private double getLatMin(double ratio) {
+    protected double getLatMin(double ratio) {
         double latMin = this.lat - (this.distance / ratio);
         if(latMin < -90){
             this.boundaryCrossesPole = true;
@@ -46,7 +46,7 @@ public class BoundaryFinder {
         return latMin;
     }
 
-    private double getLatMax(double ratio) {
+    protected double getLatMax(double ratio) {
         double latMax = this.lat + (this.distance / ratio);
         if(latMax < -90){
             this.boundaryCrossesPole = true;
