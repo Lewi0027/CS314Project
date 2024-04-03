@@ -19,30 +19,37 @@ public class BoundaryFinder {
     }
 
     private void calculateBoundary() {
+        double latDegreePerDistance = calculateLatRatio();
+        this.boundary.latMin = getLatMin(latDegreePerDistance);
+        this.boundary.latMax = getLatMax(latDegreePerDistance);
 
+        double latBoundaryByEquator = Math.min(Math.abs(this.boundary.latMin), Math.abs(this.boundary.latMax));
+
+        this.boundary.lonMin = getLonMin(latBoundaryByEquator);
+        this.boundary.lonMax = getLonMax(latBoundaryByEquator);
     }
 
     private double calculateLatRatio() {
         return -1;
     }
 
-    private double getLatMin() {
+    private double getLatMin(double ratio) {
         return -1;
     }
 
-    private double getLatMax() {
+    private double getLatMax(double ratio) {
         return -1;
     }
 
-    private double getLonMin() {
+    private double getLonMin(double latByEquator) {
         return -1;
     }
 
-    private double getLonMax() {
+    private double getLonMax(double latByEquator) {
         return -1;
     }
 
-    private double degreesOfLongitude() {
+    private double degreesOfLongitude(double latByEquator) {
         return -1;
     }
 
