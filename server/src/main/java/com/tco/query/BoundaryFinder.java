@@ -33,23 +33,23 @@ public class BoundaryFinder {
         return -1;
     }
 
-    private double getLatMin() {
+    private double getLatMin(double ratio) {
         return -1;
     }
 
-    private double getLatMax() {
+    private double getLatMax(double ratio) {
         return -1;
     }
 
-    private double getLonMin() {
+    private double getLonMin(double latByEquator) {
         return -1;
     }
 
-    private double getLonMax() {
+    private double getLonMax(double latByEquator) {
         return -1;
     }
 
-    private double degreesOfLongitude() {
+    private double degreesOfLongitude(double latByEquator) {
         return -1;
     }
 
