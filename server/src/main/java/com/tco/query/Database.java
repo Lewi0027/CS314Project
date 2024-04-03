@@ -30,7 +30,11 @@ public class Database {
         }
 
         static Integer found(String sql) throws Exception {
-            return 0;
+            ResultSet results = performQuery(sql);
+            if (!results.next()) {
+                throw new Exception("No count results in found query.");
+            }
+            return results.getInt("count");
         }
 
         static Places places(String sql) throws Exception {
