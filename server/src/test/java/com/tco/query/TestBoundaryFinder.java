@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestBoundaryFinder {
     BoundaryFinder boundFinderOne;
@@ -73,4 +74,14 @@ public class TestBoundaryFinder {
         double actual = boundFinderOne.getLonMax(20);
         assertEquals(expected, actual);
     }  
+    @Test
+    @DisplayName("Wyattg5: Test constructor for correct output")
+    public void testBoundaryFinderConstructor() {
+        BoundaryFinder boundfind = new BoundaryFinder(15, 35, 1000, 99);
+        assertEquals(15, boundfind.lat);
+        assertEquals(35, boundfind.lon);
+        assertEquals(1000, boundfind.earthRadius);
+        assertEquals(100, boundfind.distance);
+        assertTrue(boundfind.getBoundary() instanceof Boundary);
+    }
 }
