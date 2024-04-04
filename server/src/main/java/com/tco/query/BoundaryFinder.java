@@ -18,7 +18,7 @@ public class BoundaryFinder {
         calculateBoundary();
     }
 
-    private void calculateBoundary() {
+    protected void calculateBoundary() {
         double latDegreePerDistance = calculateLatRatio();
         this.boundary.latMin = getLatMin(latDegreePerDistance);
         this.boundary.latMax = getLatMax(latDegreePerDistance);
@@ -60,12 +60,12 @@ public class BoundaryFinder {
         return latMax;
     }       
 
-    private double getLonMin(double latByEquator) {
+    protected double getLonMin(double latByEquator) {
         if(this.boundaryCrossesPole) return -180;
         return this.lon - degreesOfLongitude(latByEquator);
     }
 
-    private double getLonMax(double latByEquator) {
+    protected double getLonMax(double latByEquator) {
         if(this.boundaryCrossesPole) return 180;
         return this.lon + degreesOfLongitude(latByEquator);
 

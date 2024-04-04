@@ -38,5 +38,15 @@ public class TestBoundaryFinder {
         assertEquals(expected, actual);
     }
 
+    @Test
+    @DisplayName("diegocel: test calculateBoundary() for correct output")
+    public void testCalculateBoundary(){
+        boundFinderOne.calculateBoundary();
+
+        assertEquals(13.0, boundFinderOne.getLatMin(50));
+        assertEquals(17.0, boundFinderOne.getLatMax(50));
+        assertEquals(26.086359063295717, boundFinderOne.getLonMin(50));
+        assertEquals(43.91364093670428, boundFinderOne.getLonMax(50));
+    }
     
 }
