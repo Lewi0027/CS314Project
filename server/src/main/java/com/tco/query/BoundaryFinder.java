@@ -80,4 +80,12 @@ public class BoundaryFinder {
     public Boundary getBoundary() {
         return this.boundary;
     }
+
+    // testing
+    protected void setCrossesPoleToFalse() {
+        this.boundaryCrossesPole = false;
+    }
+    protected void setCrossesPoleToTrue() {
+        this.boundaryCrossesPole = true;
+    }
 }
