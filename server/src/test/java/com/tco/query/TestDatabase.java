@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class TestDatabase {
 
     static class ResultSetConverter {
-
+        
         public static String resultSetToString(ResultSet rs) throws SQLException {
             StringBuilder sb = new StringBuilder();
             ResultSetMetaData rsmd = rs.getMetaData();
@@ -133,6 +133,30 @@ public class TestDatabase {
             Database.found(sql);
         });
         
+    }
+
+    @Test
+    @DisplayName("lewi0027:testing Places() method")
+    public void testPlacesMethod() {
+        try{    
+            Places actual = Database.places("SELECT * FROM world WHERE latitude BETWEEN 5.0 AND 25.0 AND longitude BETWEEN 30.0 AND 40.0;");
+
+            assertEquals(105, actual.size());
+        } catch(Exception e) {
+            fail("Shouldnt have thrown an exception when querying the DB.");
+        }        
+    }
+
+    @Test
+    @DisplayName("lewi0027:testing Places() method with an Empty Set return")
+    public void testPlacesMethodEmptySet() {
+        try{    
+            Places actual = Database.places("SELECT * FROM world WHERE latitude BETWEEN 75.0 AND 85.0 AND longitude BETWEEN 30.0 AND 40.0;");
+
+            assertEquals(0, actual.size());
+        } catch(Exception e) {
+            fail("Shouldnt have thrown an exception when querying the DB.");
+        }        
     }
     
 }
