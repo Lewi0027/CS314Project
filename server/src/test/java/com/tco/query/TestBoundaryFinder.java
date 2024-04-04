@@ -38,5 +38,39 @@ public class TestBoundaryFinder {
         assertEquals(expected, actual);
     }
 
-    
+    @Test
+    @DisplayName("bscheidt: test getLonMin() boundary crosses pole")
+    public void testGetLonMinCrossesPole() {
+        boundFinderOne.setCrossesPoleToTrue();
+        double expected = -180;
+        double actual = boundFinderOne.getLonMin(20);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("bscheidt: test getLonMin() boundary does not cross pole")
+    public void testGetLonMinNotCrossesPole() {
+        boundFinderOne.setCrossesPoleToFalse();
+        double expected = 28.902710498549705;
+        double actual = boundFinderOne.getLonMin(20);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("bscheidt: test getLonMax() boundary crosses pole")
+    public void testGetLonMaxCrossesPole() {
+        boundFinderOne.setCrossesPoleToTrue();
+        double expected = 180;
+        double actual = boundFinderOne.getLonMax(20);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("bscheidt: test getLonMax() boundary does not cross pole")
+    public void testGetLonMaxNotCrossesPole() {
+        boundFinderOne.setCrossesPoleToFalse();
+        double expected = 41.0972895014503;
+        double actual = boundFinderOne.getLonMax(20);
+        assertEquals(expected, actual);
+    }  
 }
