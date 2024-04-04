@@ -61,11 +61,14 @@ public class BoundaryFinder {
     }       
 
     private double getLonMin(double latByEquator) {
-        return -1;
+        if(this.boundaryCrossesPole) return -180;
+        return this.lon - degreesOfLongitude(latByEquator);
     }
 
     private double getLonMax(double latByEquator) {
-        return -1;
+        if(this.boundaryCrossesPole) return 180;
+        return this.lon + degreesOfLongitude(latByEquator);
+
     }
 
     private double degreesOfLongitude(double latByEquator) {
