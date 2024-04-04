@@ -10,8 +10,6 @@ import java.sql.Statement;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
-import java.util.Map;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -47,15 +45,6 @@ public class TestDatabase {
             }
 
             return sb.toString();
-        }
-    }
-
-    private void printPlaces(Places places) {
-        for (Place place : places) {
-            System.out.println("Place:");
-            for (Map.Entry<String, String> entry : place.entrySet()) {
-                System.out.println(entry.getKey() + ": " + entry.getValue());
-            }
         }
     }
 
