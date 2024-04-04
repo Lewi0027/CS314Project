@@ -32,15 +32,25 @@ public class NearLocations {
     private Boundary searchBoundary;
 
     public NearLocations(Place place, int distance, double earthRadius, int limit, String formula) {
-        // Constructor
+        this.place = place;
+        this.distance = distance;
+        this.earthRadius = earthRadius;
+        this.limit = limit;
+        this.formula = formula;
+        this.places = new Places();
+        this.distances = new Distances();
     }
 
     public Distances distances() {
-        return null;
+        return this.distances;
     }
 
     public Places near() throws Exception {
-        return null;
+        searchBoundary = getSearchBoundary();
+        Places foundInBoundary = findPlacesWithinBoundary(searchBoundary);
+        buildDistancesAndPlaces(foundInBoundary);
+
+        return this.places;
     }
 
     private Boundary getSearchBoundary() {
