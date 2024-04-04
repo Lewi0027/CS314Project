@@ -18,7 +18,7 @@ public class BoundaryFinder {
         calculateBoundary();
     }
 
-    private void calculateBoundary() {
+    protected void calculateBoundary() {
         double latDegreePerDistance = calculateLatRatio();
         this.boundary.latMin = getLatMin(latDegreePerDistance);
         this.boundary.latMax = getLatMax(latDegreePerDistance);
