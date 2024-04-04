@@ -29,8 +29,9 @@ public class BoundaryFinder {
         this.boundary.lonMax = getLonMax(latBoundaryByEquator);
     }
 
-    private double calculateLatRatio() {
-        return -1;
+    protected double calculateLatRatio() {
+        double circumference = (2 * Math.PI) * this.earthRadius;
+        return circumference / 360;
     }
 
     protected double getLatMin(double ratio) {
