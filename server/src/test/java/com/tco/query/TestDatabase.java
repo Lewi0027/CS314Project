@@ -139,11 +139,11 @@ public class TestDatabase {
     @DisplayName("lewi0027:testing Places() method")
     public void testPlacesMethod() {
         try{    
-            Places actual = Database.places("SELECT name,municipality,latitude,longitude,altitude,type FROM world WHERE latitude BETWEEN 5.0 AND 25.0 AND longitude BETWEEN 30.0 AND 40.0 ORDER BY ABS(latitude - 15) + ABS(longitude - 35) LIMIT 130;");
+            Places actual = Database.places("SELECT * FROM world WHERE latitude BETWEEN 5.0 AND 25.0 AND longitude BETWEEN 30.0 AND 40.0;");
 
             assertEquals(105, actual.size());
         } catch(Exception e) {
-            StringBuilder errorMessage = new StringBuilder("Shouldn't have thrown an exception when querying the DB. ");
+            fail("Shouldnt have thrown an exception when querying the DB.");
         }        
     }
 
@@ -151,11 +151,11 @@ public class TestDatabase {
     @DisplayName("lewi0027:testing Places() method with an Empty Set return")
     public void testPlacesMethodEmptySet() {
         try{    
-            Places actual = Database.places("SELECT name,municipality,latitude,longitude,altitude,type FROM world WHERE latitude BETWEEN 75.0 AND 85.0 AND longitude BETWEEN 30.0 AND 40.0 ORDER BY ABS(latitude - 15) + ABS(longitude - 35) LIMIT 130;");
+            Places actual = Database.places("SELECT * FROM world WHERE latitude BETWEEN 75.0 AND 85.0 AND longitude BETWEEN 30.0 AND 40.0;");
 
             assertEquals(0, actual.size());
         } catch(Exception e) {
-            StringBuilder errorMessage = new StringBuilder("Shouldn't have thrown an exception when querying the DB. ");
+            fail("Shouldnt have thrown an exception when querying the DB.");
         }        
     }
     
