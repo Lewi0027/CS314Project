@@ -10,7 +10,8 @@ public class TestBoundaryFinder {
     BoundaryFinder boundFinderOne;
     BoundaryFinder boundFinderTwo;
 
-    public TestBoundaryFinder(){
+    @BeforeEach
+    public void setup(){
         boundFinderOne = new BoundaryFinder(15, 35, 1000, 99);       
         boundFinderTwo = new BoundaryFinder(45, 45, 5000, 9);       
     }
@@ -27,6 +28,14 @@ public class TestBoundaryFinder {
     public void testGetLatMax() {
         assertEquals(17.0, boundFinderOne.getLatMax(50));
         assertEquals(46.0, boundFinderTwo.getLatMax(10));
+    }
+
+    @Test
+    @DisplayName("bscheidt: test calculateLatRatio() returns correct calculation")
+    public void testCalculateLatRatio() {
+        double expected = 17.453292519943293;
+        double actual = boundFinderOne.calculateLatRatio();
+        assertEquals(expected, actual);
     }
 
     
