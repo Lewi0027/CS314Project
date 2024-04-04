@@ -10,6 +10,8 @@ import java.sql.Statement;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
+import java.util.Map;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class TestDatabase {
 
     static class ResultSetConverter {
-
+        
         public static String resultSetToString(ResultSet rs) throws SQLException {
             StringBuilder sb = new StringBuilder();
             ResultSetMetaData rsmd = rs.getMetaData();
@@ -45,6 +47,15 @@ public class TestDatabase {
             }
 
             return sb.toString();
+        }
+    }
+
+    private void printPlaces(Places places) {
+        for (Place place : places) {
+            System.out.println("Place:");
+            for (Map.Entry<String, String> entry : place.entrySet()) {
+                System.out.println(entry.getKey() + ": " + entry.getValue());
+            }
         }
     }
 
@@ -133,6 +144,30 @@ public class TestDatabase {
             Database.found(sql);
         });
         
+    }
+
+    @Test
+    @DisplayName("lewi0027:testing Places() method")
+    public void testPlacesMethod() {
+        try{    
+            Places actual = Database.places("SELECT name,municipality,latitude,longitude,altitude,type FROM world WHERE latitude BETWEEN 5.0 AND 25.0 AND longitude BETWEEN 30.0 AND 40.0 ORDER BY ABS(latitude - 15) + ABS(longitude - 35) LIMIT 130;");
+
+            assertEquals(105, actual.size());
+        } catch(Exception e) {
+            StringBuilder errorMessage = new StringBuilder("Shouldn't have thrown an exception when querying the DB. ");
+        }        
+    }
+
+    @Test
+    @DisplayName("lewi0027:testing Places() method with an Empty Set return")
+    public void testPlacesMethodEmptySet() {
+        try{    
+            Places actual = Database.places("SELECT name,municipality,latitude,longitude,altitude,type FROM world WHERE latitude BETWEEN 75.0 AND 85.0 AND longitude BETWEEN 30.0 AND 40.0 ORDER BY ABS(latitude - 15) + ABS(longitude - 35) LIMIT 130;");
+
+            assertEquals(0, actual.size());
+        } catch(Exception e) {
+            StringBuilder errorMessage = new StringBuilder("Shouldn't have thrown an exception when querying the DB. ");
+        }        
     }
     
 }
