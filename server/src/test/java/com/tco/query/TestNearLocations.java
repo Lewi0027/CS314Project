@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import com.tco.requests.Place;
 import com.tco.requests.Places;
+import com.tco.requests.Distances;
 
 public class TestNearLocations {
     NearLocations locations;
@@ -218,5 +219,59 @@ public class TestNearLocations {
 
         assertEquals(13l, pairs.get(0).getDistance());
         assertEquals(12l, pairs.get(1).getDistance());
+    }
+
+    @Test
+    @DisplayName("ajlei: test fillPlacesAndDistances with an empty pairs variable") 
+    public void testEmptyPairsFill() {
+        locations = new NearLocations(foco, 21, 3959, 10, "vincenty");
+
+        Places places = new Places();
+        places.add(windsor);
+        places.add(greeley);
+        places.add(loveland);
+        places.add(estesPark);
+        places.add(boulder);
+
+        Distances distances = new Distances();
+        distances.add((long)10);
+        distances.add((long)11);
+        distances.add((long)12);
+        distances.add((long)13);
+        distances.add((long)14);
+
+        locations.setPlaces(places);
+        locations.setDistances(distances);
+
+        List<PlaceDistancePair> pairs = new ArrayList<>();
+        locations.fillPlacesAndDistances(pairs);
+
+        assertEquals(0, locations.getPlaces().size());
+        assertEquals(0, locations.distances().size());
+    }
+
+    @Test
+    @DisplayName("ajlei: test fillPlacesAndDistances with empty places and distances variables") 
+    public void testPlacesDistancesFill() {
+        locations = new NearLocations(foco, 21, 3959, 10, "vincenty");
+
+        Places places = new Places();
+        Distances distances = new Distances();
+
+        locations.setPlaces(places);
+        locations.setDistances(distances);
+
+        List<PlaceDistancePair> pairs = new ArrayList<>();
+        pairs.add(new PlaceDistancePair(windsor, (long)10));
+        pairs.add(new PlaceDistancePair(greeley, (long)10));
+        pairs.add(new PlaceDistancePair(loveland, (long)10));
+        pairs.add(new PlaceDistancePair(estesPark, (long)10));
+        pairs.add(new PlaceDistancePair(boulder, (long)10));
+
+
+        locations.fillPlacesAndDistances(pairs);
+
+        assertEquals(5, locations.getPlaces().size());
+        assertEquals(5, locations.distances().size());
     }
 }
