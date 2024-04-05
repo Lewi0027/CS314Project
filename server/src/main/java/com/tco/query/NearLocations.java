@@ -78,12 +78,23 @@ public class NearLocations {
 
     }
 
-    private void populatePairs(Places allFound, List<PlaceDistancePair> pairs) {
+    protected void populatePairs(Places allFound, List<PlaceDistancePair> pairs) {
+        GreatCircleDistance distanceCalculator = FormulaFactory.createFormula(this.formula);
 
+        for (int index = 0; index < allFound.size(); index++) {
+            GeographicCoordinate from = this.place;
+            GeographicCoordinate to = allFound.get(index);
+
+            long distance = distanceCalculator.between(from, to, this.earthRadius);
+
+            if (distance <= this.distance) {
+                pairs.add(new PlaceDistancePair(allFound.get(index), distance));
+            }
+        }
     }
 
     private void fillPlacesAndDistances(List<PlaceDistancePair> pairs) {
-
+        
     }
 
     protected void sortAndTrimPairs(List<PlaceDistancePair> pairs) {

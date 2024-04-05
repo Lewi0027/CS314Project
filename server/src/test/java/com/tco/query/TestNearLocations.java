@@ -11,13 +11,26 @@ import java.util.List;
 import java.util.ArrayList;
 
 import com.tco.requests.Place;
+import com.tco.requests.Places;
 
 public class TestNearLocations {
     NearLocations locations;
+    Place foco;
+    Place loveland;
+    Place windsor;
+    Place greeley;
+    Place estesPark;
+    Place boulder;
 
     @BeforeEach
     public void setup() {
-        Place foco = new Place("40.572978", "-105.086761");
+        foco = new Place("40.572978", "-105.086761");
+        loveland = new Place("40.40", "-105.08"); // distance from foco: 12
+        windsor = new Place("40.46", "-104.89"); // distance from foco: 13
+        greeley = new Place("40.42", "-104.71"); // distance from foco: 22
+        estesPark = new Place("40.38", "-105.52"); // distance from foco: 26
+        boulder = new Place("40.02", "-105.27"); // distance from foco: 39
+
         locations = new NearLocations(foco, 5, 3959, 10, "vincenty");
     }
 
@@ -149,5 +162,61 @@ public class TestNearLocations {
         assertEquals(1, pairs.size());
         assertEquals(four, pairs.get(0));
 
+    }
+
+    @Test
+    @DisplayName("bscheidt: test populatePairs() all within correct distance")
+    public void testPopulatePairsWithinDistance() {
+        Places allFound = new Places();
+        allFound.add(windsor);
+        allFound.add(greeley);
+        allFound.add(loveland);
+        allFound.add(estesPark);
+        allFound.add(boulder);
+
+        locations = new NearLocations(foco, 39, 3959, 10, "vincenty");
+
+        List<PlaceDistancePair> pairs = new ArrayList<>();
+
+        locations.populatePairs(allFound, pairs);
+
+        assertEquals(5, pairs.size());
+
+        assertEquals(windsor, pairs.get(0).getPlace());
+        assertEquals(greeley, pairs.get(1).getPlace());
+        assertEquals(loveland, pairs.get(2).getPlace());
+        assertEquals(estesPark, pairs.get(3).getPlace());
+        assertEquals(boulder, pairs.get(4).getPlace());
+
+        assertEquals(13l, pairs.get(0).getDistance());
+        assertEquals(22l, pairs.get(1).getDistance());
+        assertEquals(12l, pairs.get(2).getDistance());
+        assertEquals(26l, pairs.get(3).getDistance());
+        assertEquals(39l, pairs.get(4).getDistance());
+    }
+
+    @Test
+    @DisplayName("bscheidt: test populatePairs() only some within correct distance")
+    public void testPopulatePairsWithinPartialDistance() {
+        Places allFound = new Places();
+        allFound.add(windsor);
+        allFound.add(greeley);
+        allFound.add(loveland);
+        allFound.add(estesPark);
+        allFound.add(boulder);
+
+        locations = new NearLocations(foco, 21, 3959, 10, "vincenty");
+
+        List<PlaceDistancePair> pairs = new ArrayList<>();
+
+        locations.populatePairs(allFound, pairs);
+
+        assertEquals(2, pairs.size());
+
+        assertEquals(windsor, pairs.get(0).getPlace());
+        assertEquals(loveland, pairs.get(1).getPlace());
+
+        assertEquals(13l, pairs.get(0).getDistance());
+        assertEquals(12l, pairs.get(1).getDistance());
     }
 }
