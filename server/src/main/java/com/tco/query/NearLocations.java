@@ -53,8 +53,13 @@ public class NearLocations {
         return this.places;
     }
 
-    private Boundary getSearchBoundary() {
-        return null;
+    protected Boundary getSearchBoundary() {
+        double lat = Double.parseDouble(this.place.get("latitude"));
+        double lon = Double.parseDouble(this.place.get("longitude"));
+
+        BoundaryFinder finder = new BoundaryFinder(lat, lon, this.earthRadius, this.distance);
+
+        return finder.getBoundary();
     }
 
     private Places findPlacesWithinBoundary(Boundary searchBoundary) throws Exception {
