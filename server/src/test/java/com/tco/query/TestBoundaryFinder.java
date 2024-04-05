@@ -39,6 +39,23 @@ public class TestBoundaryFinder {
         assertEquals(expected, actual);
     }
 
+    // degreesOfLongitude(double latByEquator)
+    @Test
+    @DisplayName("ajlei: test calculateLatRatio() returns for latByEquator = 75")
+    public void testPositiveDegreesOfLong() {
+        double expected = 22.13738926762013;
+        double actual = boundFinderOne.degreesOfLongitude(75.0);
+        assertEquals(expected, actual, 0.00000001);
+    }
+
+    @Test
+    @DisplayName("ajlei: test calculateLatRatio() returns for latByEquator = -75")
+    public void testNegativeDegreesOfLong() {
+        double expected = 22.13738926762013;
+        double actual = boundFinderOne.degreesOfLongitude(-75.0);
+        assertEquals(expected, actual, 0.00000001);
+    }
+
     @Test
     @DisplayName("diegocel: test calculateBoundary() for correct output")
     public void testCalculateBoundary(){
