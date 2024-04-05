@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import com.tco.requests.Place;
 
 public class TestNearLocations {
@@ -78,5 +81,73 @@ public class TestNearLocations {
 
         assertEquals(expectedLonMin, boundarySouth.lonMin);
         assertEquals(expectedLonMax, boundarySouth.lonMax);
+    }
+
+    @Test
+    @DisplayName("bscheidt: test sorting place/distance pairs")
+    public void testSortPDPairs() {
+        Place placeOne = new Place("0", "0");
+        Place placeTwo = new Place("20", "20");
+        Place placeThree = new Place("40", "40");
+        Place placeFour = new Place("60", "60");
+
+        long distanceOne = 40l;
+        long distanceTwo = 30l;
+        long distanceThree = 20l;
+        long distanceFour = 10l;
+
+        PlaceDistancePair one = new PlaceDistancePair(placeOne, distanceOne);
+        PlaceDistancePair two = new PlaceDistancePair(placeTwo, distanceTwo);
+        PlaceDistancePair three = new PlaceDistancePair(placeThree, distanceThree);
+        PlaceDistancePair four = new PlaceDistancePair(placeFour, distanceFour);
+
+        List<PlaceDistancePair> pairs = new ArrayList<>();
+
+        pairs.add(one);
+        pairs.add(two);
+        pairs.add(three);
+        pairs.add(four);
+
+        locations.sortAndTrimPairs(pairs);
+
+        assertEquals(four, pairs.get(0));
+        assertEquals(three, pairs.get(1));
+        assertEquals(two, pairs.get(2));
+        assertEquals(one, pairs.get(3));
+
+    }
+
+    @Test
+    @DisplayName("bscheidt: test trimming place/distance pairs")
+    public void testTrimPDPairs() {
+        Place placeOne = new Place("0", "0");
+        Place placeTwo = new Place("20", "20");
+        Place placeThree = new Place("40", "40");
+        Place placeFour = new Place("60", "60");
+
+        long distanceOne = 40l;
+        long distanceTwo = 30l;
+        long distanceThree = 20l;
+        long distanceFour = 10l;
+
+        PlaceDistancePair one = new PlaceDistancePair(placeOne, distanceOne);
+        PlaceDistancePair two = new PlaceDistancePair(placeTwo, distanceTwo);
+        PlaceDistancePair three = new PlaceDistancePair(placeThree, distanceThree);
+        PlaceDistancePair four = new PlaceDistancePair(placeFour, distanceFour);
+
+        List<PlaceDistancePair> pairs = new ArrayList<>();
+
+        pairs.add(one);
+        pairs.add(two);
+        pairs.add(three);
+        pairs.add(four);
+
+        locations = new NearLocations(placeOne, 0, 0, 1, "vincenty");
+
+        locations.sortAndTrimPairs(pairs);
+
+        assertEquals(1, pairs.size());
+        assertEquals(four, pairs.get(0));
+
     }
 }

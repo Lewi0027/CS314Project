@@ -86,8 +86,15 @@ public class NearLocations {
 
     }
 
-    private void sortAndTrimPairs(List<PlaceDistancePair> pairs) {
+    protected void sortAndTrimPairs(List<PlaceDistancePair> pairs) {
+        // Sort pairs by distance
+        pairs.sort(Comparator.comparingLong(PlaceDistancePair::getDistance));
 
+        if(pairs.size() > this.limit) {
+            List<PlaceDistancePair> trimmedList = new ArrayList<>(pairs.subList(0, this.limit));
+            pairs.clear();
+            pairs.addAll(trimmedList);
+        }
     }
 
 }
