@@ -93,7 +93,14 @@ public class NearLocations {
         }
     }
 
-    private void fillPlacesAndDistances(List<PlaceDistancePair> pairs) {
+    protected void fillPlacesAndDistances(List<PlaceDistancePair> pairs) {
+        this.places.clear();
+        this.distances.clear();
+
+        for(PlaceDistancePair pair : pairs) {
+            this.places.add(pair.getPlace());
+            this.distances.add(pair.getDistance());
+        }
         
     }
 
@@ -107,5 +114,12 @@ public class NearLocations {
             pairs.addAll(trimmedList);
         }
     }
+
+
+    // For testing
+    protected Places getPlaces() { return this.places; }
+
+    protected void setPlaces(Places cover) { this.places = cover; }
+    protected void setDistances(Distances cover) { this.distances = cover; }
 
 }
