@@ -54,6 +54,7 @@ public class TestBoundaryFinder {
         double expected = 21.916015374943928;
         double actual = boundFinderOne.degreesOfLongitude(-75.0);
         assertEquals(expected, actual, 0.00000001);
+    }
 
     @Test
     @DisplayName("diegocel: test calculateBoundary() for correct output")
