@@ -71,7 +71,7 @@ public class BoundaryFinder {
 
     }
 
-    private double degreesOfLongitude(double latByEquator) {
+    protected double degreesOfLongitude(double latByEquator) {
         double radiusAtLatitude = this.earthRadius * Math.cos(Math.toRadians(latByEquator));
         double distancePerDegree = (2 * Math.PI * radiusAtLatitude) / 360;
         return this.distance / distancePerDegree;
