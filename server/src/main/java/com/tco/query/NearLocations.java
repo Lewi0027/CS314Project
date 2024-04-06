@@ -66,8 +66,12 @@ public class NearLocations {
         return null;
     }
 
-    private void buildDistancesAndPlaces(Places allFound) {
+    protected void buildDistancesAndPlaces(Places allFound) {
+        List<PlaceDistancePair> pairs = new ArrayList<>();
 
+        populatePairs(allFound, pairs);
+        sortAndTrimPairs(pairs);
+        fillPlacesAndDistances(pairs);
     }
 
     protected Places combineQueries(Boundary searchBoundary) throws Exception {
