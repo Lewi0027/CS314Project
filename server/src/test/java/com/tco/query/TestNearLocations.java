@@ -318,4 +318,34 @@ public class TestNearLocations {
         assertTrue(two.lonMax == twoExpected.lonMax);
         assertTrue(two.lonMin == twoExpected.lonMin);
     }
+
+    @Test
+    @DisplayName("ajlei: test buildDistancesAndPairs()")
+    public void testBuildDistancesAndPlaces() {
+        Places allFound = new Places();
+        allFound.add(windsor);// distance from foco: 13
+        allFound.add(greeley);// distance from foco: 22
+        allFound.add(loveland);// distance from foco: 12
+        allFound.add(estesPark);// distance from foco: 26
+        allFound.add(boulder);// distance from foco: 39
+
+        locations = new NearLocations(foco, 39, 3959, 10, "vincenty");
+
+        locations.buildDistancesAndPlaces(allFound);
+
+        assertEquals(5, locations.getPlaces().size());
+        assertEquals(5, locations.distances().size());
+
+        assertEquals(loveland, locations.getPlaces().get(0));
+        assertEquals(windsor, locations.getPlaces().get(1));
+        assertEquals(greeley, locations.getPlaces().get(2));
+        assertEquals(estesPark, locations.getPlaces().get(3));
+        assertEquals(boulder, locations.getPlaces().get(4));
+
+        assertEquals(12l, locations.distances().get(0));
+        assertEquals(13l, locations.distances().get(1));
+        assertEquals(22l, locations.distances().get(2));
+        assertEquals(26l, locations.distances().get(3));
+        assertEquals(39l, locations.distances().get(4));
+    }
 }
