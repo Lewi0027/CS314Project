@@ -12,14 +12,19 @@ public class ConfigRequest extends Request {
 
     private String serverName;
     private List<String> features;
+    private List<String> formulae;
 
     @Override
     public void buildResponse() {
         serverName = "t28 BarleyBytes";
         features = new ArrayList<>();
+        formulae = new ArrayList<>();
         features.add("config");
         features.add("distances");
         features.add("tour");
+        formulae.add("vincenty");
+        formulae.add("haversine");
+        formulae.add("cosines");
         log.trace("buildResponse -> {}", this);
     }
 
