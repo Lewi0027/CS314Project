@@ -74,6 +74,15 @@ public class NearLocations {
         return null;
     }
 
+    protected Places queryCombinedBoundaries(Boundary one, Boundary two) throws Exception{
+        Places queryOne = Database.places(Select.near(one, this.place));
+        Places queryTwo = Database.places(Select.near(two, this.place));
+
+        queryOne.addAll(queryTwo);
+
+        return queryOne;
+    }
+
     private void modifyCombinedBoundaries(Boundary one, Boundary two, Boundary searchBoundary) {
 
     }
