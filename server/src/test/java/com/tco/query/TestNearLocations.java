@@ -274,4 +274,48 @@ public class TestNearLocations {
         assertEquals(5, locations.getPlaces().size());
         assertEquals(5, locations.distances().size());
     }
+
+    @Test
+    @DisplayName("lewi0027: Test modifyCombinedBoundaries for wrap around") 
+    public void testModifyCombinedBoundariesWrapAround() {
+        Boundary one = new Boundary(90, 100, 175, 185);
+        Boundary two = new Boundary(90, 100, 175, 185);
+        Boundary searchBoundary = new Boundary(90, 100, 175, 185);
+        Boundary oneExpected = new Boundary(90, 100, 175, 180);
+        Boundary twoExpected = new Boundary(90, 100, -180, -175);
+
+        NearLocations nearLocations = new NearLocations(new Place("0", "0"), 0, 0, 0, "");
+        nearLocations.modifyCombinedBoundaries(one, two, searchBoundary);
+        
+        assertTrue(one.latMax == oneExpected.latMax);
+        assertTrue(one.latMin == oneExpected.latMin);
+        assertTrue(one.lonMax == oneExpected.lonMax);
+        assertTrue(one.lonMin == oneExpected.lonMin);
+        assertTrue(two.latMax == twoExpected.latMax);
+        assertTrue(two.latMin == twoExpected.latMin);
+        assertTrue(two.lonMax == twoExpected.lonMax);
+        assertTrue(two.lonMin == twoExpected.lonMin);
+    }
+
+    @Test
+    @DisplayName("lewi0027: Test modifyCombinedBoundaries wrap around negative direction") 
+    public void testModifyCombinedBoundariesWrapAroundNegativeDirection() {
+        Boundary one = new Boundary(90, 100, -185, -175);
+        Boundary two = new Boundary(90, 100, -185, -175);
+        Boundary searchBoundary = new Boundary(90, 100, -185, -175);
+        Boundary oneExpected = new Boundary(90, 100, -180, -175);
+        Boundary twoExpected = new Boundary(90, 100, 175, 180);
+
+        NearLocations nearLocations = new NearLocations(new Place("0", "0"), 0, 0, 0, "");
+        nearLocations.modifyCombinedBoundaries(one, two, searchBoundary);
+        
+        assertTrue(one.latMax == oneExpected.latMax);
+        assertTrue(one.latMin == oneExpected.latMin);
+        assertTrue(one.lonMax == oneExpected.lonMax);
+        assertTrue(one.lonMin == oneExpected.lonMin);
+        assertTrue(two.latMax == twoExpected.latMax);
+        assertTrue(two.latMin == twoExpected.latMin);
+        assertTrue(two.lonMax == twoExpected.lonMax);
+        assertTrue(two.lonMin == twoExpected.lonMin);
+    }
 }
