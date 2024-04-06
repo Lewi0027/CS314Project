@@ -70,8 +70,13 @@ public class NearLocations {
 
     }
 
-    private Places combineQueries(Boundary searchBoundary) throws Exception {
-        return null;
+    protected Places combineQueries(Boundary searchBoundary) throws Exception {
+        Boundary one = new Boundary(searchBoundary);
+        Boundary two = new Boundary(searchBoundary);
+
+        modifyCombinedBoundaries(one, two, searchBoundary);
+
+        return queryCombinedBoundaries(one, two);
     }
 
     protected Places queryCombinedBoundaries(Boundary one, Boundary two) throws Exception{
