@@ -83,8 +83,17 @@ public class NearLocations {
         return queryOne;
     }
 
-    private void modifyCombinedBoundaries(Boundary one, Boundary two, Boundary searchBoundary) {
-
+    protected void modifyCombinedBoundaries(Boundary one, Boundary two, Boundary searchBoundary) {
+        if (searchBoundary.lonMax > 180) {
+            one.lonMax = 180;
+            two.lonMin = -180;
+            two.lonMax = -180 + (searchBoundary.lonMax - 180); 
+        }
+        else {
+            one.lonMin = -180;
+            two.lonMin = 180 + (searchBoundary.lonMin + 180);
+            two.lonMax = 180;
+        }
     }
 
     protected void populatePairs(Places allFound, List<PlaceDistancePair> pairs) {
