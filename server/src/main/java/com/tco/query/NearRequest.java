@@ -24,11 +24,26 @@ public class NearRequest extends Request{
     private final static transient Logger log = LoggerFactory.getLogger(DistancesRequest.class);
 
     public NearRequest(){
-        //constructor
+        this.place = place;
+        this.distance = distance;
+        this.earthRadius = earthRadius;
+        this.limit = limit;
+        this.formula = formula;
     }
 
     @Override
     public void buildResponse() throws BadRequestException{
-
+        try {
+            NearLocations locations = new NearLocations(this.place, this.distance, this.earthRadius, this.limit, this.formula);
+            this.places = locations.near();
+            this.distances = locations.distances();
+        } 
+        catch (Exception e) {
+            log.error("Error processing request: ", e);
+            throw new BadRequestException();
+        }
+        finally {
+            log.trace("buildResponse -> {}", this);
+        }
     }
 }
