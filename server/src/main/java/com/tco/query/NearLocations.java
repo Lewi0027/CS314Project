@@ -62,8 +62,16 @@ public class NearLocations {
         return finder.getBoundary();
     }
 
-    private Places findPlacesWithinBoundary(Boundary searchBoundary) throws Exception {
-        return null;
+    protected Places findPlacesWithinBoundary(Boundary searchBoundary) throws Exception {
+        Places allFound;
+
+        if(searchBoundary.lonMax > 180 || searchBoundary.lonMin < -180) {
+            allFound = combineQueries(searchBoundary);
+        } else {
+            allFound = Database.places(Select.near(searchBoundary, this.place));
+        }
+
+        return allFound;
     }
 
     protected void buildDistancesAndPlaces(Places allFound) {
