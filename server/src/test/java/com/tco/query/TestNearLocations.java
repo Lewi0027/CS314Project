@@ -348,4 +348,28 @@ public class TestNearLocations {
         assertEquals(26l, locations.distances().get(3));
         assertEquals(39l, locations.distances().get(4));
     }
+
+    @Test
+    @DisplayName("ajlei: test findPlacesWithinBoundary() with large lonMax and small lonMin")
+    public void testFindWithinBoundaryLarge() throws Exception {
+        Boundary searchBoundary = new Boundary(-90, 90, -185, 185);
+
+        locations = new NearLocations(foco, 39, 3959, 10, "vincenty");
+
+        Places result = locations.findPlacesWithinBoundary(searchBoundary);
+
+        assertEquals(220, result.size());
+    }
+
+    @Test
+    @DisplayName("ajlei: test findPlacesWithinBoundary() properly sized boundary")
+    public void testFindWithinBoundary() throws Exception {
+        Boundary searchBoundary = new Boundary(-90, 90, -180, 180);
+
+        locations = new NearLocations(foco, 39, 3959, 10, "vincenty");
+
+        Places result = locations.findPlacesWithinBoundary(searchBoundary);
+
+        assertEquals(200, result.size());
+    }
 }
