@@ -4,29 +4,44 @@ import java.util.Arrays;
 
 public class TwoOpt extends TourOptimizer{
 
+    boolean improvement;
     protected int[] route;
+    private int i;
+    private int k;
     
     @Override
     public void improve() {
         route = Arrays.copyOf(tour, tour.length + 1);
         route[(route.length - 1)] = tour[0];
 
-        boolean improvement = true;
+        improvement = true;
         
         while (improvement) {
             if(tooMuchTimeElapsed()) break;
             improvement = false;
-            for(int i = 0; i <= route.length - 4; i++){
-                for(int k = i + 2; k <= route.length - 2; k++){
-                    if(tooMuchTimeElapsed()) break;
-                    if(isImproved(i, k)){
-                        swapIndex(i + 1, k);
-                        improvement = true;
-                    }
-                }
-            }
+            loopOne();    
         }
         this.tour = Arrays.copyOf(route, route.length - 1);
+    }
+
+    private void loopOne(){
+        for(i = 0; i <= route.length - 4; i++){
+            loopTwo();
+        }
+    }
+
+    private void loopTwo(){
+        for(k = i + 2; k <= route.length - 2; k++){
+            if(tooMuchTimeElapsed()) break;
+            checkImprovement();
+        }
+    }
+
+    private void checkImprovement(){
+        if(isImproved(i, k)){
+            swapIndex(i + 1, k);
+            improvement = true;
+        }
     }
 
     protected boolean isImproved(int i, int k){
