@@ -69,28 +69,36 @@ public abstract class TourOptimizer {
     }
 
     protected void calculateShortestTour() {
+        if (initialChecksFail()) return;
+
         long shortestTourDistance = totalDistanceOfTour();
-        long tourDistance = 0l;
         int[] bestTourSoFar = this.tour.clone();
-        int tourLength = this.tour.length;
-        if(tourLength == 0) return;
 
-        if(tooMuchTimeElapsed()) return;
+        for (int i = 0; i < this.tour.length && !tooMuchTimeElapsed(); i++) {
+            updateTourWithNearestNeighbor(i);
 
-        for(int i = 0; i < tourLength; i++) {
-            this.tour = nearestNeighbor(i);
-            if(tooMuchTimeElapsed()) break;
-            improve();
-            if(tooMuchTimeElapsed()) break;
-            tourDistance = totalDistanceOfTour();
-            if(tooMuchTimeElapsed()) break; 
-            if(tourDistance < shortestTourDistance) {
-                shortestTourDistance = tourDistance;
-                bestTourSoFar = this.tour.clone();
-            }
+            long currentTourDistance = totalDistanceOfTour();
+            bestTourSoFar = updateBestTourIfNeeded(currentTourDistance, shortestTourDistance, bestTourSoFar);
+            shortestTourDistance = Math.min(shortestTourDistance, currentTourDistance);
         }
 
         this.tour = bestTourSoFar;
+    }
+
+    private boolean initialChecksFail() {
+        return this.tour.length == 0 || tooMuchTimeElapsed();
+    }
+
+    private void updateTourWithNearestNeighbor(int index) {
+        this.tour = nearestNeighbor(index);
+        if (!tooMuchTimeElapsed()) improve();
+    }
+
+    private int[] updateBestTourIfNeeded(long currentTourDistance, long shortestTourDistance, int[] bestTourSoFar) {
+        if (currentTourDistance < shortestTourDistance) {
+            return this.tour.clone();
+        }
+        return bestTourSoFar;
     }
 
     protected long totalDistanceOfTour() {
