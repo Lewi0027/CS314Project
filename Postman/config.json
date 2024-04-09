@@ -57,11 +57,80 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "bscheidt: formulae test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cb454ae6-9dc4-4be9-aad6-31a0dd5a526e",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Server-side team name is correct\", () => {",
+							"    const response = pm.response.json();",
+							"pm.collectionVariables.set(\"TEAM_NAME\", \"t28 BarleyBytes\");",
+							"    const expectedTeamName = pm.collectionVariables.get(\"TEAM_NAME\");",
+							"    pm.expect(response.serverName).to.eql(expectedTeamName);",
+							"});",
+							"",
+							"pm.test(\"Formulae object contains vincenty, haversine, and cosines\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    ",
+							"    // Ensure the formulae key exists",
+							"    pm.expect(responseJson).to.have.property('formulae');",
+							"    ",
+							"    // Extract the formulae array",
+							"    const formulae = responseJson.formulae;",
+							"    ",
+							"    // Check that the formulae array is exactly as expected",
+							"    pm.expect(formulae).to.be.an('array').that.includes.members([\"vincenty\", \"haversine\", \"cosines\"]);",
+							"    ",
+							"    // To ensure there are no extra items, check the length as well",
+							"    pm.expect(formulae.length).to.eql(3);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "a80ebaf7-841d-4a90-b3cb-4032f2a294ef",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"config\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/config",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"config"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"variable": [
 		{
-			"id": "bee34078-af05-4e1b-9e8a-df0f0506785f",
+			"id": "b53cf6a5-174d-4a4c-a805-09cb7ead8034",
 			"key": "TEAM_NAME",
 			"value": ""
 		}
