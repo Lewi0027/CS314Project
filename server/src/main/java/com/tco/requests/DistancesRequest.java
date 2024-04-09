@@ -43,7 +43,7 @@ public class DistancesRequest extends Request {
     }
 
     private boolean isInvalidFormula() {
-        return !formula.equalsIgnoreCase("Vincenty") && !formula.equalsIgnoreCase("Haversine") && !formula.equalsIgnoreCase("Cosines")
+        return !formula.equalsIgnoreCase("Vincenty") && !formula.equalsIgnoreCase("Haversine") && !formula.equalsIgnoreCase("Cosines");
     }
 
     private Distances buildDistanceList(){
