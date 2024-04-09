@@ -35,30 +35,27 @@ public class BoundaryFinder {
     }
 
     protected double getLatMin(double ratio) {
-        double latMin = this.lat - (this.distance / ratio);
-        if(latMin < -90){
-            this.boundaryCrossesPole = true;
-            latMin = -90;
-        }
-        else if(latMin > 90){
-            this.boundaryCrossesPole = true;
-            latMin = 90;
-        }
-        return latMin;
+        return getLatMinMax(ratio, true);
     }
 
     protected double getLatMax(double ratio) {
-        double latMax = this.lat + (this.distance / ratio);
-        if(latMax < -90){
-            this.boundaryCrossesPole = true;
-            latMax = -90;
+        return getLatMinMax(ratio, false);
+    }
+    
+    protected double getLatMinMax(double ratio, boolean valIsMin ) {
+        double lat;
+	    if (valIsMin) {
+            lat = this.lat - (this.distance / ratio);
         }
-        else if(latMax > 90){
-            this.boundaryCrossesPole = true;
-            latMax = 90;
+        else {
+            lat = this.lat + (this.distance / ratio);
         }
-        return latMax;
-    }       
+        if (lat < -90 || lat > 90) {
+            this.boundaryCrossesPole = true;
+            lat = (lat < -90) ? -90 : 90;
+        }
+        return lat;
+    }
 
     protected double getLonMin(double latByEquator) {
         if(this.boundaryCrossesPole) return -180;
