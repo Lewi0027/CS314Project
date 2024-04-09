@@ -23,25 +23,36 @@ public class ThreeOpt extends TwoOpt{
         this.tour = Arrays.copyOf(this.route, this.route.length - 1);
         }
     }
+
     private void loopOne() {
         for (i = 0; i <= n - 3; i++) {
             loopTwo();
         }
     }
+    
     private void loopTwo() {
         for (j = i + 1; j <= n - 2; j++) {
             loopThree();
         }
     }
+
     private void loopThree() {
         for (k = j + 1; k <= n - 1; k++) {
             if (tooMuchTimeElapsed()) break;
-            int reversals = threeOptReversals(i, j, k);
-            if (threeOptReverseI1J(reversals)) swapIndex(i + 1, j);
-            if (threeOptReverseJ1K(reversals)) swapIndex(j + 1, k);
-            if (threeOptReverseI1K(reversals)) swapIndex(i + 1, k);
-            if (reversals > 0) improvement = true;
+            processThreeOptReversals(i, j, k);
         }
+    }
+
+    private void processThreeOptReversals(int i, int j, int k) {
+        int reversals = threeOptReversals(i, j, k);
+        performReversalsIfNeeded(reversals);
+        if (reversals > 0) improvement = true;
+    }
+
+    private void performReversalsIfNeeded(int reversals) {
+        if (threeOptReverseI1J(reversals)) swapIndex(i + 1, j);
+        if (threeOptReverseJ1K(reversals)) swapIndex(j + 1, k);
+        if (threeOptReverseI1K(reversals)) swapIndex(i + 1, k);
     }
 
     protected boolean threeOptReverseI1J(int reversals){
