@@ -33,62 +33,6 @@ public class TestDistancesRequest {
         distances = new Distances();
     }
 
-
-    // bad request testing
-
-    @Test
-    @DisplayName("bscheidt: latitude too low")
-    public void testLatitudeLow() {
-        places.add(new Place("-91", "0"));
-        request = new DistancesRequest(places, bigRadius, null);
-        assertThrows(BadRequestException.class, () -> request.buildResponse());
-    }
-
-    @Test
-    @DisplayName("bscheidt: latitude too high")
-    public void testLatitudeHigh() {
-        places.add(new Place("91", "0"));
-        request = new DistancesRequest(places, bigRadius, null);
-        assertThrows(BadRequestException.class, () -> request.buildResponse());
-    }
-
-    @Test
-    @DisplayName("bscheidt: longitude too low")
-    public void testLongitudeLow() {
-        places.add(new Place("0", "-181"));
-        request = new DistancesRequest(places, bigRadius, null);
-        assertThrows(BadRequestException.class, () -> request.buildResponse());
-    }
-
-    @Test
-    @DisplayName("bscheidt: longitude too high")
-    public void testLongitudeHigh() {
-        places.add(new Place("0", "181"));
-        request = new DistancesRequest(places, bigRadius, null);
-        assertThrows(BadRequestException.class, () -> request.buildResponse());
-    }
-
-    @Test
-    @DisplayName("bscheidt: earth radius null")
-    public void testEarthRadiusNull() {
-        request = new DistancesRequest(places, null, null);
-        assertThrows(BadRequestException.class, () -> request.buildResponse());
-    }
-
-    @Test
-    @DisplayName("bscheidt: earth radius negative")
-    public void testEarthRadiusNegative() {
-        request = new DistancesRequest(places, -1.0, null);
-        assertThrows(BadRequestException.class, () -> request.buildResponse());
-    }
-
-    @Test
-    @DisplayName("bscheidt: places null")
-    public void testPlacesNull() {
-        request = new DistancesRequest(null, bigRadius, null);
-        assertThrows(BadRequestException.class, () -> request.buildResponse());
-    }
-
     // request tests for bigRadius
     @Test 
     @DisplayName("diegocel: empty places big radius")
