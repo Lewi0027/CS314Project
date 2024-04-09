@@ -27,4 +27,27 @@ async function verifySearch(props) {
 	}
   }
 
-  export {verifySearch};
+async function verifyNear(props, lat, lng){
+	if(!isFeatureImplemented(props.serverSettings, "near")){
+		props.setFoundPlaces([]);
+		return;
+	}
+	const requestBody = {
+		requestType: "near",
+		place: {"latitude": lat + '', "longitude": lng + ''},
+		earthRadius: 3959,
+		distance: 10,
+		limit: 7
+	};
+	const nearResponse = await sendAPIRequest(requestBody, props.serverSettings.serverUrl);
+	if(nearResponse){
+		props.setFoundPlaces(nearResponse.places);
+		props.setDistances(nearResponse.distances);
+	}
+	else{
+		props.setFoundPlaces([]);
+		props.setDistances([]);
+		LOG.error(`Near request to ${props.serverSettings.serverUrl} failed. Check the log for more details.`, "error");
+	}
+}
+  export {verifySearch, verifyNear};

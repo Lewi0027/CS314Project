@@ -5,7 +5,7 @@ import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import VerifySearch from '@components/Header/VerifySearch';
 import { DEFAULT_STARTING_POSITION } from '@utils/constants';
 import { isFeatureImplemented, sendAPIRequest } from '@utils/restfulAPI';
-import { verifySearch } from '../../../src/components/Header/VerifySearch';
+import { verifySearch, verifyNear } from '../../../src/components/Header/VerifySearch';
 import { MOCK_PLACES } from '../../sharedMocks';
 
 jest.mock('@utils/restfulAPI', () => ({
@@ -25,7 +25,8 @@ describe('AddPlace', () => {
         selectedCountry: "United States",
         selectedType: "airport",
         setFoundPlaces: jest.fn(),
-
+        setDistances: jest.fn(),
+        place: placeObj
 	};
 
     test('base: doesn\'t render', async() => {
@@ -42,5 +43,22 @@ describe('AddPlace', () => {
         sendAPIRequest.mockResolvedValueOnce({places: MOCK_PLACES});
         await verifySearch(props);
         expect(props.setFoundPlaces).toBeCalledWith(MOCK_PLACES);
+    })
+
+    test('base: tests VerifyNear function', async() => {
+        cleanup();
+        isFeatureImplemented.mockResolvedValueOnce(true);
+        sendAPIRequest.mockResolvedValueOnce({places: MOCK_PLACES, distances: [0,0,0,0,0,0,0,0]});
+        await verifyNear(props);
+        expect(props.setFoundPlaces).toBeCalledWith(MOCK_PLACES);
+        expect(props.setDistances).toBeCalledWith([0,0,0,0,0,0,0,0]);
+    })
+    test('base: no response', async() => {
+        cleanup();
+        isFeatureImplemented.mockResolvedValueOnce(true);
+        sendAPIRequest.mockResolvedValueOnce(null);
+        await verifyNear(props);
+        expect(props.setFoundPlaces).toBeCalledWith([]);
+        expect(props.setDistances).toBeCalledWith([]);
     })
 });

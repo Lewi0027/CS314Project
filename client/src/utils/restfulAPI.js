@@ -3,18 +3,20 @@ import * as distancesSchema from '../../schemas/DistancesResponse';
 import * as configSchema from '../../schemas/ConfigResponse';
 import * as findSchema from '../../schemas/FindResponse';
 import * as tourSchema from '../../schemas/TourResponse.json';
+import * as nearSchema from '../../schemas/NearResponse.json';
 import { LOG } from './constants';
 
 const SCHEMAS = {
     config: configSchema,
     distances: distancesSchema,
     find: findSchema,
-    tour: tourSchema
+    tour: tourSchema,
+    near: nearSchema
 }
 
 export async function sendAPIRequest(requestBody, serverUrl) {
     const response = await sendRequest(requestBody, serverUrl);
-
+        
     if (isRequestNotSupported(requestBody)) {
         throw new Error(`sendAPIRequest() does not have support for type: ${requestBody.requestType}. Please add the schema to 'SCHEMAS'.`);
     }

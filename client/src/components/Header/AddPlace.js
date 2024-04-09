@@ -18,7 +18,7 @@ import { reverseGeocode } from '@utils/reverseGeocode';
 import { sendAPIRequest } from '@utils/restfulAPI';
 import { isFeatureImplemented } from '@utils/restfulAPI';
 import { LOG } from '@utils/constants';
-import { verifySearch } from './VerifySearch';
+import { verifySearch, verifyNear } from './VerifySearch';
 
 export default function AddPlace(props) {
 	const [foundPlace, setFoundPlace] = useState();
@@ -28,15 +28,15 @@ export default function AddPlace(props) {
 	const [selectedType, setSelectedType] = useState('All Types');
 	const [selectedCountry, setSelectedCountry] = useState('All Countries');
 	const [countries, setCountries] = useState([]);
+	const [distances, setDistances] = useState([]);
 	const addPlaceProps = {
 		buttonClicked, setButtonClicked,
-		foundPlace, setFoundPlace,
-		coordString, setCoordString,
+		foundPlace, setFoundPlace, coordString, setCoordString,
 		append: props.placeActions.append, serverSettings: props.serverSettings,
 		foundPlaces, setFoundPlaces,
 		selectedType, setSelectedType,
 		selectedCountry, setSelectedCountry,
-		countries, setCountries
+		countries, setCountries, distances, setDistances
 	}
 	return (
 		<Modal isOpen={props.showAddPlace} toggle={props.toggleAddPlace}>
@@ -124,19 +124,22 @@ async function verifyCoordinates(props) {
     if (!isCoordinateText(props.coordString)) {
         await verifySearch(props);
         props.setButtonClicked(Array(props.foundPlaces.length).fill(false));
+		props.setDistances([]);
         return;
     }
+	let fullPlace;
     try {
         const latLngPlace = new Coordinates(props.coordString);
 		const lat = latLngPlace.getLatitude();
 		const lng = latLngPlace.getLongitude();
         if (isLatLngValid(lat, lng)){
-			const fullPlace = await reverseGeocode({ lat, lng });
-        	props.setFoundPlace(fullPlace);
-        	props.setFoundPlaces([]);
+			fullPlace = await reverseGeocode({ lat, lng });
+			props.setFoundPlace(fullPlace);
+			await verifyNear(props, lat, lng);
+			props.setButtonClicked(Array(props.foundPlaces.length).fill(false));
 		}
     } catch (error) {
-        props.setFoundPlace(undefined);
+        if(!fullPlace) props.setFoundPlace(undefined);
     }
 }
 
@@ -147,6 +150,7 @@ function DisplayMap(props){
 			{props.foundPlaces.map((place, index) => (
 				<div style={{ fontSize: "14px" }} key={place.name}>
 					{place.name}: {place.municipality}, {place.country} {"     "}
+					{props.distances.length != 0 ? `${props.distances[index]} miles away` : ""}
 					<td><Button color={props.buttonClicked[index] ? "secondary" : "primary"} size="sm"
 						onClick={() => {
 							props.append(place);
