@@ -280,7 +280,7 @@ public class TestTourOptimizer {
         optimizer.setDistanceMatrix(distanceMatrix);
         optimizer.fillTour(places.size());
         optimizer.setResponse(1.0);
-        optimizer.setStartTime(System.nanoTime());
+        optimizer.startTime = System.nanoTime();
 
         optimizer.calculateShortestTour();
 
@@ -305,7 +305,7 @@ public class TestTourOptimizer {
         optimizer.setDistanceMatrix(distanceMatrix);
         optimizer.fillTour(places.size());
         optimizer.setResponse(1.0);
-        optimizer.setStartTime(System.nanoTime());
+        optimizer.startTime = System.nanoTime();
 
         optimizer.calculateShortestTour();
 
@@ -332,7 +332,7 @@ public class TestTourOptimizer {
         optimizer.setDistanceMatrix(distanceMatrix);
         optimizer.fillTour(places.size());
         optimizer.setResponse(1.0);
-        optimizer.setStartTime(System.nanoTime());
+        optimizer.startTime = System.nanoTime();
 
         optimizer.calculateShortestTour();
 
@@ -360,7 +360,7 @@ public class TestTourOptimizer {
         optimizer.setDistanceMatrix(distanceMatrix);
         optimizer.fillTour(5);
         optimizer.setResponse(1.0);
-        optimizer.setStartTime(System.nanoTime());
+        optimizer.startTime = System.nanoTime();
 
         optimizer.calculateShortestTour();
 

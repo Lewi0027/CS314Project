@@ -87,7 +87,7 @@ public class TestTwoOpt {
         optimizer2.setDistanceMatrix(distanceMatrix);
         optimizer2.setTour(tour);
         optimizer2.setResponse(1.0);
-        optimizer2.setStartTime(System.nanoTime());
+        optimizer2.startTime = System.nanoTime();
 
         optimizer2.improve();
 
@@ -102,7 +102,7 @@ public class TestTwoOpt {
         optimizer.setTour(new int[]{A, C, B, D, E, F});
         int[] testTour = {A, B, C, D, E, F};
         optimizer.setResponse(1.0);
-        optimizer.setStartTime(System.nanoTime());   
+        optimizer.startTime = System.nanoTime();
         
         optimizer.improve();
 
@@ -115,7 +115,7 @@ public class TestTwoOpt {
         optimizer.setTour(new int[]{A, D, C, B, E, F});
         int[] testTour = {A, B, C, D, E, F};
         optimizer.setResponse(1.0);
-        optimizer.setStartTime(System.nanoTime());   
+        optimizer.startTime = System.nanoTime();
 
         optimizer.improve();
 
@@ -128,7 +128,7 @@ public class TestTwoOpt {
         optimizer.setTour(new int[]{A, E, D, B, C, F});
         int[] testTour = {A, B, C, D, E, F};
         optimizer.setResponse(1.0);
-        optimizer.setStartTime(System.nanoTime()); 
+        optimizer.startTime = System.nanoTime();
 
         optimizer.improve();
 
@@ -143,7 +143,7 @@ public class TestTwoOpt {
         optimizerCity.setTour(new int[]{FC, SLC, LA, Ottowa, JC, Memphis});
         int[] testTour = {FC, LA, SLC, Ottowa, JC, Memphis};
         optimizerCity.setResponse(1.0);
-        optimizerCity.setStartTime(System.nanoTime()); 
+        optimizerCity.startTime = System.nanoTime();
 
         optimizerCity.improve();
         
@@ -156,7 +156,7 @@ public class TestTwoOpt {
         optimizerCity.setTour(new int[]{FC, Ottowa, LA, JC, SLC, Memphis});
         int[] testTour = {FC, SLC, LA, Memphis, JC, Ottowa};
         optimizerCity.setResponse(1.0);
-        optimizerCity.setStartTime(System.nanoTime()); 
+        optimizerCity.startTime = System.nanoTime();
 
         optimizerCity.improve();
         
