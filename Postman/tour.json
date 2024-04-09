@@ -51,6 +51,242 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "bscheidt: hexagon no crosses",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c26d1c7f-6263-484a-926a-d76fee9ed874",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Order of places is A, B, C, D, E, F\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    const places = responseJson.places;",
+							"    const expectedOrder = [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"];",
+							"",
+							"    pm.expect(places).to.be.an('array').that.is.not.empty;",
+							"    pm.expect(places.length).to.eql(expectedOrder.length);",
+							"",
+							"    places.forEach((place, index) => {",
+							"        pm.expect(place.name).to.eql(expectedOrder[index]);",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "6cf88c38-9e20-457d-a92a-29a20e86911b",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"tour\",\n    \"places\": [\n        {\"name\": \"A\", \"latitude\": \"35.26804693351555\", \"longitude\": \"-106.78710937500001\"},\n        {\"name\": \"B\", \"latitude\": \"35.37561413174875\", \"longitude\": \"-99.71191406250001\"},\n        {\"name\": \"C\", \"latitude\": \"40.36747374615593\", \"longitude\": \"-94.13085937500001\"},\n        {\"name\": \"D\", \"latitude\": \"44.57873024377564\", \"longitude\": \"-99.27246093750001\"},\n        {\"name\": \"E\", \"latitude\": \"44.51609322284931\", \"longitude\": \"-108.32519531250001\"},\n        {\"name\": \"F\", \"latitude\": \"39.863371338285305\", \"longitude\": \"-112.58789062500001\"}\n        ],\n    \"earthRadius\": 3959,\n    \"response\": 1.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/tour",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"tour"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bscheidt: hexagon one cross",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c26d1c7f-6263-484a-926a-d76fee9ed874",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Order of places is A, B, C, D, E, F\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    const places = responseJson.places;",
+							"    const expectedOrder = [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"];",
+							"",
+							"    pm.expect(places).to.be.an('array').that.is.not.empty;",
+							"    pm.expect(places.length).to.eql(expectedOrder.length);",
+							"",
+							"    places.forEach((place, index) => {",
+							"        pm.expect(place.name).to.eql(expectedOrder[index]);",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "d622782d-cc18-4d87-87a7-608746df5c2c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"tour\",\n    \"places\": [\n        {\"name\": \"A\", \"latitude\": \"35.26804693351555\", \"longitude\": \"-106.78710937500001\"},\n        {\"name\": \"C\", \"latitude\": \"40.36747374615593\", \"longitude\": \"-94.13085937500001\"},\n        {\"name\": \"B\", \"latitude\": \"35.37561413174875\", \"longitude\": \"-99.71191406250001\"},    \n        {\"name\": \"D\", \"latitude\": \"44.57873024377564\", \"longitude\": \"-99.27246093750001\"},\n        {\"name\": \"E\", \"latitude\": \"44.51609322284931\", \"longitude\": \"-108.32519531250001\"},\n        {\"name\": \"F\", \"latitude\": \"39.863371338285305\", \"longitude\": \"-112.58789062500001\"}\n        ],\n    \"earthRadius\": 3959,\n    \"response\": 1.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/tour",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"tour"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bscheidt: hexagon two cross",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c26d1c7f-6263-484a-926a-d76fee9ed874",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Order of places is A, B, C, D, E, F\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    const places = responseJson.places;",
+							"    const expectedOrder = [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"];",
+							"",
+							"    pm.expect(places).to.be.an('array').that.is.not.empty;",
+							"    pm.expect(places.length).to.eql(expectedOrder.length);",
+							"",
+							"    places.forEach((place, index) => {",
+							"        pm.expect(place.name).to.eql(expectedOrder[index]);",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "c33f9cd4-96d0-4205-89b8-28bf59af1268",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"tour\",\n    \"places\": [\n        {\"name\": \"A\", \"latitude\": \"35.26804693351555\", \"longitude\": \"-106.78710937500001\"},\n        {\"name\": \"D\", \"latitude\": \"44.57873024377564\", \"longitude\": \"-99.27246093750001\"},\n        {\"name\": \"C\", \"latitude\": \"40.36747374615593\", \"longitude\": \"-94.13085937500001\"},\n        {\"name\": \"B\", \"latitude\": \"35.37561413174875\", \"longitude\": \"-99.71191406250001\"},      \n        {\"name\": \"E\", \"latitude\": \"44.51609322284931\", \"longitude\": \"-108.32519531250001\"},\n        {\"name\": \"F\", \"latitude\": \"39.863371338285305\", \"longitude\": \"-112.58789062500001\"}\n        ],\n    \"earthRadius\": 3959,\n    \"response\": 1.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/tour",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"tour"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bscheidt: hexagon three cross",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c26d1c7f-6263-484a-926a-d76fee9ed874",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Order of places is A, B, C, D, E, F\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    const places = responseJson.places;",
+							"    const expectedOrder = [\"A\", \"B\", \"C\", \"D\", \"E\", \"F\"];",
+							"",
+							"    pm.expect(places).to.be.an('array').that.is.not.empty;",
+							"    pm.expect(places.length).to.eql(expectedOrder.length);",
+							"",
+							"    places.forEach((place, index) => {",
+							"        pm.expect(place.name).to.eql(expectedOrder[index]);",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "0a930611-bd5c-4575-a6be-85bd5941ac74",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"tour\",\n    \"places\": [\n        {\"name\": \"A\", \"latitude\": \"35.26804693351555\", \"longitude\": \"-106.78710937500001\"},\n        {\"name\": \"D\", \"latitude\": \"44.57873024377564\", \"longitude\": \"-99.27246093750001\"},\n        {\"name\": \"E\", \"latitude\": \"44.51609322284931\", \"longitude\": \"-108.32519531250001\"},\n        {\"name\": \"B\", \"latitude\": \"35.37561413174875\", \"longitude\": \"-99.71191406250001\"}, \n        {\"name\": \"C\", \"latitude\": \"40.36747374615593\", \"longitude\": \"-94.13085937500001\"},     \n        {\"name\": \"F\", \"latitude\": \"39.863371338285305\", \"longitude\": \"-112.58789062500001\"}\n        ],\n    \"earthRadius\": 3959,\n    \"response\": 1.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/tour",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"tour"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
