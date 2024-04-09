@@ -38,23 +38,12 @@ public class DistancesRequest extends Request {
     }
 
     private void validateRequest() throws BadRequestException {
-        if (earthRadius == null || earthRadius <= 0) {
+        if(formula != null && isInvalidFormula()) 
             throw new BadRequestException();
-        }
+    }
 
-        if (places == null) {
-            throw new BadRequestException();
-        }
-
-        for (Place place : places) {
-            if (place.latRadians() < (-0.5 * Math.PI) || place.latRadians() > (0.5 * Math.PI)) {
-                throw new BadRequestException();
-            }
-            if (place.lonRadians() < (-1.0 * Math.PI) || place.lonRadians() > (Math.PI)) {
-                throw new BadRequestException();
-            }
-        }
-        if ( formula != null && !formula.equalsIgnoreCase("Vincenty") && !formula.equalsIgnoreCase("Haversine") && !formula.equalsIgnoreCase("Cosines")) throw new BadRequestException();
+    private boolean isInvalidFormula() {
+        return !formula.equalsIgnoreCase("Vincenty") && !formula.equalsIgnoreCase("Haversine") && !formula.equalsIgnoreCase("Cosines")
     }
 
     private Distances buildDistanceList(){
