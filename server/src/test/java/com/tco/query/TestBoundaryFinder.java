@@ -111,4 +111,25 @@ public class TestBoundaryFinder {
         assertEquals(100, boundfind.distance);
         assertTrue(boundfind.getBoundary() instanceof Boundary);
     }
+
+    @Test
+    @DisplayName("Lewi0027: Test getLatMinMax() is returning for min")
+    public void testGetLatMinMaxForMin() {
+        BoundaryFinder minBoundaryTest = new BoundaryFinder(-80, 0, 3959, 700);
+        double ratio = 700/3959;
+        double latValue = minBoundaryTest.getLatMinMax(ratio, true);
+        
+        assertEquals(latValue, -90);
+        assertEquals(minBoundaryTest.boundaryCrossesPole, true);
+    }
+    @Test
+    @DisplayName("Lewi0027: Test getLatMinMax() is returning for max")
+    public void testGetLatMinMaxForMax() {
+        BoundaryFinder minBoundaryTest = new BoundaryFinder(80, 0, 3959, 700);
+        double ratio = 700/3959;
+        double latValue = minBoundaryTest.getLatMinMax(ratio, false);
+        
+        assertEquals(latValue, 90);
+        assertEquals(minBoundaryTest.boundaryCrossesPole, true);
+    }
 }
