@@ -13,6 +13,7 @@ files[] = {"id":"25883428-e2da8534-17ce-4454-a0b6-f1a278f04362","path":"base.jso
 files[] = {"id":"25883428-38ce6b00-3aba-4aca-9880-fd63e78b7c0f","path":"config.json","metaData":{}}
 files[] = {"id":"25883428-6635f217-d621-498b-b41d-be9da79ccb29","path":"distances.json","metaData":{}}
 files[] = {"id":"25883428-a4a381dc-b7b6-486e-abcf-7eed07eb4411","path":"find.json","metaData":{}}
+files[] = {"id":"25883428-e798feae-a216-4346-aa35-7e946a7eac4c","path":"near.json","metaData":{}}
 files[] = {"id":"25883428-6385f103-1b4d-4366-8c2e-5bffbdd8d330","path":"tour.json","metaData":{}}
 
 [config.relations.collections.metaData]

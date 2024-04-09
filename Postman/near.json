@@ -1,0 +1,321 @@
+{
+	"info": {
+		"_postman_id": "e798feae-a216-4346-aa35-7e946a7eac4c",
+		"name": "near",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "25883428-e798feae-a216-4346-aa35-7e946a7eac4c"
+	},
+	"item": [
+		{
+			"name": "base",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ebd7577f-98ff-4817-b70b-ed879e007e45",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "1f9378e9-8aaf-4696-986e-c6168b0e46f4",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"near\",\n    \"place\": {\"latitude\": \"0\", \"longitude\": \"0\"},\n    \"distance\": 5,\n    \"earthRadius\": 3959,\n    \"formula\": \"vincenty\",\n    \"limit\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/near",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"near"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bscheidt: test 180 border",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ebd7577f-98ff-4817-b70b-ed879e007e45",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Correct number of places and distances in increasing order\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    const places = responseJson.places;",
+							"    const distances = responseJson.distances;",
+							"",
+							"    // Check the number of places matches the number of distances",
+							"    pm.expect(places.length).to.eql(distances.length);",
+							"    ",
+							"    // Check that the number of places received matches the expected number",
+							"    const expectedNumberOfPlaces = 7; ",
+							"    pm.expect(places.length).to.equal(expectedNumberOfPlaces);",
+							"    ",
+							"    // Check distances are in increasing order",
+							"    for(let i = 0; i < distances.length - 1; i++) {",
+							"        pm.expect(distances[i]).to.be.below(distances[i + 1]);",
+							"    }",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "1a910e59-10e2-4de4-a14d-e09a80a561e0",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"near\",\n    \"place\": {\"latitude\": \"-17\", \"longitude\": \"180\"},\n    \"distance\": 50,\n    \"earthRadius\": 3959,\n    \"formula\": \"vincenty\",\n    \"limit\": 10\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/near",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"near"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bscheidt: test -180 border",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ebd7577f-98ff-4817-b70b-ed879e007e45",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Correct number of places and distances in increasing order\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    const places = responseJson.places;",
+							"    const distances = responseJson.distances;",
+							"",
+							"    // Check the number of places matches the number of distances",
+							"    pm.expect(places.length).to.eql(distances.length);",
+							"    ",
+							"    // Check that the number of places received matches the expected number",
+							"    const expectedNumberOfPlaces = 7; ",
+							"    pm.expect(places.length).to.equal(expectedNumberOfPlaces);",
+							"    ",
+							"    // Check distances are in increasing order",
+							"    for(let i = 0; i < distances.length - 1; i++) {",
+							"        pm.expect(distances[i]).to.be.below(distances[i + 1]);",
+							"    }",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "123eb7b0-0446-4ebd-b544-1ca87460ace8",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"near\",\n    \"place\": {\"latitude\": \"-17\", \"longitude\": \"-180\"},\n    \"distance\": 50,\n    \"earthRadius\": 3959,\n    \"formula\": \"vincenty\",\n    \"limit\": 10\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/near",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"near"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bscheidt: test asking for everything and getting limit 200 back",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ebd7577f-98ff-4817-b70b-ed879e007e45",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Correct number of places and distances in increasing order\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    const places = responseJson.places;",
+							"    const distances = responseJson.distances;",
+							"",
+							"    // Check the number of places matches the number of distances",
+							"    pm.expect(places.length).to.eql(distances.length);",
+							"    ",
+							"    // Check that the number of places received matches the expected number",
+							"    const expectedNumberOfPlaces = 200; ",
+							"    pm.expect(places.length).to.equal(expectedNumberOfPlaces);",
+							"    ",
+							"    // Check distances are in increasing order",
+							"    for(let i = 0; i < distances.length - 1; i++) {",
+							"        pm.expect(distances[i]).to.be.at.most(distances[i + 1]);",
+							"    }",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "7e333a8d-1622-4d2e-bb05-8109f4129487",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"near\",\n    \"place\": {\"latitude\": \"0\", \"longitude\": \"0\"},\n    \"distance\": 50,\n    \"earthRadius\": 1,\n    \"formula\": \"vincenty\",\n    \"limit\": 53000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/near",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"near"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bscheidt: test south pole boundary",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ebd7577f-98ff-4817-b70b-ed879e007e45",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Correct number of places and distances in increasing order\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    const places = responseJson.places;",
+							"    const distances = responseJson.distances;",
+							"",
+							"    // Check the number of places matches the number of distances",
+							"    pm.expect(places.length).to.eql(distances.length);",
+							"    ",
+							"    // Check that the number of places received matches the expected number",
+							"    const expectedNumberOfPlaces = 1; ",
+							"    pm.expect(places.length).to.equal(expectedNumberOfPlaces);",
+							"    ",
+							"    // Check distances are in increasing order",
+							"    for(let i = 0; i < distances.length - 1; i++) {",
+							"        pm.expect(distances[i]).to.be.at.most(distances[i + 1]);",
+							"    }",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "d4069b37-9ce8-4e08-9e98-ad61b07a7085",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"near\",\n    \"place\": {\"latitude\": \"-89.5\", \"longitude\": \"70\"},\n    \"distance\": 50,\n    \"earthRadius\": 3959,\n    \"formula\": \"vincenty\",\n    \"limit\": 53000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/near",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"near"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
