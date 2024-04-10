@@ -1,10 +1,25 @@
 export function generateKML(tripName, tripData) {
-  if (!tripData || !tripName) return `<?xml version="1.0" encoding="UTF - 8"?>
-    < kml xmlns = "http://www.opengis.net/kml/2.2" >
+  if (!tripData || !tripName) return generateEmptyKML();
+
+  let description = `A sample tour that includes ${tripData.places?.length || 0} places.`;
+  let kml = generateKMLHeader(tripName, description);
+
+  kml = generateTourPlacemark(kml, tripData);
+  kml = generatePlacesPlacemark(kml, tripData);
+  kml += generateKMLFooter();
+
+  return kml;
+}
+
+function generateEmptyKML() {
+  return `<?xml version="1.0" encoding="UTF - 8"?>
+    <kml xmlns="http://www.opengis.net/kml/2.2">
       <Document></Document>
-    </kml>`
-  let description = `A sample tour that includes ${tripData.places?.length || 0} places.`
-  let kml = `<?xml version="1.0" encoding="UTF-8"?>
+    </kml>`;
+}
+
+function generateKMLHeader(tripName, description) {
+  return `<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
   <Document>
     <name>${tripName}</name>
@@ -21,14 +36,12 @@ export function generateKML(tripName, tripData) {
         <scale>1.1</scale>
       </IconStyle>
     </Style>`;
+}
 
-  kml = generateTourPlacemark(kml, tripData);
-  kml = generatePlacesPlacemark(kml, tripData);
-  kml += `
+function generateKMLFooter() {
+  return `
   </Document>
 </kml>`;
-
-  return kml;
 }
 
 function generateTourPlacemark(kml, tripData) {
@@ -55,19 +68,26 @@ function generateTourPlacemark(kml, tripData) {
   return kml;
 }
 
+function generatePlacePlacemark(place) {
+  const name = place.defaultDisplayName || place.name || 'Unnamed Place';
+  const description = `${place.region || 'Unknown'}, ${place.country || 'Unknown'}`;
+  const coordinates = `${place.longitude || '0'},${place.latitude || '0'}`;
+
+  return `
+    <Placemark>
+      <styleUrl>#Place</styleUrl>
+      <name>${name}</name>
+      <description>${description}</description>
+      <Point>
+          <coordinates>${coordinates}</coordinates>
+      </Point>
+    </Placemark>`;
+}
+
 function generatePlacesPlacemark(kml, tripData) {
   if (Array.isArray(tripData.places)) {
     tripData.places.forEach(place => {
-
-      kml += `
-            <Placemark>
-            <styleUrl>#Place</styleUrl>
-            <name>${place.defaultDisplayName || place.name || 'Unnamed Place'}</name>
-            <description>${place.region || 'Unknown'}, ${place.country || 'Unknown'}</description>
-            <Point>
-                <coordinates>${place.longitude || '0'},${place.latitude || '0'}</coordinates>
-            </Point>
-            </Placemark>`;
+      kml += generatePlacePlacemark(place);
     });
   }
 
