@@ -13,6 +13,10 @@ public class TestOptimizerFactory {
     final static int mediumPlaceSize = 50;
     final static int largePlaceSize = 100;
     final static int veryLargePlaceSize = 1000;
+    final static double[] matrixCoeff = {1.69777e-11, -3.28461e-8, 1.26646e-4, 1.94351e-3, 1.2237e-1};
+    final static double[] oneOptCoeff = {1e-10, 5.999e-7, -0.000111, 0.4580, 14.9673};
+    final static double[] twoOptCoeff = {7.35150e-10, 1.05654e-5, -1.48424e-3, 4.64993e-1, 8.38256};
+    final static double[] threeOptCoeff = {3.16846e-6, -2.14276e-4, 3.61923e-2, -1.49333, 19.3161};
 
     OptimizerFactory testClass;
 
@@ -164,15 +168,16 @@ public class TestOptimizerFactory {
     void testMatrixTimeSmallInput() {
         int placesSize = smallPlaceSize;
         double expectedTime = 0.15443702;
-        assertEquals(expectedTime, testClass.calculateMatrixTime(placesSize), 0.00001);
+        assertEquals(expectedTime, testClass.calculateOptimizationTime(placesSize, matrixCoeff), 0.00001);
     }
+
 
     @Test
     @DisplayName("ajlei: should return about 0.5321608 for placesSize = 50")
     void testMatrixTimeMediumInput() {
         int placesSize = mediumPlaceSize;
         double expectedTime = 0.5321608;
-        assertEquals(expectedTime, testClass.calculateMatrixTime(placesSize), 0.00001);
+        assertEquals(expectedTime, testClass.calculateOptimizationTime(placesSize, matrixCoeff), 0.00001);
     }
 
     @Test
@@ -180,7 +185,7 @@ public class TestOptimizerFactory {
     void testMatrixTimeLargeInput() {
         int placesSize = largePlaceSize;
         double expectedTime = 1.55203267;
-        assertEquals(expectedTime, testClass.calculateMatrixTime(placesSize), 0.00001);
+        assertEquals(expectedTime, testClass.calculateOptimizationTime(placesSize, matrixCoeff), 0.00001);
     }
 
     @Test
@@ -188,7 +193,7 @@ public class TestOptimizerFactory {
     void testMatrixTimeVeryLargeInput() {
         int placesSize = veryLargePlaceSize;
         double expectedTime = 112.84348;
-        assertEquals(expectedTime, testClass.calculateMatrixTime(placesSize), 0.00001);
+        assertEquals(expectedTime, testClass.calculateOptimizationTime(placesSize, matrixCoeff), 0.00001);
     }
 
     @Test
@@ -196,49 +201,7 @@ public class TestOptimizerFactory {
     void testMatrixTimeZeroInput() {
         int placesSize = 0;
         double expectedTime = 0.12237; // Assuming constant term for zero input
-        assertEquals(expectedTime, testClass.calculateMatrixTime(placesSize), 0.00001);
-    }
-
-
-    // Tests for calculateNoOpt(int placesSize)
-    @Test
-    @DisplayName("ajlei: should return about 20.06500388 for placesSize = 10")
-    void testNoOptSmallInput() {
-        int placesSize = smallPlaceSize;
-        double expectedTime = 20.06500388;
-        assertEquals(expectedTime, testClass.calculateNoOpt(placesSize), 0.00001);
-    }
-
-    @Test
-    @DisplayName("ajlei: should return about 31.924616 for placesSize = 50")
-    void testNoOptMediumInput() {
-        int placesSize = mediumPlaceSize;
-        double expectedTime = 31.924616;
-        assertEquals(expectedTime, testClass.calculateNoOpt(placesSize), 0.00001);
-    }
-
-    @Test
-    @DisplayName("ajlei: should return about 46.309658 for placesSize = 100")
-    void testNoOptLargeInput() {
-        int placesSize = largePlaceSize;
-        double expectedTime = 46.309658;
-        assertEquals(expectedTime, testClass.calculateNoOpt(placesSize), 0.00001);
-    }
-
-    @Test
-    @DisplayName("ajlei: should return about 221.74007 for placesSize = 1000")
-    void testNoOptVeryLargeInput() {
-        int placesSize = veryLargePlaceSize;
-        double expectedTime = 221.74007;
-        assertEquals(expectedTime, testClass.calculateNoOpt(placesSize), 0.00001);
-    }
-
-    @Test
-    @DisplayName("ajlei: should return about 17.05127 for placesSize = 0")
-    void testNoOptZeroInput() {
-        int placesSize = 0;
-        double expectedTime = 17.05127; // Assuming constant term for zero input
-        assertEquals(expectedTime, testClass.calculateNoOpt(placesSize), 0.00001);
+        assertEquals(expectedTime, testClass.calculateOptimizationTime(placesSize, matrixCoeff), 0.00001);
     }
 
     // Tests calculateOneOpt()
@@ -248,7 +211,7 @@ public class TestOptimizerFactory {
     void testOneOptZeroInput() {
         int placesSize = 0;
         double expectedTime = 14.9673; // Assuming constant term for zero input
-        assertEquals(expectedTime, testClass.calculateOneOpt(placesSize), 0.00001);
+        assertEquals(expectedTime, testClass.calculateOptimizationTime(placesSize, oneOptCoeff), 0.00001);
     }
 
     @Test
@@ -256,7 +219,7 @@ public class TestOptimizerFactory {
     void testOneOptVeryLargeInput() {
         int placesSize = veryLargePlaceSize;
         double expectedTime = 1061.86730;
-        assertEquals(expectedTime, testClass.calculateOneOpt(placesSize), 0.00001);
+        assertEquals(expectedTime, testClass.calculateOptimizationTime(placesSize, oneOptCoeff), 0.00001);
     }
 
     @Test
@@ -264,7 +227,7 @@ public class TestOptimizerFactory {
     void testOneOptSmallInput() {
         int placesSize = smallPlaceSize;
         double expectedTime = 19.5368009;
-        assertEquals(expectedTime, testClass.calculateOneOpt(placesSize), 0.00001);
+        assertEquals(expectedTime, testClass.calculateOptimizationTime(placesSize, oneOptCoeff), 0.00001);
     }
 
     @Test
@@ -272,7 +235,7 @@ public class TestOptimizerFactory {
     void testOneOptMediumInput() {
         int placesSize = mediumPlaceSize;
         double expectedTime = 37.6654125;
-        assertEquals(expectedTime, testClass.calculateOneOpt(placesSize), 0.00001);
+        assertEquals(expectedTime, testClass.calculateOptimizationTime(placesSize, oneOptCoeff), 0.00001);
     }
 
     @Test
@@ -280,7 +243,7 @@ public class TestOptimizerFactory {
     void testOneOptLargeInput() {
         int placesSize = largePlaceSize;
         double expectedTime = 60.2672;
-        assertEquals(expectedTime, testClass.calculateOneOpt(placesSize), 0.00001);
+        assertEquals(expectedTime, testClass.calculateOptimizationTime(placesSize, oneOptCoeff), 0.00001);
     }
 
     // Tests calculateTwoOpt()
@@ -290,7 +253,7 @@ public class TestOptimizerFactory {
     void testTwoOptZeroInput() {
         int placesSize = 0;
         double expectedTime = 8.38256; // Assuming constant term for zero input
-        assertEquals(expectedTime, testClass.calculateTwoOpt(placesSize), 0.00001);
+        assertEquals(expectedTime, testClass.calculateOptimizationTime(placesSize, twoOptCoeff), 0.00001);
     }
 
     @Test
@@ -298,7 +261,7 @@ public class TestOptimizerFactory {
     void testTwoOptVeryLargeInput() {
         int placesSize = veryLargePlaceSize;
         double expectedTime = 10289.68556;
-        assertEquals(expectedTime, testClass.calculateTwoOpt(placesSize), 0.00001);
+        assertEquals(expectedTime, testClass.calculateOptimizationTime(placesSize, twoOptCoeff), 0.00001);
     }
 
     @Test
@@ -306,7 +269,7 @@ public class TestOptimizerFactory {
     void testTwoOptSmallInput() {
         int placesSize = smallPlaceSize;
         double expectedTime = 12.894638;
-        assertEquals(expectedTime, testClass.calculateTwoOpt(placesSize), 0.00001);
+        assertEquals(expectedTime, testClass.calculateOptimizationTime(placesSize, twoOptCoeff), 0.00001);
     }
 
     @Test
@@ -314,7 +277,7 @@ public class TestOptimizerFactory {
     void testTwoOptMediumInput() {
         int placesSize = mediumPlaceSize;
         double expectedTime = 29.246879;
-        assertEquals(expectedTime, testClass.calculateTwoOpt(placesSize), 0.00001);
+        assertEquals(expectedTime, testClass.calculateOptimizationTime(placesSize, twoOptCoeff), 0.00001);
     }
 
     @Test
@@ -322,7 +285,7 @@ public class TestOptimizerFactory {
     void testTwoOptLargeInput() {
         int placesSize = largePlaceSize;
         double expectedTime = 50.678375;
-        assertEquals(expectedTime, testClass.calculateTwoOpt(placesSize), 0.00001);
+        assertEquals(expectedTime, testClass.calculateOptimizationTime(placesSize, twoOptCoeff), 0.00001);
     }
 
     // Tests calculateThreeOpt()
@@ -332,7 +295,7 @@ public class TestOptimizerFactory {
     void testThreeOptZeroInput() {
         int placesSize = 0;
         double expectedTime = 19.3161; // Assuming constant term for zero input
-        assertEquals(expectedTime, testClass.calculateThreeOpt(placesSize), 0.00001);
+        assertEquals(expectedTime, testClass.calculateOptimizationTime(placesSize, threeOptCoeff), 0.00001);
     }
 
     @Test
@@ -340,7 +303,7 @@ public class TestOptimizerFactory {
     void testThreeOptVeryLargeInput() {
         int placesSize = veryLargePlaceSize;
         double expectedTime = 2988902.2860999997;
-        assertEquals(expectedTime, testClass.calculateThreeOpt(placesSize), 0.00001);
+        assertEquals(expectedTime, testClass.calculateOptimizationTime(placesSize, threeOptCoeff), 0.00001);
     }
 
     @Test
@@ -348,7 +311,7 @@ public class TestOptimizerFactory {
     void testThreeOptSmallInput() {
         int placesSize = smallPlaceSize;
         double expectedTime = 7.819438599999998;
-        assertEquals(expectedTime, testClass.calculateThreeOpt(placesSize), 0.00001);
+        assertEquals(expectedTime, testClass.calculateOptimizationTime(placesSize, threeOptCoeff), 0.00001);
     }
 
     @Test
@@ -356,7 +319,7 @@ public class TestOptimizerFactory {
     void testThreeOptMediumInput() {
         int placesSize = mediumPlaceSize;
         double expectedTime = 28.148724999999992;
-        assertEquals(expectedTime, testClass.calculateThreeOpt(placesSize), 0.00001);
+        assertEquals(expectedTime, testClass.calculateOptimizationTime(placesSize, threeOptCoeff), 0.00001);
     }
 
     @Test
@@ -364,8 +327,6 @@ public class TestOptimizerFactory {
     void testThreeOptLargeInput() {
         int placesSize = largePlaceSize;
         double expectedTime = 334.4761;
-        assertEquals(expectedTime, testClass.calculateThreeOpt(placesSize), 0.00001);
+        assertEquals(expectedTime, testClass.calculateOptimizationTime(placesSize, threeOptCoeff), 0.00001);
     }
-
-
 }
