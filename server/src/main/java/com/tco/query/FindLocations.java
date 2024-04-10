@@ -10,10 +10,10 @@ import org.slf4j.LoggerFactory;
 
 public class FindLocations {
     private Places places;
-    String match;
-    List<String> type;
-    List<String> where;
-    int limit;
+    private String match;
+    private List<String> type;
+    private List<String> where;
+    private int limit;
 
     public FindLocations(String match, List<String> type, List<String> where, int limit){
         this.match = match;
@@ -23,10 +23,11 @@ public class FindLocations {
     }
 
     public Places find() throws Exception {
-        return null;
+        this.places = Database.places(Select.match(this.match,this.limit));
+        return this.places;
     }
 
     public Integer found() throws Exception {
-        return null;
+        return Database.found(Select.found(this.match));
     }
 }
