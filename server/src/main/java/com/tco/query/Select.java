@@ -16,20 +16,17 @@ public class Select {
     }
 
     static String found(String match) {
-        String where = "WHERE ";
-        for(int i = 0; i < COLUMN.length; i++) {
-            if(i != COLUMN.length - 1) {
-                where += COLUMN[i] +" LIKE \"%" + match + "%\"" + " OR ";
-            }
-            else {
-                where += COLUMN[i] +" LIKE \"%" + match + "%\"";
-            }   
-        }
+        String where = createWhereString(match);
         return statementFind(where, "COUNT(*) AS count", "");
     }
 
     static String match(String match, int limit) {
         if(limit > 100) limit = 100;
+        String where = createWhereString(match);
+        return statementFind(where, COLUMNS + " ", "LIMIT " + limit);
+    }
+
+    static String createWhereString(String match) {
         String where = "WHERE ";
         for(int i = 0; i < COLUMN.length; i++) {
             if(i != COLUMN.length - 1) {
@@ -39,7 +36,7 @@ public class Select {
                 where += COLUMN[i] +" LIKE \"%" + match + "%\"";
             }   
         }
-        return statementFind(where, COLUMNS + " ", "LIMIT " + limit);
+        return where;
     }
 
     static String statementFind(String where, String data, String limit) {
