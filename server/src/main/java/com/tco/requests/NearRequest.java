@@ -21,9 +21,9 @@ public class NearRequest extends Request{
     Distances distances;
     String formula;
 
-    private final static transient Logger log = LoggerFactory.getLogger(DistancesRequest.class);
+    private final static transient Logger log = LoggerFactory.getLogger(NearRequest.class);
 
-    public NearRequest(){
+    public NearRequest(Place place, int distance, double earthRadius, int limit, String formula){
         this.place = place;
         this.distance = distance;
         this.earthRadius = earthRadius;
