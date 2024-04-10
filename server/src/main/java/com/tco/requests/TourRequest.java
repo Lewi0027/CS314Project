@@ -16,7 +16,7 @@ public class TourRequest extends Request{
     private final String formula;
     private final Double response;
 
-    private final static transient Logger log = LoggerFactory.getLogger(DistancesRequest.class);
+    private final static transient Logger log = LoggerFactory.getLogger(TourRequest.class);
 
     public TourRequest(Places places, Double earthRadius, String formula, Double response) {
         this.places = places;
