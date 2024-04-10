@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class FindLocations {
-    Places places;
+    private Places places;
     String match;
     List<String> type;
     List<String> where;
@@ -23,10 +23,10 @@ public class FindLocations {
     }
 
     public Places find() throws Exception {
-        
+        return null;
     }
 
     public Integer found() throws Exception {
-
+        return null;
     }
 }
