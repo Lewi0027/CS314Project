@@ -24,7 +24,7 @@ public abstract class TourOptimizer {
     }
 
     protected boolean tooMuchTimeElapsed(){
-        Double responseThreshold = (this.response * 1000) - 150;
+        Double responseThreshold = tour.length >= 500 ? (this.response * 1000) - 400 : (this.response * 1000) - 250;
         long currTime = System.nanoTime();
         double totalDuration = (currTime - this.startTime) / 1e6;
         return (totalDuration >= responseThreshold);
