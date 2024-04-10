@@ -12,7 +12,7 @@ public class Database {
 
     private final static String TABLE = "world";
     private final static String COLUMN = "name";
-    private final static String COLUMNS = "id,name,municipality,iso_region,iso_country,latitude,longitude,altitude,type";
+    private final static String COLUMNS = "id,name,municipality,region,country,latitude,longitude,altitude,type";
 
     protected static ResultSet performQuery (String sql) throws Exception {
         try (

@@ -4,9 +4,9 @@ import com.tco.requests.Place;
 
 public class Select {
 
-    private final static String TABLE = "world";
-    private final static String COLUMN = "name";
-    private final static String COLUMNS = "id,name,municipality,iso_region,iso_country,latitude,longitude,altitude,type";
+    private final static String TABLE = "world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id";
+    private final static String[] COLUMN = {"world.name", "world.id", "region.name", "country.name"};
+    private final static String COLUMNS = " world.id AS id, world.name, world.municipality, region.name AS region, country.name AS country, world.latitude, world.longitude, world.altitude, world.type";
 
     static String near(Boundary boundary, Place place) {
         String where = "WHERE latitude BETWEEN " + boundary.latMin + " AND " + boundary.latMax + 
@@ -16,12 +16,29 @@ public class Select {
     }
 
     static String found(String match) {
-        String where = "WHERE " + COLUMN + " LIKE \"%" + match + "%\"";
+        String where = "WHERE ";
+        for(int i = 0; i < COLUMN.length; i++) {
+            if(i != COLUMN.length - 1) {
+                where += COLUMN[i] +" LIKE \"%" + match + "%\"" + " OR ";
+            }
+            else {
+                where += COLUMN[i] +" LIKE \"%" + match + "%\"";
+            }   
+        }
         return statementFind(where, "COUNT(*) AS count", "");
     }
 
     static String match(String match, int limit) {
-        String where = "WHERE " + COLUMN + " LIKE \"%" + match + "%\""; 
+        if(limit > 100) limit = 100;
+        String where = "WHERE ";
+        for(int i = 0; i < COLUMN.length; i++) {
+            if(i != COLUMN.length - 1) {
+                where += COLUMN[i] +" LIKE \"%" + match + "%\"" + " OR ";
+            }
+            else {
+                where += COLUMN[i] +" LIKE \"%" + match + "%\"";
+            }   
+        }
         return statementFind(where, COLUMNS + " ", "LIMIT " + limit);
     }
 
