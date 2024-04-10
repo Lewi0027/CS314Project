@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "bscheidt-distances-1-point",
+			"name": "bscheidt: distances-1-point",
 			"event": [
 				{
 					"listen": "test",
@@ -27,7 +27,8 @@
 							"});",
 							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -61,7 +62,7 @@
 			"response": []
 		},
 		{
-			"name": "bscheidt-distances-2-points",
+			"name": "bscheidt: distances-2-points",
 			"event": [
 				{
 					"listen": "test",
@@ -82,7 +83,8 @@
 							"});",
 							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -116,7 +118,7 @@
 			"response": []
 		},
 		{
-			"name": "bscheidt-distances-null-places",
+			"name": "bscheidt: distances-null-places",
 			"event": [
 				{
 					"listen": "test",
@@ -128,7 +130,8 @@
 							"});",
 							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -162,7 +165,7 @@
 			"response": []
 		},
 		{
-			"name": "bscheidt-distances-null-earth-radius",
+			"name": "bscheidt: distances-null-earth-radius",
 			"event": [
 				{
 					"listen": "test",
@@ -174,7 +177,8 @@
 							"});",
 							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -208,7 +212,7 @@
 			"response": []
 		},
 		{
-			"name": "bscheidt-distances-0-earth-radius",
+			"name": "bscheidt: distances-0-earth-radius",
 			"event": [
 				{
 					"listen": "test",
@@ -220,7 +224,8 @@
 							"});",
 							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -254,7 +259,7 @@
 			"response": []
 		},
 		{
-			"name": "bscheidt-distances-OOB-latitude",
+			"name": "bscheidt: distances-OOB-latitude",
 			"event": [
 				{
 					"listen": "test",
@@ -266,7 +271,8 @@
 							"});",
 							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -300,7 +306,7 @@
 			"response": []
 		},
 		{
-			"name": "bscheidt-distances-OOB-longitude",
+			"name": "bscheidt: distances-OOB-longitude",
 			"event": [
 				{
 					"listen": "test",
@@ -312,7 +318,8 @@
 							"});",
 							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
