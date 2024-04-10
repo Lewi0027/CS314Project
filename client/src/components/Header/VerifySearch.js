@@ -36,7 +36,7 @@ async function verifyNear(props, lat, lng){
 		requestType: "near",
 		place: {"latitude": lat + '', "longitude": lng + ''},
 		earthRadius: 3959,
-		distance: 10,
+		distance: 50,
 		limit: 7
 	};
 	const nearResponse = await sendAPIRequest(requestBody, props.serverSettings.serverUrl);
