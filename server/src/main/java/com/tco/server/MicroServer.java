@@ -7,6 +7,7 @@ import com.tco.requests.DistancesRequest;
 import com.tco.requests.TourRequest;
 import com.tco.requests.NearRequest;
 import com.tco.requests.Request;
+import com.tco.requests.FindRequest;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -42,6 +43,7 @@ public final class MicroServer {
             post("/distances", (req, res) -> processHttpRequest(req, res, DistancesRequest.class));
             post("/tour", (req, res) -> processHttpRequest(req, res, TourRequest.class));
             post("/near", (req, res) -> processHttpRequest(req, res, NearRequest.class));
+            post("/find", (req, res) -> processHttpRequest(req, res, FindRequest.class));
         });
     }
 
