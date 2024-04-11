@@ -411,6 +411,59 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Lewi0027: same starting point",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c26d1c7f-6263-484a-926a-d76fee9ed874",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Starts with same element\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    const places = responseJson.places;",
+							"",
+							"    pm.expect(places[0].name).to.eql(\"Start\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "1cd880c7-bd59-4e09-80b1-c8e150199b88",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"tour\",\n    \"places\": [\n        {\"name\": \"Start\", \"latitude\": \"80\", \"longitude\": \"-100\"},\n        {\"name\": \"1\", \"latitude\": \"50\", \"longitude\": \"-90\"},\n        {\"name\": \"2\", \"latitude\": \"30\", \"longitude\": \"-80\"},\n        {\"name\": \"3\", \"latitude\": \"20\", \"longitude\": \"-70\"}, \n        {\"name\": \"4\", \"latitude\": \"10\", \"longitude\": \"-50\"},     \n        {\"name\": \"5\", \"latitude\": \"0\", \"longitude\": \"0\"}\n        ],\n    \"earthRadius\": 3959,\n    \"response\": 1.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/tour",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"tour"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

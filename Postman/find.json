@@ -19,7 +19,8 @@
 							"});",
 							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -33,6 +34,112 @@
 				"body": {
 					"mode": "raw",
 					"raw": "{\n    \"requestType\": \"find\",\n    \"match\": \"denver\",\n    \"limit\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/find",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"find"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lewi0027: find test limit value",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "749b06bd-7ba9-47c7-a113-e6e197e0367d",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Test find for limit value of 100\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    const places = responseJson.places;    ",
+							"",
+							"    pm.expect(places.length).to.eql(100);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "af6caf48-6838-499e-922c-3b9d1beea173",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"find\",\n    \"match\": \"\",\n    \"limit\": 100\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/find",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"find"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lewi0027: find test no return",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "749b06bd-7ba9-47c7-a113-e6e197e0367d",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Test find for limit value of 100\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    const places = responseJson.places;    ",
+							"",
+							"    pm.expect(places.length).to.eql(0);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "8a7a4799-1af7-4cb4-92c5-6274109c61fd",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"find\",\n    \"match\": \"zyxwvut\",\n    \"limit\": 100\n}",
 					"options": {
 						"raw": {
 							"language": "json"

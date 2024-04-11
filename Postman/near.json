@@ -378,6 +378,131 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "lewi0027: zero-returns",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ebd7577f-98ff-4817-b70b-ed879e007e45",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Correct number of places and distances in increasing order\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    const places = responseJson.places;",
+							"    const distances = responseJson.distances;",
+							"",
+							"    // Check the number of places matches the number of distances",
+							"    pm.expect(places.length).to.eql(distances.length);",
+							"    ",
+							"    // Check that the number of places received matches the expected number",
+							"    const expectedNumberOfPlaces = 1; ",
+							"    pm.expect(places.length).to.equal(expectedNumberOfPlaces);",
+							"    ",
+							"    // Check distances are in increasing order",
+							"    for(let i = 0; i < distances.length - 1; i++) {",
+							"        pm.expect(distances[i]).to.be.at.most(distances[i + 1]);",
+							"    }",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "0237e06f-923d-4573-9ade-f2e4f6d10de4",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"near\",\n    \"place\": {\"latitude\": \"-89.5\", \"longitude\": \"70\"},\n    \"distance\": 50,\n    \"earthRadius\": 3959,\n    \"formula\": \"vincenty\",\n    \"limit\": 53000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/near",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"near"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lewi0027: test-distances-value",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ebd7577f-98ff-4817-b70b-ed879e007e45",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Correct distance value\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    const places = responseJson.places;",
+							"    const distances = responseJson.distances;",
+							"",
+							"    ",
+							"    // Check that the number of places received matches the expected number",
+							"    const expectedDistance = 48;",
+							"    pm.expect(distances[0]).to.equal(expectedDistance);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "514f1794-fd6f-4c54-b471-c7d6236a6094",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"near\",\n    \"place\": {\"latitude\": \"15\", \"longitude\": \"50\"},\n    \"distance\": 50,\n    \"earthRadius\": 3959,\n    \"formula\": \"vincenty\",\n    \"limit\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/near",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"near"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
