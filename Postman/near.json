@@ -503,6 +503,54 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "ajlei: limit of zero error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7b45914e-9a1b-4dc1-8987-b0309c1a5fff",
+						"exec": [
+							"pm.test(\"Response is HTTP400 status\", () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "2e977bf8-6010-4ad5-85bf-426a3894bc91",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"requestType\": \"near\",\r\n    \"place\": {\"latitude\": \"40.574444\", \"longitude\": \"-105.086439\"},\r\n    \"distance\": 20,\r\n    \"earthRadius\": 3959,\r\n    \"formula\": \"vincenty\",\r\n    \"limit\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/near",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"near"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

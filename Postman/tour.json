@@ -413,7 +413,7 @@
 			"response": []
 		},
 		{
-			"name": "Lewi0027: same starting point",
+			"name": "lewi0027: same starting point",
 			"event": [
 				{
 					"listen": "test",
@@ -446,6 +446,69 @@
 				"body": {
 					"mode": "raw",
 					"raw": "{\n    \"requestType\": \"tour\",\n    \"places\": [\n        {\"name\": \"Start\", \"latitude\": \"80\", \"longitude\": \"-100\"},\n        {\"name\": \"1\", \"latitude\": \"50\", \"longitude\": \"-90\"},\n        {\"name\": \"2\", \"latitude\": \"30\", \"longitude\": \"-80\"},\n        {\"name\": \"3\", \"latitude\": \"20\", \"longitude\": \"-70\"}, \n        {\"name\": \"4\", \"latitude\": \"10\", \"longitude\": \"-50\"},     \n        {\"name\": \"5\", \"latitude\": \"0\", \"longitude\": \"0\"}\n        ],\n    \"earthRadius\": 3959,\n    \"response\": 1.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/tour",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"tour"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ajlei: less than 5 places",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dfcb7a09-c1a0-4375-ab08-e14240513df3",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Order of places shouldn't change\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const places = responseJson.places;\r",
+							"    const expectedOrder = [\"A\", \"B\", \"C\", \"D\"];\r",
+							"\r",
+							"\r",
+							"    pm.expect(places).to.be.an('array').that.is.not.empty;\r",
+							"    pm.expect(places.length).to.eql(expectedOrder.length);\r",
+							"\r",
+							"\r",
+							"    places.forEach((place, index) => {\r",
+							"        pm.expect(place.name).to.eql(expectedOrder[index]);\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "a29e206d-9504-418e-8de9-eca6edfd0dff",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"requestType\": \"tour\",\r\n    \"places\": [\r\n        {\"name\": \"A\", \"latitude\": \"37.61\", \"longitude\": \"-84.9\"},\r\n        {\"name\": \"B\", \"latitude\": \"49.07\", \"longitude\": \"15.64\"},\r\n        {\"name\": \"C\", \"latitude\": \"19.84\", \"longitude\": \"51.15\"},\r\n        {\"name\": \"D\", \"latitude\": \"-6.47\", \"longitude\": \"27.60\"}\r\n        ],\r\n    \"earthRadius\": 3959,\r\n    \"response\": 1.0\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"

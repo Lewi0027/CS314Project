@@ -158,6 +158,112 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "ajlei: find test no limit",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "60f20ccd-bfaf-44ee-ae79-e696e83ab1ea",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Normal Find response for Denver\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const found = responseJson.found;    \r",
+							"\r",
+							"    pm.expect(found).to.eql(50427);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "39c998bc-3163-41b5-b833-dcceb3f9dd4f",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"requestType\": \"find\",\r\n    \"match\": \"\",\r\n    \"limit\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/find",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"find"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "find test normal request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "09d77ea9-4810-4822-a2d3-457f8623b766",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Normal Find response for Denver\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const places = responseJson.places;    \r",
+							"\r",
+							"    pm.expect(places.length).to.eql(7);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "456bb57d-b5fb-4f45-bafb-0e97741d5f49",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"requestType\": \"find\",\r\n    \"match\": \"denver\",\r\n    \"limit\": 10\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/find",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"find"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
