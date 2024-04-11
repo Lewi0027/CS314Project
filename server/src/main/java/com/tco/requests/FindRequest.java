@@ -16,11 +16,12 @@ import java.util.List;
 
 public class FindRequest extends Request{
 
-    private Places places = new Places();
-    String match;
-    List<String> type;
-    List<String> where;
-    int limit;
+    private final String match;
+    private final List<String> type;
+    private final List<String> where;
+    private final Integer limit;
+    private Integer found;
+    private Places places;
 
 
     private final static transient Logger log = LoggerFactory.getLogger(FindRequest.class);
@@ -37,7 +38,7 @@ public class FindRequest extends Request{
         try {
             FindLocations locations = new FindLocations(this.match, this.type, this.where, this.limit);
             this.places = locations.find();
-            this.limit = locations.found();
+            this.found = locations.found();
         } 
         catch (Exception e) {
             log.error("Error processing request: ", e);
