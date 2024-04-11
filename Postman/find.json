@@ -173,9 +173,9 @@
 							"\r",
 							"pm.test(\"Normal Find response for Denver\", () => {\r",
 							"    const responseJson = pm.response.json();\r",
-							"    const places = responseJson.places;    \r",
+							"    const found = responseJson.found;    \r",
 							"\r",
-							"    pm.expect(places.length).to.eql(50427);\r",
+							"    pm.expect(found).to.eql(50427);\r",
 							"});"
 						],
 						"type": "text/javascript",
