@@ -30,4 +30,10 @@ public class FindLocations {
     public Integer found() throws Exception {
         return Database.found(Select.found(this.match));
     }
+
+    public Places where() throws Exception {
+        return this.places;
+    }
+
+
 }
