@@ -228,7 +228,7 @@
 							"    const responseJson = pm.response.json();\r",
 							"    const places = responseJson.places;    \r",
 							"\r",
-							"    pm.expect(places.length).to.eql(7);\r",
+							"    pm.expect(places.length).to.eql(30);\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -245,7 +245,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"requestType\": \"find\",\r\n    \"match\": \"denver\",\r\n    \"limit\": 10\r\n}",
+					"raw": "{\r\n    \"requestType\": \"find\",\r\n    \"match\": \"denver\",\r\n    \"limit\": 100\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

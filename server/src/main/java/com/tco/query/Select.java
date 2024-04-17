@@ -5,7 +5,7 @@ import com.tco.requests.Place;
 public class Select {
 
     private final static String TABLE = "world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id";
-    private final static String[] COLUMN = {"world.name", "world.id", "region.name", "country.name"};
+    private final static String[] COLUMN = {"world.name", "world.id", "world.municipality", "region.name", "country.name"};
     private final static String COLUMNS = " world.id AS id, world.name, world.municipality, region.name AS region, country.name AS country, world.latitude, world.longitude, world.altitude, world.type";
 
     static String near(Boundary boundary, Place place) {
