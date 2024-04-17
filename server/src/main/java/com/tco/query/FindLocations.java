@@ -35,5 +35,7 @@ public class FindLocations {
         return this.places;
     }
 
-
+    public Places type() throws Exception {
+        return this.places;
+    }
 }
