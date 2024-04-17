@@ -36,9 +36,6 @@ public class Select {
                 where += COLUMN[i] +" LIKE \"%" + match + "%\"";
             }   
         }
-        for (int i=0; i<COLUMN.length; i++) {
-            System.out.println("column" + i + ": " + COLUMN[i]);
-        }
         return where;
     }
 
