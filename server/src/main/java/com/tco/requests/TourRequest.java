@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import com.tco.misc.OptimizerFactory;
 import com.tco.misc.TourOptimizer;
-import com.tco.misc.OneOpt;
+import com.tco.misc.BadRequestException;
 
 import java.util.ArrayList;
 
@@ -26,11 +26,30 @@ public class TourRequest extends Request{
     }
 
     @Override
-    public void buildResponse() {
-        if(this.response == 0.0) return;
-        constructPlacesWithOptimizer();
-        log.trace("buildResponse -> {}", this);
+    public void buildResponse() throws BadRequestException {
+        try {
+            validateRequest();
+            if(this.response == 0.0) return;
+            constructPlacesWithOptimizer();
+        }
+        catch (BadRequestException e) {
+            log.error("Error processing request: ", e);
+            throw new BadRequestException();
+        }
+        finally {
+            log.trace("buildResponse -> {}", this);
+        }
     }
+
+    private void validateRequest() throws BadRequestException {
+        if(formula != null && isInvalidFormula()) 
+            throw new BadRequestException();
+    }
+
+    private boolean isInvalidFormula() {
+        return !formula.equalsIgnoreCase("Vincenty") && !formula.equalsIgnoreCase("Haversine") && !formula.equalsIgnoreCase("Cosines");
+    }
+
 
     protected void constructPlacesWithOptimizer() {
         TourOptimizer optimizer = OptimizerFactory.createOptimizer(this.places.size(), this.response);

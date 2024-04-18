@@ -23,26 +23,49 @@ public class TestTourRequest {
     @Test
     @DisplayName("bscheidt: test request empty places")
     public void testEmptyPlaces() {
-        request = new TourRequest(places, 1000.0, "vincenty", 1.0);
-        Places testPlaces = new Places();
+        try {
+            request = new TourRequest(places, 1000.0, "vincenty", 1.0);
+            Places testPlaces = new Places();
         
-        request.buildResponse();
+            request.buildResponse();
 
-        assertEquals(testPlaces, request.getPlaces());
+            assertEquals(testPlaces, request.getPlaces());
+        }
+        catch (BadRequestException e) {
+            fail("Did not expect BadRequestException to be thrown.");
+        }
     }
 
     @Test
     @DisplayName("bscheidt: test request 1 place")
     public void testOnePlace() {
+        try {
+            places.add(new Place("0", "0"));
+            request = new TourRequest(places, 1000.0, "vincenty", 1.0);
+
+            Places testPlaces = new Places();
+            testPlaces.add(new Place("0", "0"));
+
+            request.buildResponse();
+
+            assertEquals(testPlaces, request.getPlaces());
+        } catch (BadRequestException e) {
+            fail("Did not expect BadRequestException to be thrown.");
+        }
+    }
+
+    @Test
+    @DisplayName("ajlei: test formula not in formulae")
+    public void testWithInvalidFormula() {
         places.add(new Place("0", "0"));
-        request = new TourRequest(places, 1000.0, "vincenty", 1.0);
+        request = new TourRequest(places, 1000.0, "elipses", 1.0);
 
         Places testPlaces = new Places();
         testPlaces.add(new Place("0", "0"));
 
-        request.buildResponse();
-
-        assertEquals(testPlaces, request.getPlaces());
+        BadRequestException exception = assertThrows(BadRequestException.class, () -> {
+            request.buildResponse();
+        });
     }
 
 }
