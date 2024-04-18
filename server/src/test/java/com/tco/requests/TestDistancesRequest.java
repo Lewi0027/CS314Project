@@ -245,4 +245,15 @@ public class TestDistancesRequest {
             fail("Did not expect BadRequestException to be thrown.");
         }
     }
+
+    @Test
+    @DisplayName("ajlei: test formula not in formulae")
+    public void testWithInvalidFormula() {
+        places.add(new Place("0", "0"));
+        request = new DistancesRequest(places, smallRadius, "elipses");
+
+        BadRequestException exception = assertThrows(BadRequestException.class, () -> {
+            request.buildResponse();
+        });
+    }
 }
