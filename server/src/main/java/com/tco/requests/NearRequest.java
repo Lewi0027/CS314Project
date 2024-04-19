@@ -34,7 +34,8 @@ public class NearRequest extends Request{
     @Override
     public void buildResponse() throws BadRequestException{
         try {
-            validateRequest();
+            FormulaValidator formulaValidator = new FormulaValidator();
+            formulaValidator.validateRequest(this.formula);
             NearLocations locations = new NearLocations(this.place, this.distance, this.earthRadius, this.limit, this.formula);
             this.places = locations.near();
             this.distances = locations.distances();
@@ -48,12 +49,4 @@ public class NearRequest extends Request{
         }
     }
 
-    private void validateRequest() throws BadRequestException {
-        if(formula != null && isInvalidFormula()) 
-            throw new BadRequestException();
-    }
-
-    private boolean isInvalidFormula() {
-        return !formula.equalsIgnoreCase("Vincenty") && !formula.equalsIgnoreCase("Haversine") && !formula.equalsIgnoreCase("Cosines");
-    }
 }
