@@ -160,6 +160,149 @@
 			"response": []
 		},
 		{
+			"name": "lewi0027: find test \"bla\"",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "749b06bd-7ba9-47c7-a113-e6e197e0367d",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Test find SQL query\", () => {",
+							"   const expectedData = [",
+							"        { id: \"04MN\", name: \"Helblad Airport\", municipality: \"Kelliher\", type: \"small_airport\" },",
+							"        { id: \"05V\", name: \"Blanca Airport\", municipality: \"Blanca\", type: \"small_airport\" },",
+							"        { id: \"06IN\", name: \"Ellis Fly-In Airport\", municipality: \"Blackhawk\", type: \"small_airport\" },",
+							"        { id: \"0ID4\", name: \"Black Butte Ranch Airport\", municipality: \"Shoshone\", type: \"small_airport\" },",
+							"        { id: \"0WN6\", name: \"L-Z Blue Thunder Heliport\", municipality: \"Blaine\", type: \"heliport\" }",
+							"    ];",
+							"",
+							"    ",
+							"    const responseJson = pm.response.json();",
+							"    const places = responseJson.places;    ",
+							"",
+							"    pm.expect(places.length).to.eql(expectedData.length);",
+							"",
+							"    for (let i = 0; i < expectedData.length; i++) {",
+							"        const expectedPlace = expectedData[i];",
+							"        const actualPlace = places[i];",
+							"",
+							"        pm.expect(actualPlace.id).to.eql(expectedPlace.id);",
+							"        pm.expect(actualPlace.name).to.eql(expectedPlace.name);",
+							"        pm.expect(actualPlace.municipality).to.eql(expectedPlace.municipality);",
+							"        pm.expect(actualPlace.type).to.eql(expectedPlace.type);",
+							"    }",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "08e20c69-1043-4ba0-9208-568f02903b66",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"find\",\n    \"match\": \"bla\",\n    \"limit\": 5\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/find",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"find"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lewi0027: find test \"cha\"",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "749b06bd-7ba9-47c7-a113-e6e197e0367d",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Test find SQL query\", () => {",
+							"     const expectedData = [",
+							"        {id: \"00LL\", name: \"Ac & R Components Heliport\", municipality: \"Chatham\", type: \"heliport\"},",
+							"        {id: \"01NM\", name: \"Champion Ranch Airport\", municipality: \"Artesia\", type: \"small_airport\"},",
+							"        {id: \"04FA\", name: \"Richards Field\", municipality: \"Homestead\", type: \"small_airport\"},",
+							"        {id: \"05FL\", name: \"Charlton Strip\", municipality: \"La Belle\", type: \"small_airport\"},",
+							"        {id: \"06LA\", name: \"Panther Helicopters Inc Heliport\", municipality: \"Belle Chasse\", type: \"heliport\"}",
+							"    ];",
+							"    ",
+							"    const responseJson = pm.response.json();",
+							"    const places = responseJson.places;    ",
+							"",
+							"    pm.expect(places.length).to.eql(expectedData.length);",
+							"",
+							"    for (let i = 0; i < expectedData.length; i++) {",
+							"        const expectedPlace = expectedData[i];",
+							"        const actualPlace = places[i];",
+							"",
+							"        pm.expect(actualPlace.id).to.eql(expectedPlace.id);",
+							"        pm.expect(actualPlace.name).to.eql(expectedPlace.name);",
+							"        pm.expect(actualPlace.municipality).to.eql(expectedPlace.municipality);",
+							"        pm.expect(actualPlace.type).to.eql(expectedPlace.type);",
+							"    }",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "2e4411af-3f8e-4827-b64c-ce7a0bdcb538",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"find\",\n    \"match\": \"cha\",\n    \"limit\": 5\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/find",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"find"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "ajlei: find test no limit",
 			"event": [
 				{
