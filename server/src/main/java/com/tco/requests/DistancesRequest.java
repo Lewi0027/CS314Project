@@ -25,7 +25,8 @@ public class DistancesRequest extends Request {
     @Override
     public void buildResponse() throws BadRequestException {
         try {
-            validateRequest();
+            FormulaValidator formulaValidator = new FormulaValidator();
+            formulaValidator.validateRequest(this.formula);
             distances = buildDistanceList();
         }
         catch (BadRequestException e) {
@@ -35,15 +36,6 @@ public class DistancesRequest extends Request {
         finally {
             log.trace("buildResponse -> {}", this);
         }
-    }
-
-    private void validateRequest() throws BadRequestException {
-        if(formula != null && isInvalidFormula()) 
-            throw new BadRequestException();
-    }
-
-    private boolean isInvalidFormula() {
-        return !formula.equalsIgnoreCase("Vincenty") && !formula.equalsIgnoreCase("Haversine") && !formula.equalsIgnoreCase("Cosines");
     }
 
     private Distances buildDistanceList(){

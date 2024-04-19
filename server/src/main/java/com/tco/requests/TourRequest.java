@@ -28,7 +28,8 @@ public class TourRequest extends Request{
     @Override
     public void buildResponse() throws BadRequestException {
         try {
-            validateRequest();
+            FormulaValidator formulaValidator = new FormulaValidator();
+            formulaValidator.validateRequest(this.formula);
             if(this.response == 0.0) return;
             constructPlacesWithOptimizer();
         }
@@ -40,16 +41,6 @@ public class TourRequest extends Request{
             log.trace("buildResponse -> {}", this);
         }
     }
-
-    private void validateRequest() throws BadRequestException {
-        if(formula != null && isInvalidFormula()) 
-            throw new BadRequestException();
-    }
-
-    private boolean isInvalidFormula() {
-        return !formula.equalsIgnoreCase("Vincenty") && !formula.equalsIgnoreCase("Haversine") && !formula.equalsIgnoreCase("Cosines");
-    }
-
 
     protected void constructPlacesWithOptimizer() {
         TourOptimizer optimizer = OptimizerFactory.createOptimizer(this.places.size(), this.response);
