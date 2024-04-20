@@ -30,7 +30,7 @@ public class Select {
     }
 
     static String createWhereString(String match) {
-        String where = "WHERE ";
+        String where = "WHERE (";
         for(int i = 0; i < COLUMN.length; i++) {
             if(i != COLUMN.length - 1) {
                 where += COLUMN[i] +" LIKE \"%" + match + "%\"" + " OR ";
@@ -39,6 +39,7 @@ public class Select {
                 where += COLUMN[i] +" LIKE \"%" + match + "%\"";
             }   
         }
+        where += ")";
         return where;
     }
 
@@ -47,6 +48,15 @@ public class Select {
             + data
             + " FROM " + TABLE
             + " " + where + " "
+            + limit + ";";
+    }
+
+    static String statementType(String where, String data, String limit, List<String> type) {
+        return "SELECT "
+            + data
+            + " FROM " + TABLE
+            + " " + where + " "
+            + generateTypeString(type)
             + limit + ";";
     }
 
@@ -59,7 +69,7 @@ public class Select {
             }
             else typeString += "world.type LIKE \"%" + port + "%\" OR ";
         }
-        typeString += ")";
+        typeString += ") ";
         return typeString;
     }
 
