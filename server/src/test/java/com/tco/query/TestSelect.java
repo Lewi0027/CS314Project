@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestSelect {
@@ -64,5 +67,33 @@ public class TestSelect {
     @DisplayName("Lewi0027: Test match() method for return value")
     public void testMatchMethod() {
         assertEquals( "SELECT  world.id AS id, world.name, world.municipality, region.name AS region, country.name AS country, world.latitude, world.longitude, world.altitude, world.type  FROM world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id WHERE world.name LIKE \"%keyword%\" OR world.id LIKE \"%keyword%\" OR world.municipality LIKE \"%keyword%\" OR region.name LIKE \"%keyword%\" OR country.name LIKE \"%keyword%\" LIMIT 5;", Select.match(keyword, 5) );
+    }
+
+    @Test
+    @DisplayName("bscheidt: test generateTypeString() all fields")
+    public void testFullType() {
+        String expected = " AND (world.type LIKE \"%airport%\" OR world.type LIKE \"%heliport%\" OR world.type LIKE \"%balloonport%\")";
+
+        List<String> type = new ArrayList<>();
+        type.add("airport");
+        type.add("heliport");
+        type.add("balloonport");
+
+        String actual = Select.generateTypeString(type);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("bscheidt: test generateTypeString() one field")
+    public void testOneType() {
+        String expected = " AND (world.type LIKE \"%airport%\")";
+
+        List<String> type = new ArrayList<>();
+        type.add("airport");
+
+        String actual = Select.generateTypeString(type);
+
+        assertEquals(expected, actual);
     }
 }

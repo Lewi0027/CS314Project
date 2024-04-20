@@ -2,6 +2,9 @@ package com.tco.query;
 
 import com.tco.requests.Place;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class Select {
 
     private final static String TABLE = "world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id";
@@ -45,6 +48,19 @@ public class Select {
             + " FROM " + TABLE
             + " " + where + " "
             + limit + ";";
+    }
+
+    static String generateTypeString(List<String> type) {
+        String typeString = " AND (";
+        for(int i = 0; i < type.size(); i++) {
+            String port = type.get(i);
+            if(i == type.size() - 1) {
+                typeString += "world.type LIKE \"%" + port + "%\"";
+            }
+            else typeString += "world.type LIKE \"%" + port + "%\" OR ";
+        }
+        typeString += ")";
+        return typeString;
     }
 
     static String statementNear(String where, String data, String limit, Place place) {
