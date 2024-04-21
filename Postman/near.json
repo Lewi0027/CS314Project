@@ -551,6 +551,68 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "diegocel: 20 places Memphis",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7b45914e-9a1b-4dc1-8987-b0309c1a5fff",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\",() =>{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Correct number of distances and places in decreasing order\",\r",
+							"    () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const places = responseJson.places;\r",
+							"    const distances = responseJson.distances;\r",
+							"    \r",
+							"    pm.expect(places.length).to.eql(distances.length);\r",
+							"\r",
+							"    const expectedNumberOfPlaces = 20;\r",
+							"    pm.expect(places.length).to.equal(expectedNumberOfPlaces);\r",
+							"\r",
+							"    for(let i = 0; i < distances.length; i++){\r",
+							"        pm.expect(distances[i]+1).to.be.above(distances[i]-1);\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "c708c84b-12ae-450b-af45-3e2d0686a554",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"requestType\": \"near\",\r\n    \"place\": {\"latitude\": \"35.12147062173281\", \"longitude\": \"-90.06042480468751\"},\r\n    \"distance\": 50,\r\n    \"earthRadius\": 3959,\r\n    \"formula\": \"vincenty\",\r\n    \"limit\": 20\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/near",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"near"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
