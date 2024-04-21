@@ -29,6 +29,12 @@ public class Select {
         return statementFind(where, COLUMNS + " ", "LIMIT " + limit);
     }
 
+    static String type(String match, int limit, List<String> type) {
+        if(limit > 100) limit = 100;
+        String where = createWhereString(match);
+        return statementType(where, COLUMNS + " ", "LIMIT " + limit, type);
+    }
+
     static String createWhereString(String match) {
         String where = "WHERE (";
         for(int i = 0; i < COLUMN.length; i++) {

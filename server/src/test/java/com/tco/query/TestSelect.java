@@ -128,4 +128,36 @@ public class TestSelect {
 
         assertEquals(expected, actual);
     }
+
+    @Test
+    @DisplayName("bscheidt: test type() all fields")
+    public void testTypeAllFields() {
+        List<String> type = new ArrayList<>();
+        type.add("airport");
+        type.add("heliport");
+        type.add("balloonport");
+
+        String expected = "SELECT  world.id AS id, world.name, world.municipality, region.name AS region, country.name AS country, world.latitude, world.longitude, world.altitude, world.type  FROM world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id WHERE (world.name LIKE \"%keyword%\" OR world.id LIKE \"%keyword%\" OR world.municipality LIKE \"%keyword%\" OR region.name LIKE \"%keyword%\" OR country.name LIKE \"%keyword%\")";
+        expected += "  AND (world.type LIKE \"%airport%\" OR world.type LIKE \"%heliport%\" OR world.type LIKE \"%balloonport%\") LIMIT 5;";
+        
+
+        String actual = Select.type("keyword", 5, type);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("bscheidt: test type() one field")
+    public void testTypeOneField() {
+        List<String> type = new ArrayList<>();
+        type.add("seaport");
+
+        String expected = "SELECT  world.id AS id, world.name, world.municipality, region.name AS region, country.name AS country, world.latitude, world.longitude, world.altitude, world.type  FROM world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id WHERE (world.name LIKE \"%try%\" OR world.id LIKE \"%try%\" OR world.municipality LIKE \"%try%\" OR region.name LIKE \"%try%\" OR country.name LIKE \"%try%\")";
+        expected += "  AND (world.type LIKE \"%seaport%\") LIMIT 5;";
+        
+
+        String actual = Select.type("try", 5, type);
+
+        assertEquals(expected, actual);
+    }
 }
