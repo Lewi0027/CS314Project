@@ -23,6 +23,11 @@ public class Select {
         return statementFind(where, "COUNT(*) AS count", "");
     }
 
+    static String foundType(String match, List<String> type) {
+        String where = createWhereString(match);
+        return statementType(where, "COUNT(*) AS count", "", type);
+    }
+
     static String match(String match, int limit) {
         if(limit > 100) limit = 100;
         String where = createWhereString(match);
