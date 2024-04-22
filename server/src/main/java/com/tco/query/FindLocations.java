@@ -31,11 +31,16 @@ public class FindLocations {
         return Database.found(Select.found(this.match));
     }
 
+    public Integer foundType() throws Exception {
+        return Database.found(Select.foundType(this.match, this.type));
+    }
+
     public Places where() throws Exception {
         return this.places;
     }
 
     public Places type() throws Exception {
+        this.places = Database.places(Select.type(this.match, this.limit, this.type));
         return this.places;
     }
 }
