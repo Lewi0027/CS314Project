@@ -21,6 +21,7 @@ public class Database {
                     Credential.PASSWORD);
                 Statement query = conn.createStatement();
         ) {
+            System.out.println(sql);
             ResultSet results = query.executeQuery(sql);
             return results;
         } catch (Exception e) {
