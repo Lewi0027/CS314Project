@@ -40,7 +40,21 @@ public class FindLocations {
     }
 
     public Places type() throws Exception {
+        if(!typeListIsValid()) {
+            throw new BadRequestException();
+        }
         this.places = Database.places(Select.type(this.match, this.limit, this.type));
         return this.places;
+    }
+
+    private boolean typeListIsValid() {
+        int portCount = 0;
+        for(String port : this.type) {
+            if(port.equalsIgnoreCase("airport") || port.equalsIgnoreCase("heliport") || port.equalsIgnoreCase("balloonport") || port.equalsIgnoreCase("other")) {
+                portCount++;
+            }
+        }
+
+        return portCount == this.type.size();    
     }
 }

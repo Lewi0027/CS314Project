@@ -83,25 +83,8 @@ public class Select {
     }
 
     static String statementType(String where, String data, String limit, List<String> type) {
-        return "SELECT "
-            + data
-            + " FROM " + TABLE
-            + " " + where + " "
-            + generateTypeString(type)
-            + limit + ";";
-    }
-
-    static String generateTypeString(List<String> type) {
-        String typeString = " AND (";
-        for(int i = 0; i < type.size(); i++) {
-            String port = type.get(i);
-            if(i == type.size() - 1) {
-                typeString += "world.type LIKE \"%" + port + "%\"";
-            }
-            else typeString += "world.type LIKE \"%" + port + "%\" OR ";
-        }
-        typeString += ") ";
-        return typeString;
+        String typeCondition = TypeFilter.generateTypeString(type);
+        return "SELECT " + data + " FROM " + TABLE + " " + where + " " + typeCondition + limit + ";";
     }
 
     static String generateWhereString(List<String> where) {

@@ -79,7 +79,7 @@ public class TestSelect {
         type.add("heliport");
         type.add("balloonport");
 
-        String actual = Select.generateTypeString(type);
+        String actual = TypeFilter.generateTypeString(type);
 
         assertEquals(expected, actual);
     }
@@ -92,7 +92,7 @@ public class TestSelect {
         List<String> type = new ArrayList<>();
         type.add("airport");
 
-        String actual = Select.generateTypeString(type);
+        String actual = TypeFilter.generateTypeString(type);
 
         assertEquals(expected, actual);
     }
@@ -115,13 +115,13 @@ public class TestSelect {
     }
 
     @Test
-    @DisplayName("bscheidt: test statementType() one field")
-    public void testStatementTypeOneField() {
+    @DisplayName("bscheidt: test statementType() other field")
+    public void testStatementTypeOtherField() {
         List<String> type = new ArrayList<>();
-        type.add("seaport");
+        type.add("other");
 
         String expected = "SELECT  world.id AS id, world.name, world.municipality, region.name AS region, country.name AS country, world.latitude, world.longitude, world.altitude, world.type FROM world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id WHERE (world.name LIKE \"%try%\" OR world.id LIKE \"%try%\" OR world.municipality LIKE \"%try%\" OR region.name LIKE \"%try%\" OR country.name LIKE \"%try%\")";
-        expected += "  AND (world.type LIKE \"%seaport%\") LIMIT 5;";
+        expected += "  AND ((world.type NOT LIKE \"%airport%\" AND world.type NOT LIKE \"%heliport%\" AND world.type NOT LIKE \"%balloonport%\")) LIMIT 5;";
         
 
         String actual = Select.statementType("WHERE (world.name LIKE \"%try%\" OR world.id LIKE \"%try%\" OR world.municipality LIKE \"%try%\" OR region.name LIKE \"%try%\" OR country.name LIKE \"%try%\")", " world.id AS id, world.name, world.municipality, region.name AS region, country.name AS country, world.latitude, world.longitude, world.altitude, world.type", "LIMIT " + 5, type);
@@ -147,13 +147,13 @@ public class TestSelect {
     }
 
     @Test
-    @DisplayName("bscheidt: test type() one field")
-    public void testTypeOneField() {
+    @DisplayName("bscheidt: test type() other field")
+    public void testTypeOtherField() {
         List<String> type = new ArrayList<>();
-        type.add("seaport");
+        type.add("other");
 
         String expected = "SELECT  world.id AS id, world.name, world.municipality, region.name AS region, country.name AS country, world.latitude, world.longitude, world.altitude, world.type  FROM world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id WHERE (world.name LIKE \"%try%\" OR world.id LIKE \"%try%\" OR world.municipality LIKE \"%try%\" OR region.name LIKE \"%try%\" OR country.name LIKE \"%try%\")";
-        expected += "  AND (world.type LIKE \"%seaport%\") LIMIT 5;";
+        expected += "  AND ((world.type NOT LIKE \"%airport%\" AND world.type NOT LIKE \"%heliport%\" AND world.type NOT LIKE \"%balloonport%\")) LIMIT 5;";
         
 
         String actual = Select.type("try", 5, type);
@@ -162,6 +162,19 @@ public class TestSelect {
     }
 
     @Test
+    @DisplayName("bscheidt: test type() other and airport") 
+    public void testTypeOtherAndAirport() {
+        List<String> type = new ArrayList<>();
+        type.add("airport");
+        type.add("other");
+
+        String expected = "SELECT  world.id AS id, world.name, world.municipality, region.name AS region, country.name AS country, world.latitude, world.longitude, world.altitude, world.type  FROM world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id WHERE (world.name LIKE \"%try%\" OR world.id LIKE \"%try%\" OR world.municipality LIKE \"%try%\" OR region.name LIKE \"%try%\" OR country.name LIKE \"%try%\")";
+        expected += "  AND (world.type LIKE \"%airport%\" OR (world.type NOT LIKE \"%heliport%\" AND world.type NOT LIKE \"%balloonport%\")) LIMIT 5;";
+        
+
+        String actual = Select.type("try", 5, type);
+    }
+
     @DisplayName("diegocel: test where one city")
     public void testWhereOneCity(){
         List<String> where = new ArrayList<>();
@@ -201,6 +214,21 @@ public class TestSelect {
     }
 
     @Test
+    @DisplayName("bscheidt: test type() all fields and other") 
+    public void testTypeAllFieldsAndOther() {
+        List<String> type = new ArrayList<>();
+        type.add("airport");
+        type.add("heliport");
+        type.add("balloonport");
+        type.add("other");
+
+        String expected = "SELECT  world.id AS id, world.name, world.municipality, region.name AS region, country.name AS country, world.latitude, world.longitude, world.altitude, world.type  FROM world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id WHERE (world.name LIKE \"%try%\" OR world.id LIKE \"%try%\" OR world.municipality LIKE \"%try%\" OR region.name LIKE \"%try%\" OR country.name LIKE \"%try%\") LIMIT 5;";   
+
+        String actual = Select.type("try", 5, type);
+
+        assertEquals(expected, actual);
+    }
+    
     @DisplayName("lewi0027: statementWhere test")
     public void testStatementWhere() {
         String where1 = "(world.name LIKE \"%%\" OR world.id LIKE \"%%\" OR world.municipality LIKE \"%%\" OR region.name LIKE \"%%\" OR country.name LIKE \"%%\")";
