@@ -167,7 +167,7 @@ public class TestSelect {
         List<String> where = new ArrayList<>();
         where.add("Canada");
 
-        String expected = " AND ((region.name LIKE \"%Canada%\" OR country.name LIKE \"%Canada%\")) ";
+        String expected = " AND ((world.municipality LIKE \"%Canada%\" OR region.name LIKE \"%Canada%\" OR country.name LIKE \"%Canada%\")) ";
         
 
         String actual = Select.generateWhereString(where);
@@ -185,7 +185,7 @@ public class TestSelect {
         List<String> where2 = new ArrayList<>();
         where2.add("Canada");
 
-        String expected = "SELECT world.id AS id, world.name, world.municipality, region.name AS region, country.name AS country, world.latitude, world.longitude, world.altitude, world.type FROM world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id (world.name LIKE \"%%\" OR world.id LIKE \"%%\" OR world.municipality LIKE \"%%\" OR region.name LIKE \"%%\" OR country.name LIKE \"%%\")  AND ((region.name LIKE \"%Canada%\" OR country.name LIKE \"%Canada%\")) LIMIT 5;";
+        String expected = "SELECT world.id AS id, world.name, world.municipality, region.name AS region, country.name AS country, world.latitude, world.longitude, world.altitude, world.type FROM world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id (world.name LIKE \"%%\" OR world.id LIKE \"%%\" OR world.municipality LIKE \"%%\" OR region.name LIKE \"%%\" OR country.name LIKE \"%%\")  AND ((world.municipality LIKE \"%Canada%\" OR region.name LIKE \"%Canada%\" OR country.name LIKE \"%Canada%\")) LIMIT 5;";
         
         String actual = Select.statementWhere(where1, data, limit, where2);
 

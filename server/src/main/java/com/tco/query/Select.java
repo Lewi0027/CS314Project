@@ -98,9 +98,9 @@ public class Select {
         for(int i = 0; i < where.size(); i++) {
             String port = where.get(i);
             if(i == where.size() - 1) {
-                typeString += "(region.name LIKE \"%" + port + "%\" OR country.name LIKE \"%" + port + "%\")";
+                typeString += "(world.municipality LIKE \"%" + port + "%\" OR region.name LIKE \"%" + port + "%\" OR country.name LIKE \"%" + port + "%\")";
             }
-            else typeString += "(region.name LIKE \"%" + port + "%\" OR country.name LIKE \"%" + port + "%\") OR ";
+            else typeString += "(world.municipality LIKE \"%" + port + "%\" OR region.name LIKE \"%" + port + "%\" OR country.name LIKE \"%" + port + "%\") OR ";
         }
         typeString += ") ";
         return typeString;
