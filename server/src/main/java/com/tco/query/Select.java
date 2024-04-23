@@ -28,6 +28,11 @@ public class Select {
         return statementType(where, "COUNT(*) AS count", "", type);
     }
 
+    static String foundWhere(String match, List<String> where) {
+        String whereStatement = createWhereString(match);
+        return statementWhere(whereStatement, "COUNT(*) AS count", "", where);
+    }
+
     static String match(String match, int limit) {
         if(limit > 100) limit = 100;
         String where = createWhereString(match);
@@ -38,6 +43,12 @@ public class Select {
         if(limit > 100) limit = 100;
         String where = createWhereString(match);
         return statementType(where, COLUMNS + " ", "LIMIT " + limit, type);
+    }
+
+    static String where(String match, int limit, List<String> whereList){
+        if(limit > 100) limit = 100;
+        String where = createWhereString(match);
+        return statementWhere(where, COLUMNS + " ", "LIMIT " + limit, whereList);
     }
 
     static String createWhereString(String match) {
