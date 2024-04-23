@@ -35,7 +35,12 @@ public class FindLocations {
         return Database.found(Select.foundType(this.match, this.type));
     }
 
+    public Integer foundWhere() throws Exception {
+        return Database.found(Select.foundWhere(this.match, this.where));
+    }
+
     public Places where() throws Exception {
+        this.places = Database.places(Select.where(this.match, this.limit, this.where));
         return this.places;
     }
 
