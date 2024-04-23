@@ -169,7 +169,7 @@ public class TestSelect {
         String match = "match";
         int limit = 5;
         String expectedQuery = "SELECT  world.id AS id, world.name, world.municipality, region.name AS region, country.name AS country, world.latitude, world.longitude, world.altitude, world.type  FROM world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id WHERE (world.name LIKE \"%match%\" OR world.id LIKE \"%match%\" OR world.municipality LIKE \"%match%\" OR region.name LIKE \"%match%\" OR country.name LIKE \"%match%\")  AND ((world.municipality LIKE \"%Denver%\" OR region.name LIKE \"%Denver%\" OR country.name LIKE \"%Denver%\")) LIMIT 5;"; 
-        String actualQuery = Select.where(match, limit, whereList);
+        String actualQuery = Select.where(match, limit, where);
         assertEquals(expectedQuery, actualQuery);
     }
 
