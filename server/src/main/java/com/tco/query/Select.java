@@ -62,6 +62,15 @@ public class Select {
             + limit + ";";
     }
 
+    static String statementWhere(String where1, String data, String limit, List<String> where2) {
+        return "SELECT " 
+            + data
+            + " FROM " + TABLE
+            + " " + where1 + " "
+            + generateWhereString(where2)
+            + limit + ";";
+    }
+
     static String statementType(String where, String data, String limit, List<String> type) {
         return "SELECT "
             + data
@@ -79,6 +88,19 @@ public class Select {
                 typeString += "world.type LIKE \"%" + port + "%\"";
             }
             else typeString += "world.type LIKE \"%" + port + "%\" OR ";
+        }
+        typeString += ") ";
+        return typeString;
+    }
+
+    static String generateWhereString(List<String> where) {
+        String typeString = " AND (";
+        for(int i = 0; i < where.size(); i++) {
+            String port = where.get(i);
+            if(i == where.size() - 1) {
+                typeString += "(region.name LIKE \"%" + port + "%\" OR country.name LIKE \"%" + port + "%\")";
+            }
+            else typeString += "(region.name LIKE \"%" + port + "%\" OR country.name LIKE \"%" + port + "%\") OR ";
         }
         typeString += ") ";
         return typeString;
