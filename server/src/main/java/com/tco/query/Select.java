@@ -62,9 +62,31 @@ public class Select {
             + limit + ";";
     }
 
+    static String statementWhere(String where1, String data, String limit, List<String> where2) {
+        return "SELECT " 
+            + data
+            + " FROM " + TABLE
+            + " " + where1 + " "
+            + generateWhereString(where2)
+            + limit + ";";
+    }
+
     static String statementType(String where, String data, String limit, List<String> type) {
         String typeCondition = TypeFilter.generateTypeString(type);
         return "SELECT " + data + " FROM " + TABLE + " " + where + " " + typeCondition + limit + ";";
+    }
+
+    static String generateWhereString(List<String> where) {
+        String typeString = " AND (";
+        for(int i = 0; i < where.size(); i++) {
+            String port = where.get(i);
+            if(i == where.size() - 1) {
+                typeString += "(world.municipality LIKE \"%" + port + "%\" OR region.name LIKE \"%" + port + "%\" OR country.name LIKE \"%" + port + "%\")";
+            }
+            else typeString += "(world.municipality LIKE \"%" + port + "%\" OR region.name LIKE \"%" + port + "%\" OR country.name LIKE \"%" + port + "%\") OR ";
+        }
+        typeString += ") ";
+        return typeString;
     }
 
     static String statementNear(String where, String data, String limit, Place place) {
