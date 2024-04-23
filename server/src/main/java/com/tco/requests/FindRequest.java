@@ -37,9 +37,14 @@ public class FindRequest extends Request{
     public void buildResponse() throws BadRequestException{
         try {
             FindLocations locations = new FindLocations(this.match, this.type, this.where, this.limit);
-            this.places = locations.find();
-            this.found = locations.found();
-        } 
+            if (this.where != null && !this.where.isEmpty()) {
+                this.places = locations.where();
+                this.found = locations.foundWhere();
+            } else {
+                this.places = locations.find();
+                this.found = locations.found();
+            }
+        }
         catch (Exception e) {
             log.error("Error processing request: ", e);
             throw new BadRequestException();
