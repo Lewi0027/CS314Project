@@ -25,12 +25,17 @@ public class Select {
 
     static String foundType(String match, List<String> type) {
         String where = createWhereString(match);
-        return statementType(where, "COUNT(*) AS count", "", type);
+        return "SELECT COUNT(*) AS count FROM " + TABLE + " " + where + " " + statementType(type) + ";";
     }
 
-    static String foundWhere(String match, List<String> where) {
-        String whereStatement = createWhereString(match);
-        return statementWhere(whereStatement, "COUNT(*) AS count", "", where);
+    static String foundWhere(String match, List<String> whereConditions) {
+        String whereClause = createWhereString(match);
+        return "SELECT COUNT(*) AS count FROM " + TABLE + " " + whereClause + " " + statementWhere(whereConditions) + ";";
+    }
+
+    static String foundWhereAndType(String match, List<String> where, List<String> type) {
+        String whereClause = createWhereString(match);
+        return "SELECT COUNT(*) AS count FROM " + TABLE + " " + whereClause + " " + statementWhere(where) + statementType(type) + ";";
     }
 
     static String match(String match, int limit) {
@@ -42,13 +47,19 @@ public class Select {
     static String type(String match, int limit, List<String> type) {
         if(limit > 100) limit = 100;
         String where = createWhereString(match);
-        return statementType(where, COLUMNS + " ", "LIMIT " + limit, type);
+        return "SELECT " + COLUMNS + " FROM " + TABLE + " " + where + " " + statementType(type) + " LIMIT " + limit + ";";
     }
 
     static String where(String match, int limit, List<String> whereList){
         if(limit > 100) limit = 100;
         String where = createWhereString(match);
-        return statementWhere(where, COLUMNS + " ", "LIMIT " + limit, whereList);
+        return "SELECT " + COLUMNS + " FROM " + TABLE + " " + where + " " + statementWhere(whereList) + " LIMIT " + limit + ";";
+    }
+
+    static String whereAndType(String match, int limit, List<String> whereList, List<String> type) {
+        if(limit > 100) limit = 100;
+        String where = createWhereString(match);
+        return "SELECT " + COLUMNS + " FROM " + TABLE + " " + where + " " + statementWhere(whereList) + " " + statementType(type) + " LIMIT " + limit + ";";
     }
 
     static String createWhereString(String match) {
@@ -66,47 +77,30 @@ public class Select {
     }
 
     static String statementFind(String where, String data, String limit) {
-        return "SELECT "
-            + data
-            + " FROM " + TABLE
-            + " " + where + " "
-            + limit + ";";
+        return "SELECT " + data + " FROM " + TABLE + " " + where + " " + limit + ";";
     }
 
-    static String statementWhere(String where1, String data, String limit, List<String> where2) {
-        return "SELECT " 
-            + data
-            + " FROM " + TABLE
-            + " " + where1 + " "
-            + generateWhereString(where2)
-            + limit + ";";
-    }
-
-    static String statementType(String where, String data, String limit, List<String> type) {
-        String typeCondition = TypeFilter.generateTypeString(type);
-        return "SELECT " + data + " FROM " + TABLE + " " + where + " " + typeCondition + limit + ";";
-    }
-
-    static String generateWhereString(List<String> where) {
-        String typeString = " AND (";
-        for(int i = 0; i < where.size(); i++) {
+    static String statementWhere(List<String> where) {
+        String whereString = " AND (";
+        for (int i = 0; i < where.size(); i++) {
             String port = where.get(i);
-            if(i == where.size() - 1) {
-                typeString += "(world.municipality LIKE \"%" + port + "%\" OR region.name LIKE \"%" + port + "%\" OR country.name LIKE \"%" + port + "%\")";
+            if (i == where.size() - 1) {
+                whereString += "(world.municipality LIKE \"%" + port + "%\" OR region.name LIKE \"%" + port + "%\" OR country.name LIKE \"%" + port + "%\")";
+            } else {
+                whereString += "(world.municipality LIKE \"%" + port + "%\" OR region.name LIKE \"%" + port + "%\" OR country.name LIKE \"%" + port + "%\") OR ";
             }
-            else typeString += "(world.municipality LIKE \"%" + port + "%\" OR region.name LIKE \"%" + port + "%\" OR country.name LIKE \"%" + port + "%\") OR ";
         }
-        typeString += ") ";
-        return typeString;
+        whereString += ")";
+        return whereString;
+    }
+
+
+    static String statementType(List<String> type) {
+        return TypeFilter.generateTypeString(type);
     }
 
     static String statementNear(String where, String data, String limit, Place place) {
-        return "SELECT "
-            + data
-            + " FROM " + TABLE + " "
-            + where
-            + " ORDER BY ABS(latitude - " + place.get("latitude") + ") + ABS(longitude - " + place.get("longitude") + ") "
-            + limit
-            + ";";
+        return "SELECT " + data + " FROM " + TABLE + " " + where + " ORDER BY ABS(latitude - " + place.get("latitude") + ") + ABS(longitude - " + place.get("longitude") + ") " + limit + ";";
     }
 }
+
