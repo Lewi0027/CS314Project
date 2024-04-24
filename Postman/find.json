@@ -417,6 +417,84 @@
 			"response": []
 		},
 		{
+			"name": "Wyattg5:findWhereAndType",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "60f20ccd-bfaf-44ee-ae79-e696e83ab1ea",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Correct number of places\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const expectedNumberOfPlaces = 15;\r",
+							"    const places = responseJson.places;\r",
+							"    pm.expect(places.length).to.equal(expectedNumberOfPlaces);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"correct type\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const places = responseJson.places;\r",
+							"    for (var i = 0; i < responseJson.length; i++) {\r",
+							"        pm.expect(responseJson[i].type.to.include(\"ial\"));\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"correct where\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const places = responseJson.places;\r",
+							"    for (var i = 0; i < responseJson.length; i++) {\r",
+							"        pm.expect(responseJson[i].where.to.eql([\"United States\"]));\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"correct type\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const places = responseJson.places;\r",
+							"    for (var i = 0; i < responseJson.length; i++) {\r",
+							"        pm.expect(responseJson[i].type.to.include(\"airport\"));\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "e34c2c36-f85c-4455-8cc5-44cb73b6cec1",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"requestType\": \"find\",\r\n    \"match\": \"ial\",\r\n    \"type\": [\"airport\"],\r\n    \"where\": [\"United States\"],\r\n    \"limit\" : 15\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/find",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"find"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "find test normal request",
 			"event": [
 				{
