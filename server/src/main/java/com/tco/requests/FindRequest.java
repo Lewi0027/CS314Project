@@ -37,13 +37,7 @@ public class FindRequest extends Request{
     public void buildResponse() throws BadRequestException{
         try {
             FindLocations locations = new FindLocations(this.match, this.type, this.where, this.limit);
-            if (this.where != null && !this.where.isEmpty()) {
-                this.places = locations.where();
-                this.found = locations.foundWhere();
-            } else {
-                this.places = locations.find();
-                this.found = locations.found();
-            }
+            determineWhereType(locations);
         }
         catch (Exception e) {
             log.error("Error processing request: ", e);
@@ -51,6 +45,30 @@ public class FindRequest extends Request{
         }
         finally {
             log.trace("buildResponse -> {}", this);
+        }
+    }
+
+    public void determineWhereType(FindLocations locations) throws BadRequestException{
+        try{
+            if ((this.where != null && !this.where.isEmpty()) && (this.type != null && !this.type.isEmpty())) {
+                this.places = locations.whereAndType();
+                this.found = locations.foundWhereAndType();
+            } 
+            else if(this.where != null && !this.where.isEmpty()){
+                this.places = locations.where();
+                this.found = locations.foundWhere();
+            }
+            else if(this.type != null && !this.type.isEmpty()){
+                this.places = locations.type();
+                this.found = locations.foundType();
+            }
+            else {
+                this.places = locations.find();
+                this.found = locations.found();
+            }
+        }  catch (Exception e) {
+            log.error("Error processing request: ", e);
+            throw new BadRequestException();
         }
     }
 }
