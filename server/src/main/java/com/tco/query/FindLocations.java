@@ -44,6 +44,15 @@ public class FindLocations {
         return this.places;
     }
 
+    public Places whereAndType() throws Exception {
+        this.places = Database.places(Select.whereAndType(this.match, this.limit, this.where, this.type));
+        return this.places;
+    }
+
+    public Integer foundWhereAndType() throws Exception {
+        return Database.found(Select.foundWhereAndType(this.match, this.where, this.type));
+    }
+
     public Places type() throws Exception {
         if(!typeListIsValid()) {
             throw new BadRequestException();
