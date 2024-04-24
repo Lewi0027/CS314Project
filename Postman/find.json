@@ -356,6 +356,67 @@
 			"response": []
 		},
 		{
+			"name": "Wyattg5:findwhere1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "60f20ccd-bfaf-44ee-ae79-e696e83ab1ea",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"    const expectedNumberOfPlaces = 10;\r",
+							"pm.test(\"Correct number of places\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const expectedNumberOfPlaces = 10;\r",
+							"    const places = responseJson.places;\r",
+							"    pm.expect(places.length).to.equal(expectedNumberOfPlaces);\r",
+							"});\r",
+							"pm.test(\"correct where\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const places = responseJson.places;\r",
+							"    for (var i = 0; i < responseJson.length; i++) {\r",
+							"        pm.expect(responseJson[i].where.to.eql([\"United States\"]));\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "c498bbcb-1dbc-435f-95ff-2d2bd9932a77",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"requestType\": \"find\",\r\n    \"match\": \"dave\",\r\n    \"type\": [\"airport\"],\r\n    \"where\": [\"United States\"],\r\n    \"limit\" : 10\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/find",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"find"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "find test normal request",
 			"event": [
 				{
