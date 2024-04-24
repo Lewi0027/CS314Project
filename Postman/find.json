@@ -521,6 +521,128 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "lewi0027: find test where",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "749b06bd-7ba9-47c7-a113-e6e197e0367d",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Test find SQL query\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    const found = responseJson.found;    ",
+							"",
+							"    pm.expect(found).to.be.within(24393, 24500);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "9f7ffa79-cb9c-4716-87dc-8a190b4e3968",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"find\",\n    \"match\": \"\",\n    \"where\": [\"United States\", \"Canada\"],\n    \"limit\": 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/find",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"find"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lewi0027: find test where+match",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "749b06bd-7ba9-47c7-a113-e6e197e0367d",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Test find SQL query\", () => {",
+							"   const expectedData = [",
+							"        { id: \"KDEN\", name: \"Denver International Airport\", municipality: \"Denver\", type: \"large_airport\" },",
+							"        { id: \"X-KDEN\", name: \"Denver Stapleton International Airport\", municipality: \"Denver\", type: \"closed\" },",
+							"    ];",
+							"",
+							"    ",
+							"    const responseJson = pm.response.json();",
+							"    const places = responseJson.places;    ",
+							"",
+							"    pm.expect(places.length).to.eql(expectedData.length);",
+							"",
+							"    for (let i = 0; i < expectedData.length; i++) {",
+							"        const expectedPlace = expectedData[i];",
+							"        const actualPlace = places[i];",
+							"",
+							"        pm.expect(actualPlace.id).to.eql(expectedPlace.id);",
+							"        pm.expect(actualPlace.name).to.eql(expectedPlace.name);",
+							"        pm.expect(actualPlace.municipality).to.eql(expectedPlace.municipality);",
+							"        pm.expect(actualPlace.type).to.eql(expectedPlace.type);",
+							"    }",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "d518e57e-d9c5-4f5a-b197-ba14f89c00f9",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"find\",\n    \"match\": \"Int\",\n    \"where\": [\"Denver\"],\n    \"limit\": 5\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/find",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"find"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
