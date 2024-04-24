@@ -2,6 +2,7 @@ package com.tco.requests;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,8 @@ public class ConfigRequest extends Request {
     private String serverName;
     private List<String> features;
     private List<String> formulae;
+    private List<String> type;
+    private List<String> where;
 
     @Override
     public void buildResponse() {
@@ -24,10 +27,13 @@ public class ConfigRequest extends Request {
         features.add("tour");
         features.add("near");
         features.add("find");
+        features.add("type");
         features.add("where");
         formulae.add("vincenty");
         formulae.add("haversine");
         formulae.add("cosines");
+        type = Constants.type;
+        where = Constants.where;
         log.trace("buildResponse -> {}", this);
     }
 
