@@ -3,6 +3,8 @@ package com.tco.misc;
 import com.tco.requests.Places;
 import com.tco.requests.Place;
 import com.tco.requests.Distances;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public abstract class TourOptimizer {
 
@@ -73,8 +75,11 @@ public abstract class TourOptimizer {
 
         long shortestTourDistance = totalDistanceOfTour();
         int[] bestTourSoFar = this.tour.clone();
+        int coresAvailable =  Runtime.getRuntime().availableProcessors();
+        int tourLength = this.tour.length;
+        ExecutorService executor = Executors.newFixedThreadPool(coresAvailable);
 
-        for (int i = 0; i < this.tour.length && !tooMuchTimeElapsed(); i++) {
+        for (int i = 0; i < tourLength && !tooMuchTimeElapsed(); i++) {
             updateTourWithNearestNeighbor(i);
 
             long currentTourDistance = totalDistanceOfTour();
