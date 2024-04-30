@@ -47,19 +47,19 @@ public class Select {
     static String type(String match, int limit, List<String> type) {
         if(limit > 100) limit = 100;
         String where = createWhereString(match);
-        return "SELECT " + COLUMNS + " FROM " + TABLE + " " + where + " " + statementType(type) + " LIMIT " + limit + ";";
+        return "SELECT " + COLUMNS + " FROM " + TABLE + " " + where + " " + statementType(type) + " ORDER BY RAND()" + " LIMIT " + limit + ";";
     }
 
     static String where(String match, int limit, List<String> whereList){
         if(limit > 100) limit = 100;
         String where = createWhereString(match);
-        return "SELECT " + COLUMNS + " FROM " + TABLE + " " + where + " " + statementWhere(whereList) + " LIMIT " + limit + ";";
+        return "SELECT " + COLUMNS + " FROM " + TABLE + " " + where + " " + statementWhere(whereList) + " ORDER BY RAND()" + " LIMIT " + limit + ";";
     }
 
     static String whereAndType(String match, int limit, List<String> whereList, List<String> type) {
         if(limit > 100) limit = 100;
         String where = createWhereString(match);
-        return "SELECT " + COLUMNS + " FROM " + TABLE + " " + where + " " + statementWhere(whereList) + " " + statementType(type) + " LIMIT " + limit + ";";
+        return "SELECT " + COLUMNS + " FROM " + TABLE + " " + where + " " + statementWhere(whereList) + " " + statementType(type) + " ORDER BY RAND()" + " LIMIT " + limit + ";";
     }
 
     static String createWhereString(String match) {
@@ -77,7 +77,7 @@ public class Select {
     }
 
     static String statementFind(String where, String data, String limit) {
-        return "SELECT " + data + " FROM " + TABLE + " " + where + " " + limit + ";";
+        return "SELECT " + data + " FROM " + TABLE + " " + where + " " + " ORDER BY RAND() " + limit + ";";
     }
 
     static String statementWhere(List<String> where) {
@@ -103,4 +103,3 @@ public class Select {
         return "SELECT " + data + " FROM " + TABLE + " " + where + " ORDER BY ABS(latitude - " + place.get("latitude") + ") + ABS(longitude - " + place.get("longitude") + ") " + limit + ";";
     }
 }
-
