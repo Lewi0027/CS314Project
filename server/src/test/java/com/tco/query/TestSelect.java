@@ -43,7 +43,7 @@ public class TestSelect {
     @DisplayName("Diegocel: Tests found for correct output")
     public void testFoundCorrect(){
         String match = "Barcelona";
-        String expectedQuery = "SELECT COUNT(*) AS count FROM world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id WHERE (world.name LIKE \"%Barcelona%\" OR world.id LIKE \"%Barcelona%\" OR world.municipality LIKE \"%Barcelona%\" OR region.name LIKE \"%Barcelona%\" OR country.name LIKE \"%Barcelona%\") ;";
+        String expectedQuery = "SELECT COUNT(*) AS count FROM world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id WHERE (world.name LIKE \"%Barcelona%\" OR world.id LIKE \"%Barcelona%\" OR world.municipality LIKE \"%Barcelona%\" OR region.name LIKE \"%Barcelona%\" OR country.name LIKE \"%Barcelona%\")  ORDER BY RAND() ;";
         String actualQuery = Select.found(match);
         assertEquals(expectedQuery, actualQuery, "Query should match");
     }
@@ -52,7 +52,7 @@ public class TestSelect {
     @DisplayName("Diegocel: Test for found with no match")
     public void testFoundNoMatch(){
         String match = "";
-        String expectedQuery = "SELECT COUNT(*) AS count FROM world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id WHERE (world.name LIKE \"%%\" OR world.id LIKE \"%%\" OR world.municipality LIKE \"%%\" OR region.name LIKE \"%%\" OR country.name LIKE \"%%\") ;";
+        String expectedQuery = "SELECT COUNT(*) AS count FROM world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id WHERE (world.name LIKE \"%%\" OR world.id LIKE \"%%\" OR world.municipality LIKE \"%%\" OR region.name LIKE \"%%\" OR country.name LIKE \"%%\")  ORDER BY RAND() ;";
         String actualQuery = Select.found(match);
         assertEquals(expectedQuery, actualQuery, "Query should match");
     }
@@ -60,13 +60,13 @@ public class TestSelect {
     @Test
     @DisplayName("Wyattg5: Test statementFind for correct output")
     public void testStatementFind() {
-        assertEquals( "SELECT data FROM world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id where LIMIT 5;", Select.statementFind(where, data, limit) );
+        assertEquals( "SELECT data FROM world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id where  ORDER BY RAND() LIMIT 5;", Select.statementFind(where, data, limit) );
     }
 
     @Test
     @DisplayName("Lewi0027: Test match() method for return value")
     public void testMatchMethod() {
-        assertEquals( "SELECT  world.id AS id, world.name, world.municipality, region.name AS region, country.name AS country, world.latitude, world.longitude, world.altitude, world.type  FROM world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id WHERE (world.name LIKE \"%keyword%\" OR world.id LIKE \"%keyword%\" OR world.municipality LIKE \"%keyword%\" OR region.name LIKE \"%keyword%\" OR country.name LIKE \"%keyword%\") LIMIT 5;", Select.match(keyword, 5) );
+        assertEquals( "SELECT  world.id AS id, world.name, world.municipality, region.name AS region, country.name AS country, world.latitude, world.longitude, world.altitude, world.type  FROM world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id WHERE (world.name LIKE \"%keyword%\" OR world.id LIKE \"%keyword%\" OR world.municipality LIKE \"%keyword%\" OR region.name LIKE \"%keyword%\" OR country.name LIKE \"%keyword%\")  ORDER BY RAND() LIMIT 5;", Select.match(keyword, 5) );
     }
 
     @Test
@@ -136,7 +136,7 @@ public class TestSelect {
         type.add("balloonport");
 
         String expected = "SELECT  world.id AS id, world.name, world.municipality, region.name AS region, country.name AS country, world.latitude, world.longitude, world.altitude, world.type FROM world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id WHERE (world.name LIKE \"%keyword%\" OR world.id LIKE \"%keyword%\" OR world.municipality LIKE \"%keyword%\" OR region.name LIKE \"%keyword%\" OR country.name LIKE \"%keyword%\")";
-        expected += "  AND (world.type LIKE \"%airport%\" OR world.type LIKE \"%heliport%\" OR world.type LIKE \"%balloonport%\")  LIMIT 5;";
+        expected += "  AND (world.type LIKE \"%airport%\" OR world.type LIKE \"%heliport%\" OR world.type LIKE \"%balloonport%\")  ORDER BY RAND() LIMIT 5;";
         
 
         String actual = Select.type("keyword", 5, type);
@@ -151,7 +151,7 @@ public class TestSelect {
         type.add("other");
 
         String expected = "SELECT  world.id AS id, world.name, world.municipality, region.name AS region, country.name AS country, world.latitude, world.longitude, world.altitude, world.type FROM world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id WHERE (world.name LIKE \"%try%\" OR world.id LIKE \"%try%\" OR world.municipality LIKE \"%try%\" OR region.name LIKE \"%try%\" OR country.name LIKE \"%try%\")";
-        expected += "  AND ((world.type NOT LIKE \"%airport%\" AND world.type NOT LIKE \"%heliport%\" AND world.type NOT LIKE \"%balloonport%\"))  LIMIT 5;";
+        expected += "  AND ((world.type NOT LIKE \"%airport%\" AND world.type NOT LIKE \"%heliport%\" AND world.type NOT LIKE \"%balloonport%\"))  ORDER BY RAND() LIMIT 5;";
         
 
         String actual = Select.type("try", 5, type);
@@ -180,7 +180,7 @@ public class TestSelect {
         where.add("Denver");
         String match = "match";
         int limit = 5;
-        String expectedQuery = "SELECT  world.id AS id, world.name, world.municipality, region.name AS region, country.name AS country, world.latitude, world.longitude, world.altitude, world.type FROM world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id WHERE (world.name LIKE \"%match%\" OR world.id LIKE \"%match%\" OR world.municipality LIKE \"%match%\" OR region.name LIKE \"%match%\" OR country.name LIKE \"%match%\")  AND ((world.municipality LIKE \"%Denver%\" OR region.name LIKE \"%Denver%\" OR country.name LIKE \"%Denver%\")) LIMIT 5;"; 
+        String expectedQuery = "SELECT  world.id AS id, world.name, world.municipality, region.name AS region, country.name AS country, world.latitude, world.longitude, world.altitude, world.type FROM world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id WHERE (world.name LIKE \"%match%\" OR world.id LIKE \"%match%\" OR world.municipality LIKE \"%match%\" OR region.name LIKE \"%match%\" OR country.name LIKE \"%match%\")  AND ((world.municipality LIKE \"%Denver%\" OR region.name LIKE \"%Denver%\" OR country.name LIKE \"%Denver%\")) ORDER BY RAND() LIMIT 5;"; 
         String actualQuery = Select.where(match, limit, where);
         assertEquals(expectedQuery, actualQuery);
     }
@@ -221,7 +221,7 @@ public class TestSelect {
         type.add("balloonport");
         type.add("other");
 
-        String expected = "SELECT  world.id AS id, world.name, world.municipality, region.name AS region, country.name AS country, world.latitude, world.longitude, world.altitude, world.type FROM world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id WHERE (world.name LIKE \"%try%\" OR world.id LIKE \"%try%\" OR world.municipality LIKE \"%try%\" OR region.name LIKE \"%try%\" OR country.name LIKE \"%try%\")  LIMIT 5;";   
+        String expected = "SELECT  world.id AS id, world.name, world.municipality, region.name AS region, country.name AS country, world.latitude, world.longitude, world.altitude, world.type FROM world INNER JOIN country ON world.iso_country = country.id INNER JOIN region ON world.iso_region = region.id WHERE (world.name LIKE \"%try%\" OR world.id LIKE \"%try%\" OR world.municipality LIKE \"%try%\" OR region.name LIKE \"%try%\" OR country.name LIKE \"%try%\")  ORDER BY RAND() LIMIT 5;";   
 
         String actual = Select.type("try", 5, type);
 
@@ -258,7 +258,7 @@ public class TestSelect {
 
         String where = "AND ((world.municipality LIKE \"%Canada%\" OR region.name LIKE \"%Canada%\" OR country.name LIKE \"%Canada%\"))  ";
 
-        String type = "AND (world.type LIKE \"%heliport%\")  LIMIT 10;";
+        String type = "AND (world.type LIKE \"%heliport%\")  ORDER BY RAND() LIMIT 10;";
 
         String expected = select + match + where + type;
         
@@ -285,7 +285,7 @@ public class TestSelect {
 
         String where = "AND ((world.municipality LIKE \"%Canada%\" OR region.name LIKE \"%Canada%\" OR country.name LIKE \"%Canada%\") OR (world.municipality LIKE \"%Alaska%\" OR region.name LIKE \"%Alaska%\" OR country.name LIKE \"%Alaska%\"))  ";
 
-        String type = "AND (world.type LIKE \"%heliport%\" OR (world.type NOT LIKE \"%airport%\" AND world.type NOT LIKE \"%balloonport%\"))  LIMIT 10;";
+        String type = "AND (world.type LIKE \"%heliport%\" OR (world.type NOT LIKE \"%airport%\" AND world.type NOT LIKE \"%balloonport%\"))  ORDER BY RAND() LIMIT 10;";
 
         String expected = select + match + where + type;
         
