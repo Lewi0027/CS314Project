@@ -99,7 +99,8 @@ export async function optimizeTrip(props){
 }
 
 export function convertObjectToPlace(obj) {
-	const newPlace = new Place({name: obj.name,
+	const newPlace = new Place({name: obj.name ?? obj.streetAddress,
+		streetAddress: obj.streetAddress,
 		latitude: obj.latitude,
 		longitude: obj.longitude,
 		municipality: obj.municipality,
