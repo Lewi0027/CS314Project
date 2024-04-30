@@ -380,6 +380,69 @@
 			"response": []
 		},
 		{
+			"name": "Wyattg5- 10 places Tampa",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ebd7577f-98ff-4817-b70b-ed879e007e45",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Correct number of places and distances in increasing order\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    const places = responseJson.places;",
+							"    const distances = responseJson.distances;",
+							"",
+							"    pm.expect(places.length).to.eql(distances.length);",
+							"    ",
+							"    const expectedNumberOfPlaces = 10; ",
+							"    pm.expect(places.length).to.equal(expectedNumberOfPlaces);",
+							"    ",
+							"    for(let i = 0; i < distances.length - 1; i++) {",
+							"        pm.expect(distances[i] - 1).to.be.below(distances[i + 1]);",
+							"    }",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "0221bac6-7d25-425b-90cf-665be503d640",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"requestType\": \"near\",\n    \"place\": {\"latitude\": \"27.9517\", \"longitude\": \"-82.45881\"},\n    \"distance\": 20,\n    \"earthRadius\": 3959,\n    \"formula\": \"vincenty\",\n    \"limit\": 10\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/near",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"near"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "lewi0027: zero-returns",
 			"event": [
 				{
