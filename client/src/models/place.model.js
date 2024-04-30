@@ -5,7 +5,7 @@ https://en.wikipedia.org/wiki/Extract,_transform,_load
 export class Place {
 	constructor(placeObj) {
 		this.name = placeObj.name ?? placeObj.leisure ?? placeObj.building ?? placeObj.amenity ?? placeObj.man_made;
-        this.streetAddress = this.buildStreetAddress(placeObj);
+        this.streetAddress = placeObj.streetAddress ?? this.buildStreetAddress(placeObj);
 		this.latitude = placeObj.latitude ?? placeObj.lat;
 		this.longitude = placeObj.longitude ?? placeObj.lng;
 		this.municipality = placeObj.municipality ?? placeObj.city ?? placeObj.village ?? placeObj.state_district ?? placeObj.town ?? placeObj.county;
