@@ -48,27 +48,44 @@ public class FindRequest extends Request{
         }
     }
 
-    public void determineWhereType(FindLocations locations) throws BadRequestException{
-        try{
-            if ((this.where != null && !this.where.isEmpty()) && (this.type != null && !this.type.isEmpty())) {
-                this.places = locations.whereAndType();
-                this.found = locations.foundWhereAndType();
-            } 
-            else if(this.where != null && !this.where.isEmpty()){
-                this.places = locations.where();
-                this.found = locations.foundWhere();
-            }
-            else if(this.type != null && !this.type.isEmpty()){
-                this.places = locations.type();
-                this.found = locations.foundType();
-            }
-            else {
-                this.places = locations.find();
-                this.found = locations.found();
-            }
-        }  catch (Exception e) {
-            log.error("Error processing request: ", e);
-            throw new BadRequestException();
+    public void determineWhereType(FindLocations locations) throws Exception {
+        if (whereExists() && typeExists()) {
+            processWhereAndType(locations);
+        } else if (whereExists()) {
+            processWhere(locations);
+        } else if (typeExists()) {
+            processType(locations);
+        } else {
+            processDefault(locations);
         }
+    }
+
+    private void processWhereAndType(FindLocations locations) throws Exception{
+        this.places = locations.whereAndType();
+        this.found = locations.foundWhereAndType();
+    }
+
+    private void processWhere(FindLocations locations) throws Exception{
+        this.places = locations.where();
+        this.found = locations.foundWhere();
+    }
+
+    private void processType(FindLocations locations) throws Exception{
+        this.places = locations.type();
+        this.found = locations.foundType();
+    }
+
+    private void processDefault(FindLocations locations) throws Exception{
+        this.places = locations.find();
+        this.found = locations.found();
+    }
+
+
+    private boolean whereExists() {
+        return this.where != null && !this.where.isEmpty();
+    }
+
+    private boolean typeExists() {
+        return this.type != null && !this.type.isEmpty();
     }
 }
