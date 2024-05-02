@@ -753,6 +753,132 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "ajlei: find type w/ limit",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6923c09a-b921-4765-ba07-9e8013aa9079",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Correct number of places\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const expectedNumberOfPlaces = 50;\r",
+							"    const places = responseJson.places;\r",
+							"    pm.expect(places.length).to.equal(expectedNumberOfPlaces);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"correct type\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const places = responseJson.places;\r",
+							"    for (var i = 0; i < responseJson.length; i++) {\r",
+							"        pm.expect(responseJson[i].type.to.include(\"airport\"));\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "fe087454-d540-4a2d-9e80-3152666c8d1c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"requestType\": \"find\",\r\n    \"match\": \"\",\r\n    \"type\": [\"airport\"],\r\n    \"limit\" : 50\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/find",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"find"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ajlei: find multiple types",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c3072918-74b2-461f-a529-d138892db1bb",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Correct number of places\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const expectedNumberOfPlaces = 50;\r",
+							"    const places = responseJson.places;\r",
+							"    pm.expect(places.length).to.equal(expectedNumberOfPlaces);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"correct type\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const places = responseJson.places;\r",
+							"    for (var i = 0; i < responseJson.length; i++) {\r",
+							"        if (pm.expect(responseJson[i].type.to.include(\"heliport\")) == false) {\r",
+							"            pm.expect(responseJson[i].type.to.include(\"airport\"));\r",
+							"        }\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "01ecb9d0-b2ff-4e5a-a949-2bba1d87da86",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"requestType\": \"find\",\r\n    \"match\": \"\",\r\n    \"type\": [\"airport\", \"heliport\"],\r\n    \"limit\" : 50\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/find",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"find"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
