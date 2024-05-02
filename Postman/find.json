@@ -550,6 +550,112 @@
 			"response": []
 		},
 		{
+			"name": "diegocel: Type",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "09d77ea9-4810-4822-a2d3-457f8623b766",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Normal Find response for Denver\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const places = responseJson.places;    \r",
+							"\r",
+							"    pm.expect(places.length).to.eql(30);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "ee1baec4-d6db-40e9-9b2d-0fb285cf2be8",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"requestType\": \"find\",\r\n    \"match\": \"denver\",\r\n    \"limit\": 100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/find",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"find"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "diegocel: TypeWrongInput",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "09d77ea9-4810-4822-a2d3-457f8623b766",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Normal Find response for Denver\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const places = responseJson.places;    \r",
+							"\r",
+							"    pm.expect(places.length).to.eql(30);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "9ebf001e-7fa5-48fd-a35d-e1c39f0dbfd4",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"requestType\": \"find\",\r\n    \"match\": \"denver\",\r\n    \"limit\": 100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/find",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"find"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "lewi0027: find test where",
 			"event": [
 				{
