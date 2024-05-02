@@ -839,8 +839,10 @@
 							"    const responseJson = pm.response.json();\r",
 							"    const places = responseJson.places;\r",
 							"    for (var i = 0; i < responseJson.length; i++) {\r",
-							"        if (pm.expect(responseJson[i].type.to.include(\"heliport\")) == false) {\r",
+							"        if (responseJson[i].type.to.include(\"heliport\") == false && responseJson[i].type.to.include(\"heliport\") == true) {\r",
 							"            pm.expect(responseJson[i].type.to.include(\"airport\"));\r",
+							"        } else if (responseJson[i].type.to.include(\"heliport\") == true && responseJson[i].type.to.include(\"heliport\") == false) {\r",
+							"            pm.expect(responseJson[i].type.to.include(\"heliport\"));\r",
 							"        }\r",
 							"    }\r",
 							"});\r",
@@ -861,6 +863,80 @@
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n    \"requestType\": \"find\",\r\n    \"match\": \"\",\r\n    \"type\": [\"airport\", \"heliport\"],\r\n    \"limit\" : 50\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/find",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"find"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f683cdd4-2b47-4df6-8b8c-17f288b950d7",
+						"exec": [
+							"pm.test(\"Response is HTTP200 status\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Correct number of places\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const expectedNumberOfPlaces = 12;\r",
+							"    const places = responseJson.places;\r",
+							"    pm.expect(places.length).to.equal(expectedNumberOfPlaces);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"correct type\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const places = responseJson.places;\r",
+							"    for (var i = 0; i < responseJson.length; i++) {\r",
+							"        pm.expect(responseJson[i].type.to.include(\"ial\"));\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"correct where\", () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const places = responseJson.places;\r",
+							"    for (var i = 0; i < responseJson.length; i++) {\r",
+							"        if (responseJson[i].where.to.eql([\"Denver\"]) == false && responseJson[i].where.to.eql([\"Peru\"]) == true) {\r",
+							"            pm.expect(responseJson[i].where.to.eql([\"Peru\"]));\r",
+							"        } else if(responseJson[i].where.to.eql([\"Denver\"]) == true && responseJson[i].where.to.eql([\"Peru\"]) == false) {\r",
+							"            pm.expect(responseJson[i].where.to.eql([\"Denver\"]));\r",
+							"        }\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "844ee7bd-aa52-4064-bee6-b6995087aece",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"requestType\": \"find\",\r\n    \"match\": \"\",\r\n    \"where\": [\"Denver\", \"Peru\"],\r\n    \"limit\": 12\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
